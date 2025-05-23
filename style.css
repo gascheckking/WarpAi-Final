@@ -22,34 +22,32 @@ body {
 }
 
 .logo-icon {
-  width: 24px;
-  height: 24px;
-}
-
-.text-wrap {
-  position: relative;
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
 }
 
 .brand-name {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: #a674ff;
+  line-height: 1;
 }
 
 .tracker-sub {
   margin: 0;
-  font-size: 0.7rem;
-  color: #aaa;
-  padding-left: 6px;
+  font-size: 0.75rem;
+  color: #aaffc2;
+  padding-left: 0.2rem;
 }
 
 .brand-name::before {
   content: "";
   position: absolute;
-  left: -8px;
+  left: -12px;
   top: 0;
-  bottom: -0.6rem;
+  bottom: -0.8rem;
   width: 2px;
   background: #a674ff;
 }
@@ -57,12 +55,13 @@ body {
 .tracker-sub::after {
   content: "";
   position: absolute;
-  left: -8px;
+  left: -12px;
   bottom: -4px;
   height: 1px;
   width: 100%;
   background: #a674ff;
 }
+
 
 .wallet-ui {
   display: flex;
