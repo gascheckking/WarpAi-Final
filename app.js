@@ -1,39 +1,29 @@
-let currentAddress = '';
+let walletConnected = false;
 
-function switchTab(tabId) {
-  document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-  document.getElementById(tabId).classList.add('active');
-}
+document.getElementById("connectWallet").addEventListener("click", () => {
+  walletConnected = !walletConnected;
 
-document.getElementById("connectWallet").addEventListener("click", async () => {
-  if (window.ethereum) {
-    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    currentAddress = accounts[0];
-    document.getElementById("walletAddress").innerText = currentAddress;
-    document.getElementById("connectWallet").style.display = "none";
-    loadActivity(currentAddress);
-    document.getElementById("xpDisplay").innerText = "180 XP 🔥";
+  const button = document.getElementById("connectWallet");
+  const xpDisplay = document.getElementById("xpDisplay");
+
+  if (walletConnected) {
+    button.textContent = "Wallet Connected";
+    xpDisplay.textContent = "🔥 87 XP";
   } else {
-    alert("MetaMask not found.");
+    button.textContent = "Connect Wallet";
+    xpDisplay.textContent = "0 XP 🔥";
   }
 });
 
-async function loadActivity(address) {
-  const apiKey = "Y1VRJKQB1A4K2JTA8GE1YDH3W54W4I35D5"; // Use from .env in backend for security
-  const url = `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=${apiKey}`;
-  const res = await fetch(url);
-  const data = await res.json();
-  const feed = document.getElementById("activityFeed");
+// Tab switching (if needed for later)
+document.querySelectorAll(".tab-button").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const tab = btn.getAttribute("data-tab");
 
-  if (!data.result || data.result.length === 0) {
-    feed.innerHTML = "<li>No transactions found.</li>";
-    return;
-  }
+    document.querySelectorAll(".tab").forEach((s) => s.classList.remove("active"));
+    document.getElementById(tab).classList.add("active");
 
-  feed.innerHTML = '';
-  data.result.slice(0, 10).forEach(tx => {
-    const ether = (parseFloat(tx.value) / 1e18).toFixed(4);
-    const direction = tx.to.toLowerCase() === address.toLowerCase() ? "⬅️ Received" : "➡️ Sent";
-    feed.innerHTML += `<li>${direction} ${ether} ETH<br/><small>${tx.hash.slice(0, 10)}...</small></li>`;
+    document.querySelectorAll(".tab-button").forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
   });
-}
+});
