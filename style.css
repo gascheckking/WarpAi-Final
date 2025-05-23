@@ -5,105 +5,20 @@ body {
   color: #ffffff;
 }
 
-li {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #314938;
-}
-
-.hero {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  padding: 0 1rem;
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.subtitle {
-  font-size: 1rem;
-  color: #aaffc2;
-}
-
-.card-grid {
+/* Header */
+.app-header {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
   justify-content: space-between;
-}
-
-.card {
-  flex: 1 1 calc(50% - 1rem);
-  background-color: #1b1d23;
+  align-items: center;
   padding: 1rem;
-  border-radius: 12px;
-  color: #fff;
-  text-align: center;
-}
-
-.card.full {
-  flex: 1 1 100%;
-  margin-top: 1rem;
-}
-
-.card button {
-  margin-top: 0.5rem;
-  padding: 0.4rem 1rem;
-  background-color: #4caf50;
-  border: none;
-  border-radius: 6px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.card.blue {
-  background-color: #224b8e;
-}
-
-.card.green {
-  background-color: #2c9463;
-}
-
-.card.dark {
-  background-color: #333;
-}
-
-.card.premium button {
-  background-color: #9146ff;
-  margin: 0.4rem 0;
-}
-
-.card.full h3 {
-  margin-top: 0;
-  font-size: 1.1rem;
-}
-
-.card.full p {
-  margin: 0.3rem 0;
-  font-size: 0.9rem;
-}
-
-.card.full button {
-  margin-top: 0.4rem;
-  padding: 0.5rem 1rem;
-  background-color: #4caf50;
-  border: none;
-  border-radius: 6px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%;
-}
-
-.card.full.premium button {
-  background-color: #9146ff;
+  background-color: #12141a;
+  border-bottom: 1px solid #292d36;
 }
 
 .logo-title {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  position: relative;
 }
 
 .logo-icon {
@@ -125,10 +40,9 @@ li {
 
 .tracker-sub {
   margin: 0;
-  font-size: 0.9rem;
-  color: #ddd;
+  font-size: 0.8rem;
+  color: #aaa;
   padding-left: 6px;
-  position: relative;
 }
 
 .brand-name::before {
@@ -151,6 +65,48 @@ li {
   background: #a674ff;
 }
 
+/* Wallet UI */
+.wallet-ui {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wallet-ui button {
+  padding: 0.4rem 0.75rem;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Tabs */
+.nav-tabs {
+  display: flex;
+  justify-content: space-around;
+  padding: 0.5rem;
+  background-color: #12141a;
+  border-top: 1px solid #292d36;
+  border-bottom: 1px solid #292d36;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.tab-button.active {
+  color: #a674ff;
+  text-decoration: underline;
+}
+
+/* Main Layout */
 .mini-container {
   max-width: 360px;
   margin: 0 auto;
@@ -174,24 +130,25 @@ li {
   margin-top: 0.4rem;
 }
 
-.card.small {
+/* Cards */
+.card {
   background-color: #1b1d23;
   padding: 1rem;
   border-radius: 12px;
-  margin-bottom: 1rem;
   color: #fff;
   text-align: center;
+  margin-bottom: 1rem;
 }
 
-.card.small.green {
+.card.green {
   background-color: #2c9463;
 }
 
-.card.small.dark {
+.card.dark {
   background-color: #333;
 }
 
-.card.small button {
+.card button {
   margin-top: 0.5rem;
   padding: 0.4rem 1rem;
   background-color: #4caf50;
@@ -204,10 +161,6 @@ li {
 
 .card.full.premium {
   background-color: #23252b;
-  padding: 1rem;
-  border-radius: 12px;
-  margin-top: 1.5rem;
-  text-align: center;
 }
 
 .card.full.premium button {
