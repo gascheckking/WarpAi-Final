@@ -14,3 +14,17 @@ document.getElementById("connectWallet").addEventListener("click", () => {
     xpDisplay.textContent = "0 XP 🔥";
   }
 });
+
+// Tab switching
+const tabs = document.querySelectorAll(".tab-button");
+const sections = document.querySelectorAll(".tab-content");
+
+tabs.forEach((tab, i) => {
+  tab.addEventListener("click", () => {
+    tabs.forEach(btn => btn.classList.remove("active"));
+    tab.classList.add("active");
+
+    sections.forEach(sec => sec.style.display = "none");
+    sections[i].style.display = "block";
+  });
+});
