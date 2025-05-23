@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WarpAI On-Chain Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <h1>WarpAI | <span>On-Chain Tracker</span></h1>
+  </header>
+
+  <nav class="nav-tabs">
+    <button onclick="switchTab('home')">🏠 Home</button>
+    <button onclick="switchTab('track')">🔍 Track</button>
+    <button onclick="switchTab('rewards')">🎁 Rewards</button>
+    <button onclick="switchTab('leaderboard')">📊 Leaderboard</button>
+    <button onclick="switchTab('profile')">👤 Profile</button>
+  </nav>
+
+  <main>
+    <section id="home" class="tab active">
+      <h2>Welcome to WarpAI</h2>
+      <p>Connect your wallet to begin tracking on-chain activity.</p>
+      <button onclick="connectWallet()">Connect Wallet</button>
+    </section>
+
+    <section id="track" class="tab">
+      <h2>On-Chain Activity</h2>
+      <ul id="activityFeed">Loading...</ul>
+    </section>
+
+    <section id="rewards" class="tab">
+      <h2>Rewards Center</h2>
+      <ul>
+        <li>Claim your address <button>Claim</button></li>
+        <li>Extra rewards for Warp <button>Claim</button></li>
+        <li>View bonus streak <button>View</button></li>
+        <li>Achievements earned <button>View</button></li>
+      </ul>
+    </section>
+
+    <section id="leaderboard" class="tab">
+      <h2>Leaderboard</h2>
+      <p>Coming soon...</p>
+    </section>
+
+    <section id="profile" class="tab">
+      <h2>Your Profile</h2>
+      <p id="walletAddress">Not connected</p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
