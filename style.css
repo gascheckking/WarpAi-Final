@@ -24,6 +24,7 @@ body {
 .logo-icon-fixed {
   width: 32px;
   height: 32px;
+  margin-left: 0.5rem;
 }
 
 .brand-name {
