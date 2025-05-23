@@ -184,4 +184,16 @@ main {
 .leaderboard li strong {
   color: #aaffc2;
 }
+.card ul {
+  list-style: disc;
+  padding-left: 1.2rem;
+  text-align: left;
+  color: #ccc;
+}
+
+.card ul li {
+  font-size: 0.7rem;
+  margin-bottom: 0.3rem;
+}
+
 
