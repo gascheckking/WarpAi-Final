@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WarpAI On-Chain Tracker</title>
+  <title>WarpAi</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <header class="app-header">
+  <header class="app-header">
     <div class="logo-title">
       <img src="logo.png" alt="WarpAi Logo" class="logo-icon" />
       <div class="text-wrap">
@@ -21,48 +21,46 @@
     </div>
   </header>
 
-
   <nav class="nav-tabs">
-  <button onclick="switchTab('home')">🏠 Home</button>
-  <button onclick="switchTab('track')">📊 Track</button>
-  <button onclick="switchTab('rewards')">🎁 Rewards</button>
-  <button onclick="switchTab('leaderboard')">🏆 Leaderboard</button>
-  <button onclick="switchTab('profile')">👤 Profile</button>
-</nav>
-
+    <button class="tab-button active" data-tab="home">🏠 Home</button>
+    <button class="tab-button" data-tab="track">📈 Track</button>
+    <button class="tab-button" data-tab="rewards">🎁 Rewards</button>
+    <button class="tab-button" data-tab="leaderboard">🏆 Leaderboard</button>
+    <button class="tab-button" data-tab="profile">👤 Profile</button>
+  </nav>
 
   <main>
-   <section id="home" class="tab active">
-  <div class="mini-container">
-    <div class="hero-header">
-      <h1>WarpAi</h1>
-      <p class="sub">Track your onchain journey in real time</p>
-    </div>
+    <section id="home" class="tab active">
+      <div class="mini-container">
+        <div class="hero-header">
+          <h1>WarpAi</h1>
+          <p class="sub">Track your onchain journey in real time</p>
+        </div>
 
-    <div class="card small green">
-      <h3>Claim XP</h3>
-      <p>Daily XP bonus</p>
-      <button>Claim</button>
-    </div>
+        <div class="card green">
+          <h3>Claim XP</h3>
+          <p>Daily XP bonus</p>
+          <button>Claim</button>
+        </div>
 
-    <div class="card small dark">
-      <h3>Buy Token</h3>
-      <p>Pre-launch $WARP</p>
-      <button>Buy Now</button>
-    </div>
+        <div class="card dark">
+          <h3>Buy Token</h3>
+          <p>Pre-launch $WARP</p>
+          <button>Buy Now</button>
+        </div>
 
-    <div class="card small">
-      <h3>Your Reward Level</h3>
-      <p>🔥 87 XP • 5-day streak</p>
-    </div>
+        <div class="card">
+          <h3>Your Reward Level</h3>
+          <p>🔥 87 XP • 5-day streak</p>
+        </div>
 
-    <div class="card full premium">
-      <h3>💎 Premium Tools</h3>
-      <button>Claim another address</button>
-      <button>Track random wallet</button>
-    </div>
-  </div>
-</section>
+        <div class="card full premium">
+          <h3>💎 Premium Tools</h3>
+          <button>Claim another address</button>
+          <button>Track random wallet</button>
+        </div>
+      </div>
+    </section>
   </main>
 
   <script src="app.js"></script>
