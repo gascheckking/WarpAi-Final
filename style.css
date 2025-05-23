@@ -18,50 +18,12 @@ body {
 .logo-title {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
 }
 
 .logo-icon-fixed {
-  width: 200px;
-  height: 175px;
-  margin: 0.2rem 0.8rem;
+  width: 48px;
+  height: 48px;
 }
-
-.brand-name {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #a674ff;
-  line-height: 1;
-}
-
-.tracker-sub {
-  margin: 0;
-  font-size: 0.75rem;
-  color: #aaffc2;
-  padding-left: 0.2rem;
-}
-
-.brand-name::before {
-  content: "";
-  position: absolute;
-  left: -12px;
-  top: 0;
-  bottom: -0.8rem;
-  width: 2px;
-  background: #a674ff;
-}
-
-.tracker-sub::after {
-  content: "";
-  position: absolute;
-  left: -12px;
-  bottom: -4px;
-  height: 1px;
-  width: 100%;
-  background: #a674ff;
-}
-
 
 .wallet-ui {
   display: flex;
@@ -104,13 +66,31 @@ body {
   text-decoration: underline;
 }
 
-/* Main Layout */
+/* Main */
 main {
   padding: 1rem 0.5rem;
   max-width: 480px;
   margin: auto;
 }
 
+.hero {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.hero h2 {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #a674ff;
+}
+
+.subtitle {
+  font-size: 0.8rem;
+  color: #ccc;
+  margin-top: 0.3rem;
+}
+
+/* Card Layout */
 .card-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -130,10 +110,16 @@ main {
   font-size: 0.85rem;
 }
 
-.card p {
+.card p,
+.card ul {
   margin: 0 0 0.5rem;
   font-size: 0.7rem;
   color: #ccc;
+}
+
+.card ul {
+  padding-left: 1rem;
+  text-align: left;
 }
 
 .card button {
@@ -155,6 +141,10 @@ main {
   background-color: #333;
 }
 
+.card.blue {
+  background-color: #264e70;
+}
+
 .card.purple {
   background-color: #3b1d5e;
 }
@@ -168,4 +158,9 @@ main {
 .card.purple button {
   background-color: #9146ff;
   width: 100%;
+}
+
+.card.full {
+  grid-column: span 2;
+  margin-top: 0.5rem;
 }
