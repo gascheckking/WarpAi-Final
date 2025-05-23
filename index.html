@@ -7,13 +7,20 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="app-header">
-    <h1>✨ WarpAI <span class="subtitle">Onchain Tracker</span></h1>
+    <header class="app-header">
+    <div class="logo-title">
+      <img src="logo.png" alt="WarpAi Logo" class="logo-icon" />
+      <div class="text-wrap">
+        <h1 class="brand-name">WarpAi</h1>
+        <p class="tracker-sub">Onchain Activity Tracker</p>
+      </div>
+    </div>
     <div class="wallet-ui">
       <span id="xpDisplay">0 XP 🔥</span>
       <button id="connectWallet">Connect Wallet</button>
     </div>
   </header>
+
 
   <nav class="nav-tabs">
   <button onclick="switchTab('home')">🏠 Home</button>
