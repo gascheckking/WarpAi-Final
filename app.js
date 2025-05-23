@@ -28,3 +28,20 @@ tabs.forEach((tab, i) => {
     sections[i].style.display = "block";
   });
 });
+// Settings toggle
+document.getElementById("settingsBtn").addEventListener("click", () => {
+  const menu = document.getElementById("settingsMenu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+});
+
+// Dark Mode toggle (localStorage optional)
+document.getElementById("toggleTheme").addEventListener("change", (e) => {
+  if (e.target.checked) {
+    document.body.style.backgroundColor = "#ffffff";
+    document.body.style.color = "#000000";
+  } else {
+    document.body.style.backgroundColor = "#0f1115";
+    document.body.style.color = "#ffffff";
+  }
+});
+
