@@ -21,10 +21,9 @@ body {
   gap: 0.6rem;
 }
 
-.logo-icon {
-  width: 30px;
-  height: 30px;
-  object-fit: contain;
+.logo-icon-fixed {
+  width: 32px;
+  height: 32px;
 }
 
 .brand-name {
