@@ -32,7 +32,7 @@ body {
 
 .brand-name {
   margin: 0;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: #a674ff;
   position: relative;
@@ -40,7 +40,7 @@ body {
 
 .tracker-sub {
   margin: 0;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #aaa;
   padding-left: 6px;
 }
@@ -73,7 +73,7 @@ body {
 }
 
 .wallet-ui button {
-  padding: 0.4rem 0.75rem;
+  padding: 0.3rem 0.9rem;
   background-color: #4caf50;
   border: none;
   border-radius: 6px;
@@ -115,29 +115,30 @@ body {
 
 .hero-header {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
 }
 
 .hero-header h1 {
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   color: #a674ff;
   margin: 0;
 }
 
 .hero-header .sub {
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   color: #aaa;
-  margin-top: 0.4rem;
+  margin-top: 0.3rem;
 }
 
 /* Cards */
 .card {
   background-color: #1b1d23;
-  padding: 1rem;
-  border-radius: 12px;
+  padding: 0.8rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
   color: #fff;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.9rem;
 }
 
 .card.green {
@@ -149,8 +150,8 @@ body {
 }
 
 .card button {
-  margin-top: 0.5rem;
-  padding: 0.4rem 1rem;
+  margin-top: 0.4rem;
+  padding: 0.3rem 0.9rem;
   background-color: #4caf50;
   border: none;
   border-radius: 6px;
