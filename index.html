@@ -8,15 +8,14 @@
 </head>
 <body>
   <header class="app-header">
-  <div class="logo-title">
-    <img src="logo.png" alt="WarpAi Logo" class="logo-icon-fixed" />
-  </div>
-  <div class="wallet-ui">
-    <span id="xpDisplay">0 XP 🔥</span>
-    <button id="connectWallet">Connect Wallet</button>
-  </div>
-</header>
-
+    <div class="logo-title">
+      <img src="logo.png" alt="WarpAi Logo" class="logo-icon-fixed" />
+    </div>
+    <div class="wallet-ui">
+      <span id="xpDisplay">0 XP 🔥</span>
+      <button id="connectWallet">Connect Wallet</button>
+    </div>
+  </header>
 
   <nav class="nav-tabs">
     <button class="tab-button active">🏠 Home</button>
@@ -27,31 +26,79 @@
   </nav>
 
   <main>
-    <section class="home">
+    <!-- HOME -->
+    <section class="tab-content home" style="display:block;">
       <div class="card-grid">
         <div class="card green">
           <h3>Claim XP</h3>
           <p>Daily XP bonus</p>
           <button>Claim</button>
         </div>
-
         <div class="card dark">
           <h3>Buy Token</h3>
           <p>Pre-launch $WARP</p>
           <button>Buy Now</button>
         </div>
-
         <div class="card">
           <h3>🔥 87 XP</h3>
           <p>5-day streak</p>
         </div>
-
         <div class="card purple">
           <h3>💎 Premium Tools</h3>
           <div class="btn-row">
             <button>Claim another address</button>
             <button>Track random wallet</button>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRACK -->
+    <section class="tab-content" style="display:none;">
+      <div class="hero">
+        <h2>📊 Onchain Tracker</h2>
+        <p class="subtitle">Följ din aktivitet på kedjan – allt i realtid</p>
+      </div>
+
+      <div class="card-grid">
+        <div class="card blue">
+          <h3>Latest Activity</h3>
+          <p>Exempelvis: Köpte token på Zora</p>
+          <small>+ $5.23 i vinst</small>
+        </div>
+
+        <div class="card dark">
+          <h3>Gas Spent</h3>
+          <p>0.14 ETH (~$42)</p>
+        </div>
+
+        <div class="card dark">
+          <h3>Tokens Minted</h3>
+          <p>23 st</p>
+        </div>
+
+        <div class="card dark">
+          <h3>Trades: Win/Loss</h3>
+          <p>17 / 6</p>
+        </div>
+
+        <div class="card dark">
+          <h3>ETH Moved</h3>
+          <p>1.65 ETH total</p>
+        </div>
+
+        <div class="card dark">
+          <h3>Connected dApps</h3>
+          <ul>
+            <li>Zora</li>
+            <li>OpenSea</li>
+            <li>Base</li>
+          </ul>
+        </div>
+
+        <div class="card full">
+          <h3>💡 Smart Insights</h3>
+          <p>Du har spenderat 23% mindre gas än genomsnittet.</p>
         </div>
       </div>
     </section>
