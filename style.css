@@ -252,3 +252,42 @@ main {
   border-top: 1px solid #444;
   margin: 0.5rem 0;
 }
+.card.upgrade {
+  background-color: #1b1d23;
+  border: 1px solid #f39c12;
+}
+
+.card.upgrade ul {
+  list-style: disc;
+  padding-left: 1.2rem;
+  color: #ccc;
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.upgrade-button {
+  background-color: #f39c12;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+
+.card.premium ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 0.75rem;
+  color: #ccc;
+  text-align: left;
+}
+
+.card.premium ul li::before {
+  content: "⭐ ";
+  color: #f39c12;
+}
+
