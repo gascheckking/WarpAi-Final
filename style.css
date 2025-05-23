@@ -195,5 +195,11 @@ main {
   font-size: 0.7rem;
   margin-bottom: 0.3rem;
 }
+.card.full.premium button {
+  margin-top: 0.5rem;
+  background-color: #f39c12;
+  color: #000;
+}
+
 
 
