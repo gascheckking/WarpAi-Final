@@ -1,75 +1,8 @@
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
-  background-color: #101218;
-  color: #d0f0c0;
-  max-width: 480px;
-  margin: auto;
-}
-
-.app-header {
-  background: #1e1f29;
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid #52c266;
-}
-
-.app-header h1 {
-  margin: 0;
-  color: #52c266;
-}
-
-.subtitle {
-  font-size: 1rem;
-  color: #9ae2b6;
-}
-
-.wallet-ui {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-#connectWallet {
-  background-color: #52c266;
-  color: #101218;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.nav-tabs {
-  display: flex;
-  background: #1e1f29;
-  border-bottom: 2px solid #52c266;
-}
-
-.nav-tabs button {
-  flex: 1;
-  padding: 0.75rem;
-  background: none;
-  border: none;
-  color: #9ae2b6;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.tab {
-  display: none;
-  padding: 1rem;
-}
-
-.tab.active {
-  display: block;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #0f1115;
+  color: #ffffff;
 }
 
 li {
@@ -80,6 +13,10 @@ li {
 .hero {
   text-align: center;
   margin-bottom: 1.5rem;
+  padding: 0 1rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .subtitle {
@@ -136,3 +73,80 @@ li {
   margin: 0.4rem 0;
 }
 
+.card.full h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.card.full p {
+  margin: 0.3rem 0;
+  font-size: 0.9rem;
+}
+
+.card.full button {
+  margin-top: 0.4rem;
+  padding: 0.5rem 1rem;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+
+.card.full.premium button {
+  background-color: #9146ff;
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+}
+
+.logo-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.text-wrap {
+  position: relative;
+}
+
+.brand-name {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #a674ff;
+  position: relative;
+}
+
+.tracker-sub {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #ddd;
+  padding-left: 6px;
+  position: relative;
+}
+
+.brand-name::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 0;
+  bottom: -0.6rem;
+  width: 2px;
+  background: #a674ff;
+}
+
+.tracker-sub::after {
+  content: "";
+  position: absolute;
+  left: -8px;
+  bottom: -4px;
+  height: 1px;
+  width: 100%;
+  background: #a674ff;
+}
