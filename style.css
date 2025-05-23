@@ -22,9 +22,9 @@ body {
 }
 
 .logo-icon-fixed {
-  width: 32px;
-  height: 32px;
-  margin-left: 0.5rem;
+  width: 48px;
+  height: 48px;
+  margin: 0.2rem 0.8rem;
 }
 
 .brand-name {
