@@ -150,3 +150,74 @@ li {
   width: 100%;
   background: #a674ff;
 }
+
+.mini-container {
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.hero-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.hero-header h1 {
+  font-size: 1.4rem;
+  color: #a674ff;
+  margin: 0;
+}
+
+.hero-header .sub {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-top: 0.4rem;
+}
+
+.card.small {
+  background-color: #1b1d23;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  color: #fff;
+  text-align: center;
+}
+
+.card.small.green {
+  background-color: #2c9463;
+}
+
+.card.small.dark {
+  background-color: #333;
+}
+
+.card.small button {
+  margin-top: 0.5rem;
+  padding: 0.4rem 1rem;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.card.full.premium {
+  background-color: #23252b;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.card.full.premium button {
+  background-color: #9146ff;
+  margin: 0.4rem 0;
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
