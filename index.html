@@ -22,21 +22,16 @@
   </header>
 
   <nav class="nav-tabs">
-    <button class="tab-button active" data-tab="home">🏠 Home</button>
-    <button class="tab-button" data-tab="track">📈 Track</button>
-    <button class="tab-button" data-tab="rewards">🎁 Rewards</button>
-    <button class="tab-button" data-tab="leaderboard">🏆 Leaderboard</button>
-    <button class="tab-button" data-tab="profile">👤 Profile</button>
+    <button class="tab-button active">🏠 Home</button>
+    <button class="tab-button">📈 Track</button>
+    <button class="tab-button">🎁 Rewards</button>
+    <button class="tab-button">🏆 Leaderboard</button>
+    <button class="tab-button">👤 Profile</button>
   </nav>
 
   <main>
-    <section id="home" class="tab active">
-      <div class="mini-container">
-        <div class="hero-header">
-          <h1>WarpAi</h1>
-          <p class="sub">Track your onchain journey in real time</p>
-        </div>
-
+    <section class="home">
+      <div class="card-grid">
         <div class="card green">
           <h3>Claim XP</h3>
           <p>Daily XP bonus</p>
@@ -50,14 +45,16 @@
         </div>
 
         <div class="card">
-          <h3>Your Reward Level</h3>
-          <p>🔥 87 XP • 5-day streak</p>
+          <h3>🔥 87 XP</h3>
+          <p>5-day streak</p>
         </div>
 
-        <div class="card full premium">
+        <div class="card purple">
           <h3>💎 Premium Tools</h3>
-          <button>Claim another address</button>
-          <button>Track random wallet</button>
+          <div class="btn-row">
+            <button>Claim another address</button>
+            <button>Track random wallet</button>
+          </div>
         </div>
       </div>
     </section>
