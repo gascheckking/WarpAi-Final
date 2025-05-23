@@ -10,7 +10,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 0.8rem;
   background-color: #12141a;
   border-bottom: 1px solid #292d36;
 }
@@ -18,12 +18,12 @@ body {
 .logo-title {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
 }
 
 .logo-icon {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
 }
 
 .text-wrap {
@@ -32,15 +32,14 @@ body {
 
 .brand-name {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: bold;
   color: #a674ff;
-  position: relative;
 }
 
 .tracker-sub {
   margin: 0;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: #aaa;
   padding-left: 6px;
 }
@@ -65,19 +64,19 @@ body {
   background: #a674ff;
 }
 
-/* Wallet UI */
 .wallet-ui {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .wallet-ui button {
-  padding: 0.3rem 0.9rem;
+  padding: 0.3rem 0.6rem;
   background-color: #4caf50;
   border: none;
   border-radius: 6px;
   color: white;
+  font-size: 0.75rem;
   font-weight: bold;
   cursor: pointer;
 }
@@ -86,7 +85,7 @@ body {
 .nav-tabs {
   display: flex;
   justify-content: space-around;
-  padding: 0.5rem;
+  padding: 0.4rem 0;
   background-color: #12141a;
   border-top: 1px solid #292d36;
   border-bottom: 1px solid #292d36;
@@ -96,7 +95,7 @@ body {
   background: none;
   border: none;
   color: white;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: bold;
   cursor: pointer;
 }
@@ -107,38 +106,46 @@ body {
 }
 
 /* Main Layout */
-.mini-container {
-  max-width: 360px;
-  margin: 0 auto;
-  padding: 1rem;
+main {
+  padding: 1rem 0.5rem;
+  max-width: 480px;
+  margin: auto;
 }
 
-.hero-header {
-  text-align: center;
-  margin-bottom: 1.2rem;
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
 }
 
-.hero-header h1 {
-  font-size: 1.1rem;
-  color: #a674ff;
-  margin: 0;
-}
-
-.hero-header .sub {
-  font-size: 0.75rem;
-  color: #aaa;
-  margin-top: 0.3rem;
-}
-
-/* Cards */
 .card {
   background-color: #1b1d23;
-  padding: 0.8rem;
+  padding: 0.7rem;
   border-radius: 10px;
-  font-size: 0.85rem;
-  color: #fff;
+  font-size: 0.75rem;
   text-align: center;
-  margin-bottom: 0.9rem;
+}
+
+.card h3 {
+  margin: 0 0 0.3rem;
+  font-size: 0.85rem;
+}
+
+.card p {
+  margin: 0 0 0.5rem;
+  font-size: 0.7rem;
+  color: #ccc;
+}
+
+.card button {
+  padding: 0.35rem 0.7rem;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
 }
 
 .card.green {
@@ -149,29 +156,17 @@ body {
   background-color: #333;
 }
 
-.card button {
-  margin-top: 0.4rem;
-  padding: 0.3rem 0.9rem;
-  background-color: #4caf50;
-  border: none;
-  border-radius: 6px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
+.card.purple {
+  background-color: #3b1d5e;
 }
 
-.card.full.premium {
-  background-color: #23252b;
+.card.purple .btn-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
-.card.full.premium button {
+.card.purple button {
   background-color: #9146ff;
-  margin: 0.4rem 0;
-  padding: 0.4rem 1rem;
-  border: none;
-  border-radius: 6px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
   width: 100%;
 }
