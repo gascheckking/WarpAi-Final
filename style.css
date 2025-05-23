@@ -209,6 +209,46 @@ main {
   background-color: #f39c12;
   color: #000;
 }
+.settings-wrapper {
+  position: relative;
+}
 
+.settings-icon {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: white;
+}
 
+.settings-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 2rem;
+  background-color: #1c1e24;
+  border: 1px solid #333;
+  padding: 0.6rem;
+  border-radius: 8px;
+  width: 160px;
+  z-index: 99;
+}
 
+.settings-dropdown label,
+.settings-dropdown button {
+  display: block;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 0.8rem;
+  padding: 0.3rem 0;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+
+.settings-dropdown hr {
+  border: 0;
+  border-top: 1px solid #444;
+  margin: 0.5rem 0;
+}
