@@ -23,25 +23,43 @@
   </nav>
 
   <main>
-    <section id="home" class="tab active">
-      <h2>Welcome to WarpAI</h2>
-      <p>Connect your wallet to start tracking your on-chain journey.</p>
-    </section>
+   <section id="home" class="tab active">
+  <div class="hero">
+    <h1>WarpAI</h1>
+    <p class="subtitle">Track your onchain journey in real time</p>
+  </div>
 
-    <section id="track" class="tab">
-      <h2>📊 Onchain Activity Feed</h2>
-      <ul id="activityFeed">Waiting for data...</ul>
-    </section>
-
-    <section id="rewards" class="tab">
-      <h2>🎁 Rewards</h2>
-      <p>Daily streaks, mints, XP boosts coming soon...</p>
-    </section>
-
-    <section id="profile" class="tab">
-      <h2>👤 Profile</h2>
+  <div class="card-grid">
+    <div class="card blue">
+      <h3>Wallet</h3>
       <p id="walletAddress">Not connected</p>
-    </section>
+      <button id="connectWallet">Connect Wallet</button>
+    </div>
+
+    <div class="card green">
+      <h3>Claim XP</h3>
+      <p>Daily XP bonus</p>
+      <button>Claim</button>
+    </div>
+
+    <div class="card dark">
+      <h3>Buy Token</h3>
+      <p>Pre-launch $WARP</p>
+      <button>Buy Now</button>
+    </div>
+  </div>
+
+  <div class="card full">
+    <h3>Your Reward Level</h3>
+    <p>🔥 87 XP • 5-day streak</p>
+  </div>
+
+  <div class="card full premium">
+    <h3>💎 Premium Tools</h3>
+    <button>Claim another address</button>
+    <button>Track random wallet</button>
+  </div>
+</section>
   </main>
 
   <script src="app.js"></script>
