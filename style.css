@@ -41,6 +41,15 @@ body {
   font-weight: bold;
   cursor: pointer;
 }
+.wallet-ui span {
+  font-size: 0.6rem; /* ← ändra detta för XP-text */
+}
+
+.wallet-ui button {
+  font-size: 0.55rem; /* ← ändra detta för knappen */
+  padding: 0.25rem 0.6rem; /* ← större/lägre knapp */
+}
+
 
 /* Tabs */
 .nav-tabs {
