@@ -164,3 +164,24 @@ main {
   grid-column: span 2;
   margin-top: 0.5rem;
 }
+.leaderboard {
+  padding-left: 1.2rem;
+  font-size: 0.8rem;
+}
+
+.leaderboard li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #333;
+  padding: 0.3rem 0;
+  color: #fff;
+}
+
+.leaderboard li span {
+  font-weight: bold;
+}
+
+.leaderboard li strong {
+  color: #aaffc2;
+}
+
