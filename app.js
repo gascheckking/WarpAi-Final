@@ -64,7 +64,7 @@ window.addEventListener("load", () => {
 
   setTimeout(() => {
     onboarding.style.display = "none";
-  }, 1000);
+  }, 2700);
 });
 
 // Copy Referral Link
