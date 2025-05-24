@@ -332,5 +332,20 @@ main {
     opacity: 0;
     transform: scale(0.95);
   }
+}.card.earn {
+  background-color: #1b1d23;
+  border-left: 4px solid #4caf50;
+}
+
+.card.earn button {
+  margin-top: 0.4rem;
+  padding: 0.4rem;
+  background-color: #2c9463;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  width: 100%;
+  cursor: pointer;
 }
 
