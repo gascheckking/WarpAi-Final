@@ -56,3 +56,10 @@ document.getElementById("toggleTheme").addEventListener("change", (e) => {
     document.body.style.color = "#ffffff";
   }
 });
+// Onboarding screen
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    const overlay = document.getElementById("onboardingOverlay");
+    overlay.classList.add("hidden");
+  }, 1500);
+});
