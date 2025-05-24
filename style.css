@@ -1,9 +1,12 @@
 /* RESET & BODY */
-body {
+html, body {
   margin: 0;
+  padding: 0;
   font-family: 'Arial', sans-serif;
   background-color: #0f1115;
   color: #ffffff;
+  height: 100%;
+  overflow-x: hidden;
 }
 
 /* HEADER */
@@ -16,6 +19,7 @@ body {
   border-bottom: 1px solid #292d36;
 }
 
+/* LOGO */
 .logo-title {
   display: flex;
   align-items: center;
@@ -26,6 +30,7 @@ body {
   height: auto;
 }
 
+/* WALLET */
 .wallet-ui {
   display: flex;
   align-items: center;
@@ -80,7 +85,7 @@ body {
 .nav-tabs {
   display: flex;
   justify-content: space-around;
-  padding: 0.4rem 0;
+  padding: 0.2rem 0;
   background-color: #12141a;
   border-top: 1px solid #292d36;
   border-bottom: 1px solid #292d36;
@@ -102,14 +107,16 @@ body {
 
 /* MAIN */
 main {
-  padding: 0.5rem 0.5rem;
+  padding: 0.2rem 0.5rem;
   max-width: 480px;
   margin: auto;
 }
 
+/* HERO */
 .hero {
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.6rem;
+  margin-top: 0.4rem;
 }
 
 .hero h2 {
@@ -124,13 +131,15 @@ main {
   margin-top: 0.3rem;
 }
 
-/* CARDS */
+/* CARD GRID */
 .card-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.6rem;
+  margin-top: 0.2rem;
 }
 
+/* CARD BASE */
 .card {
   background-color: #1b1d23;
   padding: 0.7rem;
@@ -167,7 +176,7 @@ main {
   cursor: pointer;
 }
 
-/* VARIANTS */
+/* CARD VARIANTS */
 .card.green { background-color: #2c9463; }
 .card.dark { background-color: #333; }
 .card.blue { background-color: #264e70; }
@@ -313,26 +322,15 @@ main {
 }
 
 @keyframes fadeInLogo {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes fadeOut {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.95);
-  }
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.95); }
 }
+
 .faq-top-right {
   position: absolute;
   top: 1rem;
@@ -354,6 +352,7 @@ main {
 .info-btn.green:hover {
   background-color: #45a049;
 }
+
 .position-relative {
   position: relative;
 }
