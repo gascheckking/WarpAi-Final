@@ -366,3 +366,35 @@ main {
   margin-bottom: 0.5rem;
   padding-bottom: 0;
 }
+/* Justerar Track Hero för bättre layout */
+.hero h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.2rem;
+}
+.hero .subtitle {
+  font-size: 0.9rem;
+  color: #bbb;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* Premium låsta kort */
+.card.dark[disabled],
+.card.dark button[disabled] {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Mindre padding för kort-rubriker */
+.card h3 {
+  margin-bottom: 0.5rem;
+}
+
+/* Justera knappar som är låsta */
+button[disabled] {
+  background: #666 !important;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+}
