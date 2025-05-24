@@ -167,7 +167,20 @@
           </ul>
           <button class="upgrade-button-green">Upgrade to Premium</button>
         </div>
-      </div>
+      </div><button class="info-btn" onclick="toggleHowToEarn()">❓</button>
+<div id="earnExplanation" class="modal hidden">
+  <div class="modal-content">
+    <h3>✨ Earn WarpAi XP</h3>
+    <ul>
+      <li>Invite a friend: <strong>+15 XP</strong></li>
+      <li>Daily login streak: <strong>+10 XP</strong></li>
+      <li>Claim WAI Token: <strong>+5 WAI</strong></li>
+      <li>Share on X/Farcaster: <strong>+5 WAI</strong></li>
+      <li>Buy Token: <strong>+20 XP</strong></li>
+    </ul>
+    <button onclick="toggleHowToEarn()">Got it!</button>
+  </div>
+</div>
     </section>
 
     <!-- LEADERBOARD -->
