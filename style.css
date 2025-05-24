@@ -5,6 +5,7 @@ body {
   color: #ffffff;
 }
 
+/* Header */
 .app-header {
   display: flex;
   justify-content: space-between;
@@ -20,8 +21,8 @@ body {
 }
 
 .logo-icon-fixed {
-  width: 200px;
-  height: 185px;
+  width: 180px;
+  height: auto;
 }
 
 .wallet-ui {
@@ -30,17 +31,51 @@ body {
   gap: 0.5rem;
 }
 
-.wallet-ui button {
-  padding: 0.3rem 0.6rem;
-  background-color: #4caf50;
+/* Settings */
+.settings-wrapper {
+  position: relative;
+}
+
+.settings-icon {
+  background: none;
   border: none;
-  border-radius: 6px;
+  font-size: 1.2rem;
+  cursor: pointer;
   color: white;
-  font-size: 0.75rem;
-  font-weight: bold;
+}
+
+.settings-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 2rem;
+  background-color: #1b1d23;
+  padding: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #000;
+  z-index: 100;
+  width: 180px;
+}
+
+.settings-dropdown button,
+.settings-dropdown label {
+  display: block;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 0.8rem;
+  text-align: left;
+  padding: 0.3rem 0;
   cursor: pointer;
 }
 
+.settings-dropdown hr {
+  border: 0;
+  border-top: 1px solid #333;
+  margin: 0.5rem 0;
+}
+
+/* Tabs */
 .nav-tabs {
   display: flex;
   justify-content: space-around;
@@ -64,6 +99,7 @@ body {
   text-decoration: underline;
 }
 
+/* Main */
 main {
   padding: 1rem 0.5rem;
   max-width: 480px;
@@ -87,6 +123,7 @@ main {
   margin-top: 0.3rem;
 }
 
+/* Card Layout */
 .card-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -189,4 +226,26 @@ main {
   font-weight: bold;
   color: white;
   cursor: pointer;
+}
+
+/* Leaderboard */
+.leaderboard {
+  padding-left: 1.2rem;
+  font-size: 0.8rem;
+}
+
+.leaderboard li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #333;
+  padding: 0.3rem 0;
+  color: #fff;
+}
+
+.leaderboard li span {
+  font-weight: bold;
+}
+
+.leaderboard li strong {
+  color: #aaffc2;
 }
