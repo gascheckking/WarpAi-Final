@@ -394,3 +394,17 @@ main {
   margin-top: 0.5rem;
   cursor: pointer;
 }
+.card.locked {
+  opacity: 0.6;
+  pointer-events: none;
+  position: relative;
+}
+
+.card.locked::after {
+  content: "🔒 Premium";
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 0.8rem;
+  color: #f39c12;
+}
