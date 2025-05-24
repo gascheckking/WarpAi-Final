@@ -100,19 +100,3 @@ function toggleXpInfo() {
 function toggleHowToEarn() {
   document.getElementById("earnExplanation").classList.toggle("hidden");
 }
-let isPremiumUser = false;
-
-document.querySelectorAll(".unlock-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    // Simulate upgrade (could be Stripe/paywall later)
-    if (confirm("Unlock Premium for $5?")) {
-      isPremiumUser = true;
-      document.querySelectorAll(".card.locked").forEach((card) => {
-        card.classList.remove("locked");
-        card.querySelector("button").textContent = "Access Granted";
-        card.querySelector("button").disabled = true;
-      });
-      alert("Premium unlocked! Enjoy all tools.");
-    }
-  });
-});
