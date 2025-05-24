@@ -333,3 +333,24 @@ main {
     transform: scale(0.95);
   }
 }
+.faq-top-right {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 50;
+}
+
+.info-btn.green {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.info-btn.green:hover {
+  background-color: #45a049;
+}
