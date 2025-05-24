@@ -286,4 +286,51 @@ main {
     opacity: 1;
     transform: translateY(0);
   }
+}/* Fade-in animation for onboarding logo */
+.fade-in-logo {
+  opacity: 0;
+  animation: fadeInLogo 1.6s ease-in forwards;
 }
+
+@keyframes fadeInLogo {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+/* Fade-in animation for onboarding logo */
+.fade-in-logo {
+  opacity: 0;
+  animation: fadeInLogo 1.6s ease-in forwards;
+}
+
+@keyframes fadeInLogo {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade-out {
+  animation: fadeOut 0.8s ease-out forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
