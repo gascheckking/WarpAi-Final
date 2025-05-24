@@ -354,3 +354,20 @@ main {
 .info-btn.green:hover {
   background-color: #45a049;
 }
+.position-relative {
+  position: relative;
+}
+
+.mini-info-btn {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 0.9rem;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.mini-info-btn:hover {
+  color: white;
+}
