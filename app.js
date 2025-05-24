@@ -24,17 +24,29 @@ tabs.forEach((tab, i) => {
     tabs.forEach(btn => btn.classList.remove("active"));
     tab.classList.add("active");
 
-    sections.forEach(sec => sec.style.display = "none");
+    sections.forEach(sec => (sec.style.display = "none"));
     sections[i].style.display = "block";
   });
 });
+
 // Settings toggle
-document.getElementById("settingsBtn").addEventListener("click", () => {
-  const menu = document.getElementById("settingsMenu");
-  menu.style.display = menu.style.display === "block" ? "none" : "block";
+const settingsBtn = document.getElementById("settingsBtn");
+const settingsMenu = document.getElementById("settingsMenu");
+
+settingsBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  const isVisible = settingsMenu.style.display === "block";
+  settingsMenu.style.display = isVisible ? "none" : "block";
 });
 
-// Dark Mode toggle (localStorage optional)
+// Auto-close settings menu when clicking outside
+document.addEventListener("click", (e) => {
+  if (!settingsMenu.contains(e.target) && e.target !== settingsBtn) {
+    settingsMenu.style.display = "none";
+  }
+});
+
+// Dark Mode toggle
 document.getElementById("toggleTheme").addEventListener("change", (e) => {
   if (e.target.checked) {
     document.body.style.backgroundColor = "#ffffff";
@@ -44,4 +56,3 @@ document.getElementById("toggleTheme").addEventListener("change", (e) => {
     document.body.style.color = "#ffffff";
   }
 });
-
