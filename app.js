@@ -79,4 +79,12 @@ function shareOnX() {
 
 function shareOnFarcaster() {
   alert("Farcaster share coming soon – stay tuned!");
-}
+}// Handle onboarding fade-out after page load
+window.addEventListener("load", () => {
+  const overlay = document.getElementById("onboardingOverlay");
+  overlay.classList.add("fade-out");
+
+  setTimeout(() => {
+    overlay.style.display = "none";
+  }, 1000); // matchar CSS-duration
+});
