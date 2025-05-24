@@ -86,3 +86,7 @@ function shareOnX() {
 function shareOnFarcaster() {
   alert("Farcaster share coming soon – stay tuned!");
 }
+function toggleHowToEarn() {
+  const modal = document.getElementById("earnExplanation");
+  modal.classList.toggle("hidden");
+}
