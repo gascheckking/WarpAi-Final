@@ -1,5 +1,6 @@
 let walletConnected = false;
 
+// Wallet Connect Button Toggle
 document.getElementById("connectWallet").addEventListener("click", () => {
   walletConnected = !walletConnected;
 
@@ -15,7 +16,7 @@ document.getElementById("connectWallet").addEventListener("click", () => {
   }
 });
 
-// Tab switching
+// Tab switching logic
 const tabs = document.querySelectorAll(".tab-button");
 const sections = document.querySelectorAll(".tab-content");
 
@@ -24,29 +25,28 @@ tabs.forEach((tab, i) => {
     tabs.forEach(btn => btn.classList.remove("active"));
     tab.classList.add("active");
 
-    sections.forEach(sec => (sec.style.display = "none"));
+    sections.forEach(sec => sec.style.display = "none");
     sections[i].style.display = "block";
   });
 });
 
-// Settings toggle
+// Settings dropdown toggle
 const settingsBtn = document.getElementById("settingsBtn");
 const settingsMenu = document.getElementById("settingsMenu");
 
-settingsBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
+settingsBtn.addEventListener("click", () => {
   const isVisible = settingsMenu.style.display === "block";
   settingsMenu.style.display = isVisible ? "none" : "block";
 });
 
-// Auto-close settings menu when clicking outside
+// Hide settings menu if clicking outside
 document.addEventListener("click", (e) => {
-  if (!settingsMenu.contains(e.target) && e.target !== settingsBtn) {
+  if (!settingsBtn.contains(e.target) && !settingsMenu.contains(e.target)) {
     settingsMenu.style.display = "none";
   }
 });
 
-// Dark Mode toggle
+// Dark mode toggle
 document.getElementById("toggleTheme").addEventListener("change", (e) => {
   if (e.target.checked) {
     document.body.style.backgroundColor = "#ffffff";
@@ -56,10 +56,13 @@ document.getElementById("toggleTheme").addEventListener("change", (e) => {
     document.body.style.color = "#ffffff";
   }
 });
-// Onboarding screen
-window.addEventListener("load", () => {
+
+// Onboarding fade-out logic
+setTimeout(() => {
+  const onboarding = document.getElementById("onboardingOverlay");
+  onboarding.classList.add("fade-out");
+
   setTimeout(() => {
-    const overlay = document.getElementById("onboardingOverlay");
-    overlay.classList.add("hidden");
-  }, 1500);
-});
+    onboarding.style.display = "none";
+  }, 800); // Matches CSS fade-out time
+}, 2000); // Initial delay before fade out starts
