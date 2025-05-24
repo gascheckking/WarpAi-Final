@@ -378,3 +378,19 @@ main {
 .card.dark strong {
   color: #ffffff;
 }
+.locked-card {
+  filter: grayscale(1) blur(1px);
+  opacity: 0.8;
+  position: relative;
+}
+
+.unlock-button {
+  background-color: #9146ff;
+  border: none;
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
