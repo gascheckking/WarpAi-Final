@@ -65,4 +65,18 @@ setTimeout(() => {
   setTimeout(() => {
     onboarding.style.display = "none";
   }, 800); // Matches CSS fade-out time
-}, 2000); // Initial delay before fade out starts
+}, 2000); // Initial delay before fade out startsfunction copyReferral() {
+  const link = "https://warp-ai-final.vercel.app/?ref=yourUser123"; // Du kan dynamisera detta sen
+  navigator.clipboard.writeText(link);
+  alert("Referral link copied!");
+}
+
+function shareOnX() {
+  const text = encodeURIComponent("Track your wallet live with WarpAi! Get XP + WAI rewards:");
+  const url = encodeURIComponent("https://warp-ai-final.vercel.app");
+  window.open(`https://twitter.com/intent/tweet?text=${text}%20${url}`, "_blank");
+}
+
+function shareOnFarcaster() {
+  alert("Farcaster share coming soon – stay tuned!");
+}
