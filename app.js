@@ -1,6 +1,6 @@
 let walletConnected = false;
 
-// Wallet Connect Toggle
+// Wallet Connect Button Toggle
 document.getElementById("connectWallet").addEventListener("click", () => {
   walletConnected = !walletConnected;
   const button = document.getElementById("connectWallet");
@@ -15,7 +15,7 @@ document.getElementById("connectWallet").addEventListener("click", () => {
   }
 });
 
-// Tabs
+// Tab switching logic
 const tabs = document.querySelectorAll(".tab-button");
 const sections = document.querySelectorAll(".tab-content");
 
@@ -28,23 +28,23 @@ tabs.forEach((tab, i) => {
   });
 });
 
-// Settings Menu
+// Settings dropdown toggle
 const settingsBtn = document.getElementById("settingsBtn");
 const settingsMenu = document.getElementById("settingsMenu");
 
 settingsBtn.addEventListener("click", () => {
-  settingsMenu.style.display =
-    settingsMenu.style.display === "block" ? "none" : "block";
+  const isVisible = settingsMenu.style.display === "block";
+  settingsMenu.style.display = isVisible ? "none" : "block";
 });
 
-// Hide Settings Menu If Clicked Outside
+// Hide settings menu if clicking outside
 document.addEventListener("click", (e) => {
   if (!settingsBtn.contains(e.target) && !settingsMenu.contains(e.target)) {
     settingsMenu.style.display = "none";
   }
 });
 
-// Dark Mode Toggle
+// Dark mode toggle
 document.getElementById("toggleTheme").addEventListener("change", (e) => {
   if (e.target.checked) {
     document.body.style.backgroundColor = "#ffffff";
@@ -55,18 +55,29 @@ document.getElementById("toggleTheme").addEventListener("change", (e) => {
   }
 });
 
-// Onboarding Delay (fixed fade-out!)
+// Onboarding overlay delay
 window.addEventListener("load", () => {
-  const overlay = document.getElementById("onboardingOverlay");
+  const onboarding = document.getElementById("onboardingOverlay");
   setTimeout(() => {
-    overlay.classList.add("fade-out");
+    onboarding.classList.add("fade-out");
     setTimeout(() => {
-      overlay.style.display = "none";
+      onboarding.style.display = "none";
     }, 1000);
-  }, 2500);
+  }, 3000); // Change to 2000 for 2s if needed
 });
 
-// Referral Links
+// Modal toggles
+function toggleHowToEarn() {
+  const modal = document.getElementById("earnExplanation");
+  modal.classList.toggle("hidden");
+}
+
+function toggleFAQ() {
+  const modal = document.getElementById("faqModal");
+  modal.classList.toggle("hidden");
+}
+
+// Referral Logic
 function copyReferral() {
   const link = "https://warp-ai-final.vercel.app/?ref=yourUser123";
   navigator.clipboard.writeText(link);
@@ -81,15 +92,4 @@ function shareOnX() {
 
 function shareOnFarcaster() {
   alert("Farcaster share coming soon – stay tuned!");
-}
-
-// Modal Toggles
-function toggleHowToEarn() {
-  const modal = document.getElementById("earnExplanation");
-  modal.classList.toggle("hidden");
-}
-
-function toggleFAQ() {
-  const modal = document.getElementById("faqModal");
-  modal.classList.toggle("hidden");
 }
