@@ -57,31 +57,32 @@ document.getElementById("toggleTheme").addEventListener("change", (e) => {
   }
 });
 
-// Onboarding fade-out logic
+// Onboarding animation delay
 window.addEventListener("load", () => {
   const onboarding = document.getElementById("onboardingOverlay");
-  onboarding.classList.add("fade-out");
 
   setTimeout(() => {
-    onboarding.style.display = "none";
-  }, 2700);
+    onboarding.classList.add("fade-out");
+
+    setTimeout(() => {
+      onboarding.style.display = "none";
+    }, 1000); // matchar fadeOut-animationen
+  }, 3000); // visa i 3 sekunder innan fade-out
 });
 
-// Copy Referral Link
+// Referral link + share buttons
 function copyReferral() {
-  const link = "https://warp-ai-final.vercel.app/?ref=yourUser123";
+  const link = "https://warp-ai-final.vercel.app/?ref=yourUser123"; // Justera till dynamisk senare
   navigator.clipboard.writeText(link);
   alert("Referral link copied!");
 }
 
-// Share on X
 function shareOnX() {
   const text = encodeURIComponent("Track your wallet live with WarpAi! Get XP + WAI rewards:");
   const url = encodeURIComponent("https://warp-ai-final.vercel.app");
   window.open(`https://twitter.com/intent/tweet?text=${text}%20${url}`, "_blank");
 }
 
-// Share on Farcaster
 function shareOnFarcaster() {
   alert("Farcaster share coming soon – stay tuned!");
 }
