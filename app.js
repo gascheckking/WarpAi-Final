@@ -93,3 +93,7 @@ function shareOnX() {
 function shareOnFarcaster() {
   alert("Farcaster share coming soon – stay tuned!");
 }
+function toggleXpInfo() {
+  const modal = document.getElementById('xpInfoModal');
+  modal.classList.toggle('hidden');
+}
