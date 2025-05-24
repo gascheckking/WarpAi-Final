@@ -1,9 +1,16 @@
-/* RESET & BODY */
-body {
+/* RESET & BASE */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   font-family: 'Arial', sans-serif;
   background-color: #0f1115;
   color: #ffffff;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* HEADER */
@@ -11,7 +18,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.8rem;
+  padding: 1rem;
   background-color: #12141a;
   border-bottom: 1px solid #292d36;
 }
@@ -32,7 +39,6 @@ body {
   gap: 0.5rem;
 }
 
-/* SETTINGS */
 .settings-wrapper {
   position: relative;
 }
@@ -90,7 +96,7 @@ body {
   background: none;
   border: none;
   color: white;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: bold;
   cursor: pointer;
 }
@@ -105,6 +111,7 @@ main {
   padding: 1rem 0.5rem;
   max-width: 480px;
   margin: auto;
+  padding-bottom: 4rem;
 }
 
 .hero {
@@ -124,30 +131,31 @@ main {
   margin-top: 0.3rem;
 }
 
-/* CARDS */
+/* CARD GRID */
 .card-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.6rem;
 }
 
+/* CARD BASE */
 .card {
   background-color: #1b1d23;
-  padding: 0.7rem;
+  padding: 0.9rem;
   border-radius: 10px;
   font-size: 0.75rem;
   text-align: center;
 }
 
 .card h3 {
-  margin: 0 0 0.3rem;
-  font-size: 0.85rem;
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
 }
 
 .card p,
 .card ul {
   margin: 0 0 0.5rem;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: #ccc;
 }
 
@@ -157,11 +165,11 @@ main {
 }
 
 .card button {
-  padding: 0.35rem 0.7rem;
+  padding: 0.45rem 0.8rem;
   background-color: #4caf50;
   border: none;
   border-radius: 6px;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: bold;
   color: white;
   cursor: pointer;
@@ -189,6 +197,17 @@ main {
   margin-top: 0.5rem;
 }
 
+.card.earn {
+  background-color: #1b1d23;
+  border-left: 4px solid #4caf50;
+}
+
+.card.earn button {
+  margin-top: 0.4rem;
+  background-color: #2c9463;
+  width: 100%;
+}
+
 .card.premium ul {
   list-style: none;
   padding-left: 0;
@@ -208,24 +227,7 @@ main {
   background-color: #12141a;
 }
 
-.card.earn {
-  background-color: #1b1d23;
-  border-left: 4px solid #4caf50;
-}
-
-.card.earn button {
-  margin-top: 0.4rem;
-  padding: 0.4rem;
-  background-color: #2c9463;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  width: 100%;
-  cursor: pointer;
-}
-
-/* XP JOURNEY */
+/* XP PROGRESS */
 .card.journey {
   background-color: #20232a;
   padding: 1rem;
@@ -272,60 +274,6 @@ main {
   box-shadow: 0 0 10px #000;
 }
 
-/* BUTTONS & INFO */
-.info-btn,
-.faq-btn {
-  background-color: #333;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.info-btn:hover,
-.faq-btn:hover {
-  background-color: #555;
-}
-
-.mini-info-btn {
-  background: none;
-  border: none;
-  color: #ccc;
-  font-size: 0.9rem;
-  margin-left: 8px;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.mini-info-btn:hover {
-  color: white;
-}
-
-.faq-top-right {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 50;
-}
-
-.info-btn.green {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  font-weight: bold;
-  font-size: 0.8rem;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.info-btn.green:hover {
-  background-color: #45a049;
-}
-
 /* ONBOARDING */
 #onboardingOverlay {
   position: fixed;
@@ -359,52 +307,46 @@ main {
   to { opacity: 0; transform: scale(0.95); }
 }
 
-/* NFT Mint History (new) */
-.card.dark ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-.card.dark ul li {
-  padding: 0.3rem 0;
-  border-bottom: 1px solid #292d36;
-  color: #ccc;
-}
-
-.card.dark ul li:last-child {
-  border-bottom: none;
-}
-
-.card.dark strong {
-  color: #ffffff;
-}
-.locked-card {
-  filter: grayscale(1) blur(1px);
-  opacity: 0.8;
-  position: relative;
-}
-
-.unlock-button {
-  background-color: #9146ff;
+/* MISC */
+.info-btn,
+.faq-btn {
+  background-color: #333;
+  color: #fff;
   border: none;
-  color: white;
-  padding: 0.4rem 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
   border-radius: 6px;
-  font-weight: bold;
-  margin-top: 0.5rem;
   cursor: pointer;
-}
-.card.locked {
-  opacity: 0.6;
-  pointer-events: none;
-  position: relative;
+  transition: background 0.3s ease;
 }
 
-.card.locked::after {
-  content: "🔒 Premium";
-  position: absolute;
-  top: 8px;
-  right: 12px;
-  font-size: 0.8rem;
-  color: #f39c12;
+.info-btn:hover,
+.faq-btn:hover {
+  background-color: #555;
+}
+
+.info-btn.green {
+  background-color: #4caf50;
+}
+
+.info-btn.green:hover {
+  background-color: #45a049;
+}
+
+.mini-info-btn {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 0.9rem;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.mini-info-btn:hover {
+  color: white;
+}
+
+.position-relative {
+  position: relative;
 }
