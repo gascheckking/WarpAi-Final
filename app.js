@@ -3,6 +3,7 @@ let walletConnected = false;
 // Wallet Connect Button Toggle
 document.getElementById("connectWallet").addEventListener("click", () => {
   walletConnected = !walletConnected;
+
   const button = document.getElementById("connectWallet");
   const xpDisplay = document.getElementById("xpDisplay");
 
@@ -23,6 +24,7 @@ tabs.forEach((tab, i) => {
   tab.addEventListener("click", () => {
     tabs.forEach(btn => btn.classList.remove("active"));
     tab.classList.add("active");
+
     sections.forEach(sec => sec.style.display = "none");
     sections[i].style.display = "block";
   });
@@ -55,29 +57,19 @@ document.getElementById("toggleTheme").addEventListener("change", (e) => {
   }
 });
 
-// Onboarding overlay delay
+// Onboarding animation delay
 window.addEventListener("load", () => {
   const onboarding = document.getElementById("onboardingOverlay");
+
   setTimeout(() => {
     onboarding.classList.add("fade-out");
     setTimeout(() => {
       onboarding.style.display = "none";
     }, 1000);
-  }, 3000); // Change to 2000 for 2s if needed
+  }, 3000);
 });
 
-// Modal toggles
-function toggleHowToEarn() {
-  const modal = document.getElementById("earnExplanation");
-  modal.classList.toggle("hidden");
-}
-
-function toggleFAQ() {
-  const modal = document.getElementById("faqModal");
-  modal.classList.toggle("hidden");
-}
-
-// Referral Logic
+// Referral link + share buttons
 function copyReferral() {
   const link = "https://warp-ai-final.vercel.app/?ref=yourUser123";
   navigator.clipboard.writeText(link);
@@ -93,7 +85,18 @@ function shareOnX() {
 function shareOnFarcaster() {
   alert("Farcaster share coming soon – stay tuned!");
 }
+
+// FAQ toggle
+function toggleFAQ() {
+  document.getElementById("faqModal").classList.toggle("hidden");
+}
+
+// XP Info toggle
 function toggleXpInfo() {
-  const modal = document.getElementById('xpInfoModal');
-  modal.classList.toggle('hidden');
+  document.getElementById("xpInfoModal").classList.toggle("hidden");
+}
+
+// Earn XP modal toggle
+function toggleHowToEarn() {
+  document.getElementById("earnExplanation").classList.toggle("hidden");
 }
