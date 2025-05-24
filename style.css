@@ -167,7 +167,7 @@ main {
   cursor: pointer;
 }
 
-/* VARIANTS */
+/* CARD VARIANTS */
 .card.green { background-color: #2c9463; }
 .card.dark { background-color: #333; }
 .card.blue { background-color: #264e70; }
@@ -272,6 +272,7 @@ main {
   box-shadow: 0 0 10px #000;
 }
 
+/* BUTTONS & INFO */
 .info-btn,
 .faq-btn {
   background-color: #333;
@@ -287,6 +288,42 @@ main {
 .info-btn:hover,
 .faq-btn:hover {
   background-color: #555;
+}
+
+.mini-info-btn {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 0.9rem;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.mini-info-btn:hover {
+  color: white;
+}
+
+.faq-top-right {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 50;
+}
+
+.info-btn.green {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.info-btn.green:hover {
+  background-color: #45a049;
 }
 
 /* ONBOARDING */
@@ -313,65 +350,16 @@ main {
 }
 
 @keyframes fadeInLogo {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes fadeOut {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-}
-.faq-top-right {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 50;
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.95); }
 }
 
-.info-btn.green {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  font-weight: bold;
-  font-size: 0.8rem;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.info-btn.green:hover {
-  background-color: #45a049;
-}
-.position-relative {
-  position: relative;
-}
-
-.mini-info-btn {
-  background: none;
-  border: none;
-  color: #ccc;
-  font-size: 0.9rem;
-  margin-left: 8px;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.mini-info-btn:hover {
-  color: white;
-}
-/* NFT Mint History Styles */
+/* NFT Mint History (new) */
 .card.dark ul {
   list-style-type: none;
   padding-left: 0;
