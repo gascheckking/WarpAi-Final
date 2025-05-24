@@ -340,3 +340,23 @@ main {
   text-align: left;
   box-shadow: 0 0 10px #000;
 }
+.card.journey {
+  background-color: #20232a;
+  padding: 1rem;
+  color: white;
+}
+
+.xp-bar {
+  background-color: #444;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 10px;
+  margin: 0.5rem 0;
+}
+
+.xp-fill {
+  height: 100%;
+  background: linear-gradient(to right, #4caf50, #00e676);
+  width: 0%; /* Dynamically set via JS if du vill */
+  transition: width 0.5s ease-in-out;
+}
