@@ -1,353 +1,115 @@
-/* RESET & BODY */
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: #0f1115;
-  color: #ffffff;
-}
+let walletConnected = false;
 
-/* HEADER */
-.app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.8rem;
-  background-color: #12141a;
-  border-bottom: 1px solid #292d36;
-}
+// Wallet Connect Toggle
+document.getElementById("connectWallet").addEventListener("click", () => {
+  walletConnected = !walletConnected;
+  const button = document.getElementById("connectWallet");
+  const xpDisplay = document.getElementById("xpDisplay");
 
-.logo-title {
-  display: flex;
-  align-items: center;
-}
-
-.logo-icon-fixed {
-  width: 180px;
-  height: auto;
-}
-
-.wallet-ui {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* SETTINGS */
-.settings-wrapper {
-  position: relative;
-}
-
-.settings-icon {
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-  color: white;
-}
-
-.settings-dropdown {
-  display: none;
-  position: absolute;
-  right: 0;
-  top: 2rem;
-  background-color: #1b1d23;
-  padding: 0.5rem;
-  border-radius: 8px;
-  box-shadow: 0 0 10px #000;
-  z-index: 100;
-  width: 180px;
-}
-
-.settings-dropdown button,
-.settings-dropdown label {
-  display: block;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 0.8rem;
-  text-align: left;
-  padding: 0.3rem 0;
-  cursor: pointer;
-}
-
-.settings-dropdown hr {
-  border: 0;
-  border-top: 1px solid #333;
-  margin: 0.5rem 0;
-}
-
-/* NAVIGATION */
-.nav-tabs {
-  display: flex;
-  justify-content: space-around;
-  padding: 0.4rem 0;
-  background-color: #12141a;
-  border-top: 1px solid #292d36;
-  border-bottom: 1px solid #292d36;
-}
-
-.tab-button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 0.85rem;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.tab-button.active {
-  color: #a674ff;
-  text-decoration: underline;
-}
-
-/* MAIN */
-main {
-  padding: 1rem 0.5rem;
-  max-width: 480px;
-  margin: auto;
-}
-
-.hero {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.hero h2 {
-  font-size: 1.2rem;
-  margin: 0;
-  color: #a674ff;
-}
-
-.subtitle {
-  font-size: 0.8rem;
-  color: #ccc;
-  margin-top: 0.3rem;
-}
-
-/* CARDS */
-.card-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.6rem;
-}
-
-.card {
-  background-color: #1b1d23;
-  padding: 0.7rem;
-  border-radius: 10px;
-  font-size: 0.75rem;
-  text-align: center;
-}
-
-.card h3 {
-  margin: 0 0 0.3rem;
-  font-size: 0.85rem;
-}
-
-.card p,
-.card ul {
-  margin: 0 0 0.5rem;
-  font-size: 0.7rem;
-  color: #ccc;
-}
-
-.card ul {
-  padding-left: 1rem;
-  text-align: left;
-}
-
-.card button {
-  padding: 0.35rem 0.7rem;
-  background-color: #4caf50;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.7rem;
-  font-weight: bold;
-  color: white;
-  cursor: pointer;
-}
-
-/* VARIANTS */
-.card.green { background-color: #2c9463; }
-.card.dark { background-color: #333; }
-.card.blue { background-color: #264e70; }
-.card.purple { background-color: #3b1d5e; }
-
-.card.purple .btn-row {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.card.purple button {
-  background-color: #9146ff;
-  width: 100%;
-}
-
-.card.full {
-  grid-column: span 2;
-  margin-top: 0.5rem;
-}
-
-.card.premium ul {
-  list-style: none;
-  padding-left: 0;
-  font-size: 0.75rem;
-  color: #ccc;
-  text-align: left;
-}
-
-.card.premium ul li::before {
-  content: "⭐ ";
-  color: #f39c12;
-}
-
-.card.highlighted-premium {
-  border: 1px solid orange;
-  padding: 1rem;
-  background-color: #12141a;
-}
-
-.card.earn {
-  background-color: #1b1d23;
-  border-left: 4px solid #4caf50;
-}
-
-.card.earn button {
-  margin-top: 0.4rem;
-  padding: 0.4rem;
-  background-color: #2c9463;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  width: 100%;
-  cursor: pointer;
-}
-
-/* XP JOURNEY */
-.card.journey {
-  background-color: #20232a;
-  padding: 1rem;
-  color: white;
-}
-
-.xp-bar {
-  background-color: #444;
-  border-radius: 10px;
-  overflow: hidden;
-  height: 10px;
-  margin: 0.5rem 0;
-}
-
-.xp-fill {
-  height: 100%;
-  background: linear-gradient(to right, #4caf50, #00e676);
-  width: 0%;
-  transition: width 0.5s ease-in-out;
-}
-
-/* LEADERBOARD */
-.leaderboard {
-  padding-left: 1.2rem;
-  font-size: 0.8rem;
-}
-
-.leaderboard li {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #333;
-  padding: 0.3rem 0;
-  color: #fff;
-}
-
-.leaderboard li span {
-  font-weight: bold;
-}
-
-.leaderboard li strong {
-  color: #aaffc2;
-}
-
-/* ONBOARDING ANIMATION */
-#onboardingOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #0f1115;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.onboarding-content img {
-  width: 320px;
-  animation: fadeInLogo 1.6s ease-in forwards;
-}
-
-.fade-in-logo {
-  opacity: 1;
-}
-
-.fade-out {
-  animation: fadeOut 1s ease-out forwards;
-}
-
-@keyframes fadeInLogo {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
+  if (walletConnected) {
+    button.textContent = "Connected";
+    xpDisplay.textContent = "🔥 87 XP";
+  } else {
+    button.textContent = "Connect Wallet";
+    xpDisplay.textContent = "0 XP 🔥";
   }
-  to {
-    opacity: 1;
-    transform: scale(1);
+});
+
+// Tab Switching
+const tabs = document.querySelectorAll(".tab-button");
+const sections = document.querySelectorAll(".tab-content");
+
+tabs.forEach((tab, i) => {
+  tab.addEventListener("click", () => {
+    tabs.forEach(btn => btn.classList.remove("active"));
+    tab.classList.add("active");
+
+    sections.forEach(sec => sec.style.display = "none");
+    sections[i].style.display = "block";
+  });
+});
+
+// Settings Menu Toggle
+const settingsBtn = document.getElementById("settingsBtn");
+const settingsMenu = document.getElementById("settingsMenu");
+
+settingsBtn.addEventListener("click", () => {
+  const isVisible = settingsMenu.style.display === "block";
+  settingsMenu.style.display = isVisible ? "none" : "block";
+});
+
+document.addEventListener("click", (e) => {
+  if (!settingsBtn.contains(e.target) && !settingsMenu.contains(e.target)) {
+    settingsMenu.style.display = "none";
   }
-}
+});
 
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-    transform: scale(1);
+// Dark Mode Toggle
+document.getElementById("toggleTheme").addEventListener("change", (e) => {
+  if (e.target.checked) {
+    document.body.style.backgroundColor = "#ffffff";
+    document.body.style.color = "#000000";
+  } else {
+    document.body.style.backgroundColor = "#0f1115";
+    document.body.style.color = "#ffffff";
   }
-  to {
-    opacity: 0;
-    transform: scale(0.95);
-  }
+});
+
+// Onboarding Animation
+window.addEventListener("load", () => {
+  const onboarding = document.getElementById("onboardingOverlay");
+  setTimeout(() => {
+    onboarding.classList.add("fade-out");
+    setTimeout(() => {
+      onboarding.style.display = "none";
+    }, 1000); // Match fadeOut duration
+  }, 3000);
+});
+
+// Modal Toggles
+function toggleHowToEarn() {
+  document.getElementById("earnExplanation").classList.toggle("hidden");
 }
 
-/* MODAL */
-.info-btn {
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-  color: #ccc;
-  margin-left: 0.5rem;
+function toggleFAQ() {
+  document.getElementById("faqModal").classList.toggle("hidden");
 }
 
-.modal {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.75);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
+// Referral Functions
+function copyReferral() {
+  const link = "https://warp-ai-final.vercel.app/?ref=yourUser123";
+  navigator.clipboard.writeText(link);
+  alert("Referral link copied!");
 }
 
-.modal.hidden {
-  display: none;
+function shareOnX() {
+  const text = encodeURIComponent("Track your wallet live with WarpAi! Get XP + WAI rewards:");
+  const url = encodeURIComponent("https://warp-ai-final.vercel.app");
+  window.open(`https://twitter.com/intent/tweet?text=${text}%20${url}`, "_blank");
 }
 
-.modal-content {
-  background-color: #1b1d23;
-  padding: 1.2rem;
-  border-radius: 10px;
-  max-width: 300px;
-  color: white;
-  text-align: left;
-  box-shadow: 0 0 10px #000;
+function shareOnFarcaster() {
+  alert("Farcaster share coming soon – stay tuned!");
 }
+
+// Surprise Bonus Toast
+window.addEventListener("load", () => {
+  const toast = document.createElement("div");
+  toast.textContent = "Bonus unlocked! Check the rewards tab.";
+  toast.style.position = "fixed";
+  toast.style.bottom = "20px";
+  toast.style.left = "50%";
+  toast.style.transform = "translateX(-50%)";
+  toast.style.background = "#4caf50";
+  toast.style.color = "#fff";
+  toast.style.padding = "0.8rem 1.2rem";
+  toast.style.borderRadius = "10px";
+  toast.style.boxShadow = "0 0 10px #000";
+  toast.style.zIndex = "10000";
+  toast.style.opacity = "0";
+  toast.style.transition = "opacity 0.5s ease-in-out";
+
+  document.body.appendChild(toast);
+  setTimeout(() => (toast.style.opacity = "1"), 1000);
+  setTimeout(() => (toast.style.opacity = "0"), 4000);
+});
