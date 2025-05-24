@@ -371,3 +371,22 @@ main {
 .mini-info-btn:hover {
   color: white;
 }
+/* NFT Mint History Styles */
+.card.dark ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.card.dark ul li {
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #292d36;
+  color: #ccc;
+}
+
+.card.dark ul li:last-child {
+  border-bottom: none;
+}
+
+.card.dark strong {
+  color: #ffffff;
+}
