@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const activityResult = document.getElementById('activityResult');
       const tokensMinted = document.getElementById('tokensMinted');
       const ethMoved = document.getElementById('ethMoved');
-      const gasSpent = document.getElementById('gasPrice');
+      const gasSpent = document.getElementById('gasSpent');
       const connectedDapps = document.getElementById('connectedDapps');
       const nftHistory = document.getElementById('nftHistory');
       const followedWallets = document.getElementById('followedWallets');
@@ -84,33 +84,33 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       
       function toggleWarpInfo() {
-  const warpInfoModal = document.getElementById('warpInfoModal');
-  if (warpInfoModal) warpInfoModal.classList.toggle('hidden');
-}
+        const warpInfoModal = document.getElementById('warpInfoModal');
+        if (warpInfoModal) warpInfoModal.classList.toggle('hidden');
+      }
 
       // Close QR Modal
-window.closeQrModal = function() {
-  qrModal.classList.add('hidden');
-  qrCodeDiv.innerHTML = ''; // Rensa QR-kod
-};
+      window.closeQrModal = function() {
+        qrModal.classList.add('hidden');
+        qrCodeDiv.innerHTML = ''; // Rensa QR-kod
+      };
 
-// Disconnect Wallet
-function disconnectWallet() {
-  if (provider && provider.close) {
-    provider.close(); // Stäng WalletConnect
-  }
-  provider = null;
-  signer = null;
-  userAddress = null;
-  if (connectWalletBtn) {
-    connectWalletBtn.textContent = 'Connect Wallet';
-  }
-  xpDisplay.textContent = '0 XP 🔥';
-  totalXP.textContent = '0';
-  currentXP.textContent = '🔥 0 XP';
-  walletAddress.textContent = 'Not Connected';
-  document.querySelector('.subtitle').textContent = 'Track your own wallet activity';
-}
+      // Disconnect Wallet
+      function disconnectWallet() {
+        if (provider && provider.close) {
+          provider.close(); // Stäng WalletConnect
+        }
+        provider = null;
+        signer = null;
+        userAddress = null;
+        if (connectWalletBtn) {
+          connectWalletBtn.textContent = 'Connect Wallet';
+        }
+        xpDisplay.textContent = '0 XP 🔥';
+        totalXP.textContent = '0';
+        currentXP.textContent = '🔥 0 XP';
+        walletAddress.textContent = 'Not Connected';
+        document.querySelector('.subtitle').textContent = 'Track your own wallet activity';
+      }
 
       // Wallet Connection with Ethers.js and WalletConnect
       const ETHERSCAN_KEY = 'Y1VRJKQB1A4K2JTA8GE1YDH3W54W4I35D5';
@@ -118,229 +118,216 @@ function disconnectWallet() {
       let provider, signer, userAddress;
 
       async function connectWithWalletConnect() {
-  try {
-    const walletConnectProvider = new WalletConnectProvider({
-      rpc: {
-        8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
-      },
-      chainId: 8453,
-    });
-    // Visa QR-kod
-    walletConnectProvider.on('display_uri', (uri) => {
-      if (qrCodeDiv) {
-        qrCodeDiv.innerHTML = '';
-        new QRCode(qrCodeDiv, {
-          text: uri,
-          width: 200,
-          height: 200,
-        });
-        qrModal.classList.remove('hidden');
+        try {
+          const walletConnectProvider = new WalletConnectProvider({
+            rpc: {
+              8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
+            },
+            chainId: 8453,
+          });
+          // Visa QR-kod
+          walletConnectProvider.on('display_uri', (uri) => {
+            if (qrCodeDiv) {
+              qrCodeDiv.innerHTML = '';
+              new QRCode(qrCodeDiv, {
+                text: uri,
+                width: 200,
+                height: 200,
+              });
+              qrModal.classList.remove('hidden');
+            }
+          });
+          await walletConnectProvider.enable();
+          provider = new ethers.providers.Web3Provider(walletConnectProvider);
+          signer = provider.getSigner();
+          userAddress = await signer.getAddress();
+          if (connectWalletBtn) {
+            connectWalletBtn.textContent = 'Disconnect';
+          }
+          if (xpDisplay) xpDisplay.textContent = '180 XP 🔥';
+          if (totalXP) totalXP.textContent = '180';
+          if (currentXP) currentXP.textContent = '🔥 180 XP';
+          if (walletAddress) walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
+          if (qrModal) qrModal.classList.add('hidden');
+          loadOnchainData();
+        } catch (error) {
+          console.error('WalletConnect failed:', error);
+          alert('WalletConnect failed: ' + error.message);
+          if (qrModal) qrModal.classList.add('hidden');
+        }
       }
-    });
-    await walletConnectProvider.enable();
-    provider = new ethers.providers.Web3Provider(walletConnectProvider);
-    signer = provider.getSigner();
-    userAddress = await signer.getAddress();
-    if (connectWalletBtn) {
-      connectWalletBtn.textContent = 'Disconnect';
-    }
-    if (xpDisplay) xpDisplay.textContent = '180 XP 🔥';
-    if (totalXP) totalXP.textContent = '180';
-    if (currentXP) currentXP.textContent = '🔥 180 XP';
-    if (walletAddress) walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
-    if (qrModal) qrModal.classList.add('hidden');
-    loadOnchainData();
-  } catch (error) {
-    console.error('WalletConnect failed:', error);
-    alert('WalletConnect failed: ' + error.message);
-    if (qrModal) qrModal.classList.add('hidden');
-  }
-}
 
       async function loadOnchainData() {
-  if (!provider || !userAddress) return;
+        if (!provider || !userAddress) return;
 
-  try {
-  const alchemyProvider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
-  const balance = await alchemyProvider.getBalance(userAddress);
-  const txCount = await alchemyProvider.getTransactionCount(userAddress);
-  // Calculate XP based on transactions (10 XP per tx)
-  const xp = txCount * 10;
-  if (currentXP) currentXP.textContent = `🔥 ${xp} XP`;
-  if (totalXP) totalXP.textContent = xp;
-  if (xpDisplay) xpDisplay.textContent = `${xp} XP 🔥`;
-  // Update progress bar (assuming 200 XP for next level)
-  const progressPercent = Math.min((xp / 200) * 100, 100);
-  const xpFill = document.querySelector('.xp-fill');
-  if (xpFill) xpFill.style.width = `${progressPercent}%`;
-  const gasUsed = await alchemyProvider.getGasPrice();
-    // Update level and badge
-const level = Math.floor(xp / 200) + 1;
-const nextLevelXP = level * 200;
-if (document.getElementById('level')) document.getElementById('level').textContent = level;
-if (document.getElementById('nextLevelXP')) document.getElementById('nextLevelXP').textContent = nextLevelXP;
-if (document.getElementById('currentXPProgress')) document.getElementById('currentXPProgress').textContent = xp;
-// Show badge for 5+ day streak (mocked for now)
-const streak = 5; // Replace with real streak logic later
-if (document.getElementById('badge') && streak >= 5) {
-  document.getElementById('badge').style.display = 'block';
-}
-// Animate progress bar
-if (xpFill) {
-  xpFill.style.transition = 'width 1s ease-in-out';
-  xpFill.style.width = `${progressPercent}%`;
-}
-
-  if (latestActivity) latestActivity.textContent = `Bought Token on Zora`;
-  if (activityResult) activityResult.textContent = `+ $${(ethers.utils.formatEther(balance) * 3000).toFixed(2)} Win`;
-  if (tokensMinted) tokensMinted.textContent = `${txCount} st`;
-  if (ethMoved) ethMoved.textContent = `${ethers.utils.formatEther(balance)} ETH total`;
-  if (gasSpent) gasSpent.textContent = `${ethers.utils.formatEther(gasUsed)} ETH (~$${(ethers.utils.formatEther(gasUsed) * 3000).toFixed(2)})`;
-  if (connectedDapps) connectedDapps.innerHTML = `<li>Zora</li><li>OpenSea</li><li>Base</li>`;
-
-  if (document.querySelector('.subtitle')) {
-    document.querySelector('.subtitle').textContent = `Track your own wallet activity (Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)})`;
-  }
-    if (viewHistoryBtn) {
-      viewHistoryBtn.addEventListener('click', () => {
-        alert('Full NFT history for your wallet: Check console for details');
-      });
-    }
-  } catch (error) {
-    console.error('Error fetching onchain data:', error);
-  }
-}
+        try {
+          const alchemyProvider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
+          const balance = await alchemyProvider.getBalance(userAddress);
+          const txCount = await alchemyProvider.getTransactionCount(userAddress);
+          const xp = txCount * 10;
+          if (currentXP) currentXP.textContent = `🔥 ${xp} XP`;
+          if (totalXP) totalXP.textContent = xp;
+          if (xpDisplay) xpDisplay.textContent = `${xp} XP 🔥`;
+          const progressPercent = Math.min((xp / 200) * 100, 100);
+          const xpFill = document.querySelector('.xp-fill');
+          if (xpFill) {
+            xpFill.style.transition = 'width 1s ease-in-out';
+            xpFill.style.width = `${progressPercent}%`;
+          }
+          const gasUsed = await alchemyProvider.getGasPrice();
+          const level = Math.floor(xp / 200) + 1;
+          const nextLevelXP = level * 200;
+          if (document.getElementById('level')) document.getElementById('level').textContent = level;
+          if (document.getElementById('nextLevelXP')) document.getElementById('nextLevelXP').textContent = nextLevelXP;
+          if (document.getElementById('currentXPProgress')) document.getElementById('currentXPProgress').textContent = xp);
+          const streak = document.getElementById('streak');
+          if (streak && streak >= 5) {
+            document.getElementById('badge').style.display = 'block';
+          }
+          if (gasSpent) gasSpent.textContent = `${ethers.utils.formatEther(gasUsed)} ETH (~$${(ethers.utils.formatEther(gasUsed) * 3000).toFixed(2)})`;
+          if (latestActivity) latestActivity.textContent = `Bought Token on Zora`;
+          if (activityResult) activityResult.textContent = `+ $${(ethers.utils.formatEther(balance) * 3000).toFixed(2)} Win`;
+          if (tokensMinted) tokensMinted.textContent = `${txCount} st`;
+          if (ethMoved) ethMoved.textContent = `${ethers.utils.formatEther(balance)} ETH total`;
+          if (connectedDapps) connectedDapps.innerHTML = `<li>Zora</li><li>OpenSea</li><li>Base</li>`;
+          if (document.querySelector('.subtitle')) {
+            document.querySelector('.subtitle').textContent = `Track your own wallet activity (Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)})`;
+          }
+          if (viewHistoryBtn) {
+            viewHistoryBtn.addEventListener('click', () => {
+              alert('Full NFT history for your wallet: Check console for details');
+            });
+          }
+        } catch (error) {
+          console.error('Error fetching onchain data:', error);
+        }
+      }
 
       if (connectWalletBtn) {
-  connectWalletBtn.addEventListener('click', async () => {
-    if (userAddress) {
-      // Already connected, so disconnect
-      disconnectWallet();
-      return;
-    }
+        connectWalletBtn.addEventListener('click', async () => {
+          if (userAddress) {
+            disconnectWallet();
+            return;
+          }
 
-    if (!confirm('Are you sure you want to connect your wallet?')) {
-      return;
-    }
+          if (!confirm('Are you sure you want to connect your wallet?')) {
+            return;
+          }
 
-    if (window.ethereum) {
-      try {
-        provider = new ethers.providers.Web3Provider(window.ethereum);
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-        await window.ethereum.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x2105' }], // Base chain ID (8453)
+          if (window.ethereum) {
+            try {
+              provider = new ethers.providers.Web3Provider(window.ethereum);
+              await window.ethereum.request({ method: 'eth_requestAccounts' });
+              await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: '0x2105' }],
+              });
+              signer = provider.getSigner();
+              userAddress = await signer.getAddress();
+              if (connectWalletBtn) {
+                connectWalletBtn.textContent = 'Disconnect';
+              }
+              if (xpDisplay) xpDisplay.textContent = '180 XP 🔥';
+              if (totalXP) totalXP.textContent = '180';
+              if (currentXP) currentXP.textContent = '🔥 180 XP';
+              if (walletAddress) walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
+              loadOnchainData();
+            } catch (error) {
+              console.error('MetaMask failed:', error);
+              alert('MetaMask failed: ' + error.message);
+            }
+          } else {
+            await connectWithWalletConnect();
+          }
         });
-        signer = provider.getSigner();
-        userAddress = await signer.getAddress();
-        if (connectWalletBtn) {
-          connectWalletBtn.textContent = 'Disconnect';
-        }
-        if (xpDisplay) xpDisplay.textContent = '180 XP 🔥';
-        if (totalXP) totalXP.textContent = '180';
-        if (currentXP) currentXP.textContent = '🔥 180 XP';
-        if (walletAddress) walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
-        loadOnchainData();
-      } catch (error) {
-        console.error('MetaMask failed:', error);
-        alert('MetaMask failed: ' + error.message);
       }
-    } else {
-      await connectWithWalletConnect();
-    }
-  });
-}
 
-      // Button Actions
-      claimXpBtn.addEventListener('click', () => {
-        let xp = parseInt(currentXP.textContent.match(/\d+/)[0]) || 0;
-        xp += 10;
-        currentXP.textContent = `🔥 ${xp} XP`;
-        totalXP.textContent = xp;
-        xpDisplay.textContent = `${xp} XP 🔥`;
-        alert('Claimed 10 XP!');
-      });
-
-      buyTokenBtn.addEventListener('click', async () => {
-        if (!signer) {
-          alert('Please connect your wallet first.');
-          return;
-        }
-        try {
-          const tx = await signer.sendTransaction({
-            to: 'YOUR_ZORA_ADDRESS',
-            value: ethers.utils.parseEther('0.01')
-          });
-          await tx.wait();
-          alert('Token purchase successful!');
+      if (claimXpBtn) {
+        claimXpBtn.addEventListener('click', () => {
           let xp = parseInt(currentXP.textContent.match(/\d+/)[0]) || 0;
-          xp += 50;
+          xp += 10;
           currentXP.textContent = `🔥 ${xp} XP`;
           totalXP.textContent = xp;
           xpDisplay.textContent = `${xp} XP 🔥`;
-        } catch (error) {
-          console.error('Token purchase failed:', error);
-          alert('Token purchase failed: ' + error.message);
-        }
-      });
+          alert('Claimed 10 XP!');
+        });
+      }
 
-      claimAddressBtn.addEventListener('click', () => {
-        if (!userAddress) {
-          alert('Please connect your wallet first.');
-          return;
-        }
-        alert('Claim another address feature is premium only.');
-      });
+      if (buyTokenBtn) {
+        buyTokenBtn.addEventListener('click', () => {
+          toggleWarpInfo();
+        });
+      }
 
-      trackRandomBtn.addEventListener('click', () => {
-        alert('Track random wallet feature is premium only.');
-      });
+      if (claimAddressBtn) {
+        claimAddressBtn.addEventListener('click', () => {
+          if (!userAddress) {
+            alert('Please connect your wallet first.');
+            return;
+          }
+          alert('Claim another address feature is premium only.');
+        });
+      }
 
-      copyReferralBtn.addEventListener('click', () => {
-        navigator.clipboard.writeText('https://warpai.com/referral/' + userAddress);
-        alert('Referral link copied!');
-      });
+      if (trackRandomBtn) {
+        trackRandomBtn.addEventListener('click', () => {
+          alert('Track random wallet feature is premium only.');
+        });
+      }
 
-      shareOnXBtn.addEventListener('click', () => {
-        window.open('https://twitter.com/intent/tweet?text=Check out WarpAi! https://warpai.com/referral/' + userAddress + ' @YOUR_X_USERNAME', '_blank');
-      });
+      if (copyReferralBtn) {
+        copyReferralBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText('https://warpai.com/referral/' + userAddress);
+          alert('Referral link copied!');
+        });
+      }
 
-      shareOnFarcasterBtn.addEventListener('click', () => {
-        window.open('https://warpcast.com/~/compose?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank');
-      });
+      if (shareOnXBtn) {
+        shareOnXBtn.addEventListener('click', () => {
+          window.open('https://twitter.com/intent/tweet?text=Check out WarpAi! https://warpai.com/referral/' + userAddress + ' @YOUR_X_USERNAME', '_blank');
+        });
+      }
 
-      shareFarcasterBtn.addEventListener('click', () => {
-        window.open('https://warpcast.com/~/compose?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank');
-      });
+      if (shareOnFarcasterBtn) {
+        shareOnFarcasterBtn.addEventListener('click', () => {
+          window.open('https://warpcast.com/~/compose?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank');
+        });
+      }
 
-      shareXBtn.addEventListener('click', () => {
-        window.open('https://twitter.com/intent/tweet?text=Check out WarpAi! https://warpai.com/referral/' + userAddress + ' @YOUR_X_USERNAME', '_blank');
-      });
+      if (shareFarcasterBtn) {
+        shareFarcasterBtn.addEventListener('click', () => {
+          window.open('https://warpcast.com/~/compose?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank');
+        });
+      }
 
-      upgradeBtn.addEventListener('click', () => {
-        alert('Upgrade to Premium for $5 to unlock all features!');
-      });
+      if (shareXBtn) {
+        shareXBtn.addEventListener('click', () => {
+          window.open('https://twitter.com/intent/tweet?text=Check out WarpAi! https://warpai.com/referral/' + userAddress + ' @YOUR_X_USERNAME', '_blank');
+        });
+      }
 
-      claimTokenBtn.addEventListener('click', () => {
-        let balance = parseFloat(waiBalance.textContent.match(/\d+\.\d+/)[0]) || 0;
-        balance += 5;
-        waiBalance.textContent = `Balance: ${balance} WAI`;
-        let history = claimHistory.innerHTML;
-        claimHistory.innerHTML = `<li>+5 WAI – claimed token</li>${history}`;
-        alert('Claimed 5 WAI!');
-      });
+      if (upgradeBtn) {
+        upgradeBtn.addEventListener('click', () => {
+          alert('Upgrade to Premium for $5 to unlock all features!');
+        });
+      }
 
-      viewHistoryBtn.addEventListener('click', () => {
-        alert('View full NFT history (premium feature).');
-      });
-    }, 500); // Match fadeOut duration
-  }, 3000); // Show for 3 seconds
+      if (claimTokenBtn) {
+        claimTokenBtn.addEventListener('click', () => {
+          let balance = parseFloat(waiBalance.textContent.match(/\d+\.\d+/)[0]) || 0;
+          balance += 5;
+          waiBalance.textContent = `Balance: ${balance} WAI`;
+          let history = claimHistory.innerHTML;
+          claimHistory.innerHTML = `<li>+5 WAI – claimed token</li>${history}`;
+          alert('Claimed 5 WAI!');
+        });
+      }
+
+      if (viewHistoryBtn) {
+        viewHistoryBtn.addEventListener('click', () => {
+          alert('View full NFT history (premium feature).');
+        });
+      }
+    }, 500);
+  }, 3000);
 });
-.xp-fill {
-  transition: width 1s ease-in-out;
-}
-#badge {
-  color: #f39c12;
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
-}
