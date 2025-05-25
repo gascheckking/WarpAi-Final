@@ -82,17 +82,18 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Wallet Connection with Ethers.js and WalletConnect
-      const ETHERSCAN_KEY = 'YOUR_ETHERSCAN_API_KEY'; // Ersätt med din Etherscan-nyckel
-      const ALCHEMY_KEY = 'YOUR_ALCHEMY_API_KEY'; // Ersätt med din Alchemy-nyckel
+      const ETHERSCAN_KEY = 'Y1VRJKQB1A4K2JTA8GE1YDH3W54W4I35D5'; // Ersätt med din Etherscan-nyckel
+      const ALCHEMY_KEY = 'aH4-X2bNp1BarPcBcHiWR6vHxJz_lGbA'; // Ersätt med din Alchemy-nyckel
       let provider, signer, userAddress;
 
       async function connectWithWalletConnect() {
-        const walletConnectProvider = new WalletConnectProvider({
-          infuraId: 'YOUR_INFURA_PROJECT_ID', // Ersätt med din Infura Project ID
-          rpc: {
-            1: `https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID`,
-          },
-        });
+  const walletConnectProvider = new WalletConnectProvider({
+    rpc: {
+      8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`, // Base-nätverket
+    },
+    chainId: 8453,
+  });
+}
 
         try {
           await walletConnectProvider.enable();
