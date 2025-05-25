@@ -158,50 +158,50 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       async function loadOnchainData() {
-        if (!provider || !userAddress) return;
+  if (!provider || !userAddress) return;
 
-        try {
-          const alchemyProvider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
-          const balance = await alchemyProvider.getBalance(userAddress);
-          const txCount = await alchemyProvider.getTransactionCount(userAddress);
-          const xp = txCount * 10;
-          if (currentXP) currentXP.textContent = `🔥 ${xp} XP`;
-          if (totalXP) totalXP.textContent = xp;
-          if (xpDisplay) xpDisplay.textContent = `${xp} XP 🔥`;
-          const progressPercent = Math.min((xp / 200) * 100, 100);
-          const xpFill = document.querySelector('.xp-fill');
-          if (xpFill) {
-            xpFill.style.transition = 'width 1s ease-in-out';
-            xpFill.style.width = `${progressPercent}%`;
-          }
-          const gasUsed = await alchemyProvider.getGasPrice();
-          const level = Math.floor(xp / 200) + 1;
-          const nextLevelXP = level * 200;
-          if (document.getElementById('level')) document.getElementById('level').textContent = level;
-          if (document.getElementById('nextLevelXP')) document.getElementById('nextLevelXP').textContent = nextLevelXP;
-          if (document.getElementById('currentXPProgress')) document.getElementById('currentXPProgress').textContent = xp);
-          const streak = document.getElementById('streak');
-          if (streak && streak >= 5) {
-            document.getElementById('badge').style.display = 'block';
-          }
-          if (gasSpent) gasSpent.textContent = `${ethers.utils.formatEther(gasUsed)} ETH (~$${(ethers.utils.formatEther(gasUsed) * 3000).toFixed(2)})`;
-          if (latestActivity) latestActivity.textContent = `Bought Token on Zora`;
-          if (activityResult) activityResult.textContent = `+ $${(ethers.utils.formatEther(balance) * 3000).toFixed(2)} Win`;
-          if (tokensMinted) tokensMinted.textContent = `${txCount} st`;
-          if (ethMoved) ethMoved.textContent = `${ethers.utils.formatEther(balance)} ETH total`;
-          if (connectedDapps) connectedDapps.innerHTML = `<li>Zora</li><li>OpenSea</li><li>Base</li>`;
-          if (document.querySelector('.subtitle')) {
-            document.querySelector('.subtitle').textContent = `Track your own wallet activity (Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)})`;
-          }
-          if (viewHistoryBtn) {
-            viewHistoryBtn.addEventListener('click', () => {
-              alert('Full NFT history for your wallet: Check console for details');
-            });
-          }
-        } catch (error) {
-          console.error('Error fetching onchain data:', error);
-        }
-      }
+  try {
+    const alchemyProvider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
+    const balance = await alchemyProvider.getBalance(userAddress);
+    const txCount = await alchemyProvider.getTransactionCount(userAddress);
+    const xp = txCount * 10;
+    if (currentXP) currentXP.textContent = `🔥 ${xp} XP`;
+    if (totalXP) totalXP.textContent = xp;
+    if (xpDisplay) xpDisplay.textContent = `${xp} XP 🔥`;
+    const progressPercent = Math.min((xp / 200) * 100, 100);
+    const xpFill = document.querySelector('.xp-fill');
+    if (xpFill) {
+      xpFill.style.transition = 'width 1s ease-in-out';
+      xpFill.style.width = `${progressPercent}%`;
+    }
+    const gasUsed = await alchemyProvider.getGasPrice();
+    const level = Math.floor(xp / 200) + 1;
+    const nextLevelXP = level * 200;
+    if (document.getElementById('level')) document.getElementById('level').textContent = level;
+    if (document.getElementById('nextLevelXP')) document.getElementById('nextLevelXP').textContent = nextLevelXP;
+    if (document.getElementById('currentXPProgress')) document.getElementById('currentXPProgress').textContent = xp;
+    const streak = 5; // Mockad streak
+    if (document.getElementById('badge') && streak >= 5) {
+      document.getElementById('badge').style.display = 'block';
+    }
+    if (gasSpent) gasSpent.textContent = `${ethers.utils.formatEther(gasUsed)} ETH (~$${(ethers.utils.formatEther(gasUsed) * 3000).toFixed(2)})`;
+    if (latestActivity) latestActivity.textContent = `Bought Token on Zora`;
+    if (activityResult) activityResult.textContent = `+ $${(ethers.utils.formatEther(balance) * 3000).toFixed(2)} Win`;
+    if (tokensMinted) tokensMinted.textContent = `${txCount} st`;
+    if (ethMoved) ethMoved.textContent = `${ethers.utils.formatEther(balance)} ETH total`;
+    if (connectedDapps) connectedDapps.innerHTML = `<li>Zora</li><li>OpenSea</li><li>Base</li>`;
+    if (document.querySelector('.subtitle')) {
+      document.querySelector('.subtitle').textContent = `Track your own wallet activity (Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)})`;
+    }
+    if (viewHistoryBtn) {
+      viewHistoryBtn.addEventListener('click', () => {
+        alert('Full NFT history for your wallet: Check console for details');
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching onchain data:', error);
+  }
+}
 
       if (connectWalletBtn) {
         connectWalletBtn.addEventListener('click', async () => {
