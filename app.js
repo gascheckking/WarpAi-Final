@@ -26,22 +26,23 @@ if (claimTokenBtn) claimTokenBtn.addEventListener('click', () => {
   waiBalance.textContent = `Balance: ${balance} WAI`;
   let history = claimHistory.innerHTML;
   claimHistory.innerHTML = `<li>+5 WAI – claimed token</li>${history}`;
-  const claimedPopup = document.createElement('div');
-claimedPopup.textContent = '🎉 5 WAI Claimed!';
-claimedPopup.style.position = 'fixed';
-claimedPopup.style.top = '40%';
-claimedPopup.style.left = '50%';
-claimedPopup.style.transform = 'translate(-50%, -50%)';
-claimedPopup.style.background = '#333';
-claimedPopup.style.color = '#fff';
-claimedPopup.style.padding = '1rem 2rem';
-claimedPopup.style.borderRadius = '10px';
-claimedPopup.style.fontSize = '1.2rem';
-claimedPopup.style.zIndex = '9999';
-document.body.appendChild(claimedPopup);
-setTimeout(() => claimedPopup.remove(), 2000);
 
+  const claimedPopup = document.createElement('div');
+  claimedPopup.textContent = '🎉 5 WAI Claimed!';
+  claimedPopup.style.position = 'fixed';
+  claimedPopup.style.top = '40%';
+  claimedPopup.style.left = '50%';
+  claimedPopup.style.transform = 'translate(-50%, -50%)';
+  claimedPopup.style.background = '#333';
+  claimedPopup.style.color = '#fff';
+  claimedPopup.style.padding = '1rem 2rem';
+  claimedPopup.style.borderRadius = '10px';
+  claimedPopup.style.fontSize = '1.2rem';
+  claimedPopup.style.zIndex = '9999';
+  document.body.appendChild(claimedPopup);
+  setTimeout(() => claimedPopup.remove(), 2000);
 });
+
   // Onboarding Animation (3 sekunder totalt)
   onboardingOverlay.classList.add('fade-in-logo');
   setTimeout(() => {
