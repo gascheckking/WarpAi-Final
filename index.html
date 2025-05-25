@@ -58,10 +58,10 @@
             <button id="buyTokenBtn">Buy Now</button>
           </div>
           <div class="card dark">
-            <h3><span idрг="2">id="currentXP">🔥 180 XP</span></h3>
-            <p>5-day streak</p>
-            <button class="info-btn green" onclick="toggleXpInfo()">[?] About XP & WAI</button>
-          </div>
+  <h3><span id="currentXP">🔥 0 XP</span></h3>
+  <p>0-day streak</p>
+  <button class="info-btn green" onclick="toggleXpInfo()">About XP & WAI</button>
+</div>
           <div class="card purple">
             <h3>💎 Premium Tools</h3>
             <div class="btn-row">
@@ -242,17 +242,18 @@
       </div>
 
       <div id="xpInfoModal" class="modal hidden">
-        <div class="modal-content">
-          <h3>❓ About XP & WAI</h3>
-          <ul>
-            <li><strong>XP:</strong> Earned daily via login, invites, and actions.</li>
-            <li><strong>Streak Bonus:</strong> Keep your login streak alive.</li>
-            <li><strong>WAI:</strong> Token rewarded for activity & sharing.</li>
-            <li><strong>Premium:</strong> Track wallets, get analytics & more.</li>
-          </ul>
-          <button onclick="toggleXpInfo()">Got it!</button>
-        </div>
-      </div>
+  <div class="modal-content">
+    <h3>Welcome to WarpAi!</h3>
+    <p>Track your onchain activity and earn rewards!</p>
+    <ul>
+      <li><strong>XP:</strong> Earn by logging in daily, making transactions, or minting NFTs.</li>
+      <li><strong>Streak:</strong> Keep logging in to boost your XP!</li>
+      <li><strong>WAI Tokens:</strong> Earn by sharing or referring friends. Swap for premium or $WARP.</li>
+      <li><strong>$WARP:</strong> Our token, buy it on Zora to unlock perks.</li>
+    </ul>
+    <button onclick="toggleXpInfo()">Start Tracking!</button>
+  </div>
+</div>
 
       <!-- QR Code Modal -->
       <div id="qrModal" class="modal hidden">
