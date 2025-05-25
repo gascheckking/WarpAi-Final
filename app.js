@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   const onboardingOverlay = document.getElementById('onboardingOverlay');
   const appContent = document.getElementById('appContent');
+  const qrModal = document.getElementById('qrModal');
+  const qrCodeDiv = document.getElementById('qrCode');
 
   // Onboarding Animation (3 sekunder totalt)
   onboardingOverlay.classList.add('fade-in-logo');
@@ -81,21 +83,35 @@ document.addEventListener('DOMContentLoaded', () => {
         xpInfoModal.classList.toggle('hidden');
       }
 
+      // Close QR Modal
+      window.closeQrModal = function() {
+        qrModal.classList.add('hidden');
+        qrCodeDiv.innerHTML = ''; // Rensa QR-kod
+      };
+
       // Wallet Connection with Ethers.js and WalletConnect
-      const ETHERSCAN_KEY = 'Y1VRJKQB1A4K2JTA8GE1YDH3W54W4I35D5'; // Ersätt med din Etherscan-nyckel
-      const ALCHEMY_KEY = 'aH4-X2bNp1BarPcBcHiWR6vHxJz_lGbA'; // Ersätt med din Alchemy-nyckel
+      const ETHERSCAN_KEY = 'Y1VRJKQB1A4K2JTA8GE1YDH3W54W4I35D5';
+      const ALCHEMY_KEY = 'aH4-X2bNp1BarPcBcHiWR6vHxJz_lGbA';
       let provider, signer, userAddress;
 
       async function connectWithWalletConnect() {
-  const walletConnectProvider = new WalletConnectProvider({
-    rpc: {
-      8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`, // Base-nätverket
-    },
-    chainId: 8453,
-  });
-}
-
         try {
+          const walletConnectProvider = new WalletConnectProvider({
+            rpc: {
+              8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
+            },
+            chainId: 8453,
+          });
+          // Visa QR-kod
+          walletConnectProvider.on('display_uri', (uri) => {
+            qrCodeDiv.innerHTML = '';
+            new QRCode(qrCodeDiv, {
+              text: uri,
+              width: 200,
+              height: 200,
+            });
+            qrModal.classList.remove('hidden');
+          });
           await walletConnectProvider.enable();
           provider = new ethers.providers.Web3Provider(walletConnectProvider);
           signer = provider.getSigner();
@@ -104,10 +120,12 @@ document.addEventListener('DOMContentLoaded', () => {
           xpDisplay.textContent = '180 XP 🔥';
           totalXP.textContent = '180';
           currentXP.textContent = '🔥 180 XP';
+          qrModal.classList.add('hidden');
           loadOnchainData();
         } catch (error) {
           console.error('WalletConnect failed:', error);
           alert('WalletConnect failed: ' + error.message);
+          qrModal.classList.add('hidden');
         }
       }
 
@@ -115,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!provider || !userAddress) return;
 
         try {
-          const alchemyProvider = new ethers.providers.AlchemyProvider('mainnet', 'YOUR_ALCHEMY_API_KEY');
+          const alchemyProvider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
           const balance = await alchemyProvider.getBalance(userAddress);
           const txCount = await alchemyProvider.getTransactionCount(userAddress);
           const gasUsed = await alchemyProvider.getGasPrice();
@@ -127,10 +145,9 @@ document.addEventListener('DOMContentLoaded', () => {
           gasSpent.textContent = `${ethers.utils.formatEther(gasUsed)} ETH (~$${(ethers.utils.formatEther(gasUsed) * 3000).toFixed(2)})`;
           connectedDapps.innerHTML = `<li>Zora</li><li>OpenSea</li><li>Base</li>`;
 
-          // Visa wallet-adress och aktivera knappen
           document.querySelector('.subtitle').textContent = `Track your own wallet activity (Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)})`;
           viewHistoryBtn.addEventListener('click', () => {
-            alert('Full NFT history for your wallet: Check console for details'); // Lägg till logik senare
+            alert('Full NFT history for your wallet: Check console for details');
           });
         } catch (error) {
           console.error('Error fetching onchain data:', error);
@@ -139,28 +156,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
       connectWalletBtn.addEventListener('click', async () => {
         if (!confirm('Are you sure you want to connect your wallet?')) {
-    return; // Avbryt om användaren klickar "Cancel"
-  }
+          return;
+        }
 
-  if (window.ethereum) {
-    try {
-      provider = new ethers.providers.Web3Provider(window.ethereum);
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
-      signer = provider.getSigner();
-      userAddress = await signer.getAddress();
-      connectWalletBtn.textContent = `Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
-      xpDisplay.textContent = '180 XP 🔥';
-      totalXP.textContent = '180';
-      currentXP.textContent = '🔥 180 XP';
-      loadOnchainData();
-    } catch (error) {
-      console.error('MetaMask failed:', error);
-      alert('MetaMask failed: ' + error.message);
-    }
-  } else {
-    await connectWithWalletConnect();
-  }
-});
+        if (window.ethereum) {
+          try {
+            provider = new ethers.providers.Web3Provider(window.ethereum);
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+            await window.ethereum.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: '0x2105' }], // Base chain ID (8453)
+            });
+            signer = provider.getSigner();
+            userAddress = await signer.getAddress();
+            connectWalletBtn.textContent = `Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
+            xpDisplay.textContent = '180 XP 🔥';
+            totalXP.textContent = '180';
+            currentXP.textContent = '🔥 180 XP';
+            loadOnchainData();
+          } catch (error) {
+            console.error('MetaMask failed:', error);
+            alert('MetaMask failed: ' + error.message);
+          }
+        } else {
+          await connectWithWalletConnect();
+        }
+      });
 
       // Button Actions
       claimXpBtn.addEventListener('click', () => {
