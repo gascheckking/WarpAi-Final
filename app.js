@@ -251,7 +251,19 @@ if (claimTokenBtn) claimTokenBtn.addEventListener('click', () => {
 
       if (copyReferralBtn) copyReferralBtn.addEventListener('click', () => {
         navigator.clipboard.writeText('https://warpai.com/referral/' + userAddress);
-        alert('Referral link copied!');
+        const toast = document.createElement('div');
+toast.textContent = '✅ Copied';
+toast.style.position = 'fixed';
+toast.style.bottom = '1rem';
+toast.style.right = '1rem';
+toast.style.background = '#4caf50';
+toast.style.color = '#fff';
+toast.style.padding = '0.5rem 1rem';
+toast.style.borderRadius = '6px';
+toast.style.zIndex = '9999';
+document.body.appendChild(toast);
+setTimeout(() => toast.remove(), 2000);
+
       });
 
       if (shareOnXBtn) shareOnXBtn.addEventListener('click', () => window.open('https://twitter.com/intent/tweet?text=Check out WarpAi! https://warpai.com/referral/' + userAddress + ' @YOUR_X_USERNAME', '_blank'));
