@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval';">
+  <!-- Uppdaterad CSP för att tillåta nödvändiga resurser -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://base-mainnet.g.alchemy.com wss://*.walletconnect.com wss://*.walletconnect.org;">
   <title>WarpAi</title>
   <link rel="stylesheet" href="style.css" />
-  
-  <!-- ✅ Säkra nycklar via <meta> -->
+  <!-- Säkra nycklar -->
   <meta name="alchemy-key" content="aH4-X2bNp1BarPcBcHiWR6vHxJz_lGbA">
-<meta name="etherscan-key" content="Y1VRJKQB1A4K2JTA8GE1YDH3W54W4I35D5">
-
+  <meta name="etherscan-key" content="Y1VRJKQB1A4K2JTA8GE1YDH3W54W4I35D5">
 </head>
 <body>
   <div id="onboardingOverlay">
@@ -26,12 +25,12 @@
       </div>
       <div class="wallet-ui">
         <div class="wallet-status">
-  <span id="xpDisplay">180 XP 🔥</span>
-  <div id="walletUI">
-    <span id="walletAddress" style="opacity: 0.6;">0xabc...123</span>
-    <button id="connectWallet">Disconnect</button>
-  </div>
-</div>
+          <span id="xpDisplay">0 XP 🔥</span>
+          <div id="walletUI">
+            <span id="walletAddress">Not Connected</span>
+            <button id="connectWallet">Connect Wallet</button>
+          </div>
+        </div>
         <div class="settings-wrapper">
           <button id="settingsBtn" class="settings-icon">⚙️</button>
           <div id="settingsMenu" class="settings-dropdown">
@@ -52,86 +51,72 @@
       <button class="tab-button" data-tab="rewards">🎁 Rewards</button>
       <button class="tab-button" data-tab="premium">💎 Premium</button>
       <button class="tab-button" data-tab="profile">👤 Profile</button>
-
     </nav>
 
     <main>
       <!-- HOME -->
       <section class="tab-content home" data-tab="home" style="display: block;">
-  <div class="custom-home-grid">
-    <!-- RUTA 1 -->
-    <div class="card dark tall">
-      <h3>🎯 Your Activity</h3>
-      <p>XP: 0 🔥<br>Streak: 5 days<br>Claimed: ✅</p>
-      <button disabled>Claim Again Tomorrow</button>
-    </div>
-
-    <!-- RUTA 2 -->
-    <div class="card dark">
-      <h3>🏆 Level & Bonus</h3>
-      <p>Level 1 → 200 XP</p>
-      <div class="xp-bar small">
-        <div class="xp-fill" style="width: 25%;"></div>
-      </div>
-      <small>Bonus: +10%</small>
-    </div>
-
-    <!-- RUTA 3 -->
-    <div class="card dark">
-      <h3>🔗 Referral & Earn</h3>
-      <p>Earn WAI for every invite</p>
-      <button id="copyReferralBtn">Copy Link</button>
-    </div>
-
-    <!-- RUTA 4 -->
-    <div class="card dark full">
-      <h3>ℹ️ About WarpAi & WAI</h3>
-      <p> <strong>
-       WarpAi tracks your onchain activity.  
-        Earn XP for every interaction.  
-        Claim WAI tokens daily.  
-        Unlock premium perks and level up.
-      </p>
-    </div>
-  </div>
-</section>
-
-
+        <div class="custom-home-grid">
+          <div class="card dark tall">
+            <h3>🎯 Your Activity</h3>
+            <p>XP: <span id="currentXP">🔥 0 XP</span><br>Streak: 5 days<br>Claimed: ✅</p>
+            <button id="claimXpBtn">Claim XP</button>
+          </div>
+          <div class="card dark">
+            <h3>🏆 Level & Bonus</h3>
+            <p>Level 1 → 200 XP</p>
+            <div class="xp-bar small">
+              <div class="xp-fill" style="width: 0%;"></div>
+            </div>
+            <small>Bonus: +10%</small>
+          </div>
+          <div class="card dark">
+            <h3>🔗 Referral & Earn</h3>
+            <p>Earn WAI for every invite</p>
+            <button id="copyReferralBtn">Copy Link</button>
+          </div>
+          <div class="card dark full">
+            <h3>ℹ️ About WarpAi & WAI</h3>
+            <p>
+              WarpAi tracks your onchain activity.<br>
+              Earn XP for every interaction.<br>
+              Claim WAI tokens daily.<br>
+              Unlock premium perks and level up.
+            </p>
+          </div>
+        </div>
       </section>
 
       <!-- TRACK -->
       <section class="tab-content track" data-tab="track" style="display: none;">
-  <div class="track-grid">
-    <div class="card dark">
-      <h3>Tokens Minted</h3>
-      <p id="tokensMinted">0 st</p>
-    </div>
-    <div class="card dark">
-      <h3>ETH Moved</h3>
-      <p id="ethMoved">0 ETH total</p>
-    </div>
-    <div class="card dark">
-      <h3>Gas Spent</h3>
-      <p id="gasSpent">0 ETH</p>
-    </div>
-    <div class="card dark">
-      <h3>Connected dApps</h3>
-      <ul id="connectedDapps">
-        <li>-</li>
-      </ul>
-    </div>
-
-    <!-- Latest Activity Full Width -->
-    <div class="card dark full">
-      <div class="track-header-row">
-        <h3>📜 Latest Activity</h3>
-        <button id="refreshTrackBtn">↻</button>
-      </div>
-      <p id="latestActivity">Loading...</p>
-      <small id="activityResult">$0</small>
-    </div>
-  </div>
-</section>
+        <div class="track-grid">
+          <div class="card dark">
+            <h3>Tokens Minted</h3>
+            <p id="tokensMinted">0 st</p>
+          </div>
+          <div class="card dark">
+            <h3>ETH Moved</h3>
+            <p id="ethMoved">0 ETH total</p>
+          </div>
+          <div class="card dark">
+            <h3>Gas Spent</h3>
+            <p id="gasSpent">0 ETH</p>
+          </div>
+          <div class="card dark">
+            <h3>Connected dApps</h3>
+            <ul id="connectedDapps">
+              <li>-</li>
+            </ul>
+          </div>
+          <div class="card dark full">
+            <div class="track-header-row">
+              <h3>📜 Latest Activity</h3>
+              <button id="refreshTrackBtn">↻</button>
+            </div>
+            <p id="latestActivity">No recent tx</p>
+            <small id="activityResult">$0</small>
+          </div>
+        </div>
       </section>
 
       <!-- REWARDS -->
@@ -147,13 +132,12 @@
             <button id="shareOnXBtn">Share on X</button>
             <button id="shareOnFarcasterBtn">Share on Farcaster</button>
           </div>
+          <div class="card dark">
+            <h3>🏆 Referral Stats</h3>
+            <p>Friends invited: 3</p>
+            <p>Total earned: 15 WAI</p>
+          </div>
         </div>
-        <div class="card dark">
-  <h3>🏆 Referral Stats</h3>
-  <p>Friends invited: 3</p>
-  <p>Total earned: 15 WAI</p>
-</div>
-
       </section>
 
       <!-- PREMIUM -->
@@ -203,7 +187,7 @@
           </div>
         </div>
       </section>
-      
+
       <!-- PROFILE -->
       <section class="tab-content profile" data-tab="profile" style="display: none;">
         <div class="hero">
@@ -213,11 +197,11 @@
           <div class="card dark">
             <h3>Wallet</h3>
             <p id="walletAddress">Not Connected</p>
-            <p>Total XP: <strong id="totalXP">180</strong></p>
+            <p>Total XP: <strong id="totalXP">0</strong></p>
           </div>
           <div class="card dark">
             <h3>WarpAi Token</h3>
-            <p id="waiBalance">Balance: 342.50 WAI</p>
+            <p id="waiBalance">Balance: 0 WAI</p>
             <p>Level Bonus: 10%</p>
           </div>
           <div class="card dark">
@@ -228,15 +212,13 @@
           <div class="card dark">
             <h3>Share Link</h3>
             <p>Earn 5 WAI per share</p>
-            <button id="shareFarcasterBtn">Share on Farcaster</button>
-            <button id="shareXBtn">Share on X</button>
+            <button id="shareOnFarcasterBtn">Share on Farcaster</button>
+            <button id="shareOnXBtn">Share on X</button>
           </div>
-          <div class="card full premium">
+          <div class="card dark full premium">
             <h3>📦 Claim History</h3>
             <ul id="claimHistory">
-              <li>+5 WAI – shared on X</li>
-              <li>+5 WAI – referred friend</li>
-              <li>+10 WAI – weekly login</li>
+              <li>No claims yet</li>
             </ul>
           </div>
         </div>
@@ -291,8 +273,9 @@
     </main>
   </div>
 
+  <!-- Externa skript -->
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@2.10.0/dist/umd/index.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js"></script>
   <script src="app.js"></script>
 </body>
