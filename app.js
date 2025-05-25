@@ -1,349 +1,204 @@
-/* RESET & BODY */
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: #0f1115;
-  color: #ffffff;
-}
+document.addEventListener('DOMContentLoaded', () => {
+  const onboardingOverlay = document.getElementById('onboardingOverlay');
+  const settingsBtn = document.getElementById('settingsBtn');
+  const settingsMenu = document.getElementById('settingsMenu');
+  const toggleTheme = document.getElementById('toggleTheme');
+  const connectWalletBtn = document.getElementById('connectWallet');
+  const xpDisplay = document.getElementById('xpDisplay');
+  const walletAddress = document.getElementById('walletAddress');
+  const totalXP = document.getElementById('totalXP');
+  const currentXP = document.getElementById('currentXP');
+  const claimXpBtn = document.getElementById('claimXpBtn');
+  const buyTokenBtn = document.getElementById('buyTokenBtn');
+  const claimAddressBtn = document.getElementById('claimAddressBtn');
+  const trackRandomBtn = document.getElementById('trackRandomBtn');
+  const copyReferralBtn = document.getElementById('copyReferralBtn');
+  const shareOnXBtn = document.getElementById('shareOnXBtn');
+  const shareOnFarcasterBtn = document.getElementById('shareOnFarcasterBtn');
+  const upgradeBtn = document.getElementById('upgradeBtn');
+  const addWalletBtn = document.getElementById('addWalletBtn');
+  const claimTokenBtn = document.getElementById('claimTokenBtn');
+  const shareFarcasterBtn = document.getElementById('shareFarcasterBtn');
+  const shareXBtn = document.getElementById('shareXBtn');
+  const viewHistoryBtn = document.getElementById('viewHistoryBtn');
+  const latestActivity = document.getElementById('latestActivity');
+  const activityResult = document.getElementById('activityResult');
+  const tokensMinted = document.getElementById('tokensMinted');
+  const ethMoved = document.getElementById('ethMoved');
+  const gasSpent = document.getElementById('gasSpent');
+  const connectedDapps = document.getElementById('connectedDapps');
+  const nftHistory = document.getElementById('nftHistory');
+  const followedWallets = document.getElementById('followedWallets');
+  const waiBalance = document.getElementById('waiBalance');
+  const claimHistory = document.getElementById('claimHistory');
+  const faqModal = document.getElementById('faqModal');
+  const xpInfoModal = document.getElementById('xpInfoModal');
+  const tabButtons = document.querySelectorAll('.tab-button');
+  const tabContents = document.querySelectorAll('.tab-content');
 
-/* HEADER */
-.app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.4rem 0.8rem 0.2rem;
-  background-color: #12141a;
-  border-bottom: 1px solid #292d36;
-}
+  // Onboarding Animation Fix
+  setTimeout(() => {
+    onboardingOverlay.classList.add('fade-out-logo');
+    setTimeout(() => {
+      onboardingOverlay.style.display = 'none';
+    }, 500);
+  }, 2000);
 
-.logo-title {
-  display: flex;
-  align-items: center;
-}
+  // Tab Switching
+  tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      tabContents.forEach(content => {
+        content.style.display = 'none';
+        if (content.getAttribute('data-tab') === button.getAttribute('data-tab')) {
+          content.style.display = 'block';
+        }
+      });
+    });
+  });
 
-.logo-icon-fixed {
-  width: 180px;
-  height: auto;
-}
+  // Settings Menu
+  settingsBtn.addEventListener('click', () => {
+    settingsMenu.classList.toggle('active');
+  });
 
-.wallet-ui {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+  // Theme Toggle
+  toggleTheme.addEventListener('change', () => {
+    document.body.classList.toggle('dark-mode', toggleTheme.checked);
+  });
 
-/* SETTINGS */
-.settings-wrapper {
-  position: relative;
-}
+  // Modal Functions
+  function toggleFAQ() {
+    faqModal.classList.toggle('hidden');
+  }
 
-.settings-icon {
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-  color: white;
-}
+  function toggleXpInfo() {
+    xpInfoModal.classList.toggle('hidden');
+  }
 
-.settings-dropdown {
-  display: none;
-  position: absolute;
-  right: 0;
-  top: 2rem;
-  background-color: #1b1d23;
-  padding: 0.5rem;
-  border-radius: 8px;
-  box-shadow: 0 0 10px #000;
-  z-index: 100;
-  width: 180px;
-}
+  // Wallet Connection with Ethers.js and Alchemy
+  const ETHERSCAN_KEY = 'Y1VRJKQB1A4K2JTA8GE1YDH3W54W4I35D5';
+  const ALCHEMY_KEY = 'aH4-X2bNp1BarPcBcHiWR6vHxJz_lGbA';
+  let provider, signer, userAddress;
 
-.settings-dropdown button,
-.settings-dropdown label {
-  display: block;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 0.8rem;
-  text-align: left;
-  padding: 0.3rem 0;
-  cursor: pointer;
-}
+  connectWalletBtn.addEventListener('click', async () => {
+    if (window.ethereum) {
+      try {
+        provider = new ethers.providers.Web3Provider(window.ethereum);
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        signer = provider.getSigner();
+        userAddress = await signer.getAddress();
+        walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
+        connectWalletBtn.style.display = 'none';
+        xpDisplay.textContent = '180 XP 🔥';
+        totalXP.textContent = '180';
+        currentXP.textContent = '🔥 180 XP';
+        loadOnchainData();
+      } catch (error) {
+        console.error('Wallet connection failed:', error);
+        alert('Wallet connection failed: ' + error.message);
+      }
+    } else {
+      alert('Please install MetaMask or a compatible wallet.');
+    }
+  });
 
-.settings-dropdown hr {
-  border: 0;
-  border-top: 1px solid #333;
-  margin: 0.5rem 0;
-}
+  async function loadOnchainData() {
+    if (!provider || !userAddress) return;
 
-/* NAVIGATION */
-.nav-tabs {
-  display: flex;
-  justify-content: space-around;
-  padding: 0.3rem 0;
-  background-color: #12141a;
-  border-top: 1px solid #292d36;
-  border-bottom: 1px solid #292d36;
-}
+    try {
+      const alchemyProvider = new ethers.providers.AlchemyProvider('mainnet', ALCHEMY_KEY);
+      const balance = await alchemyProvider.getBalance(userAddress);
+      const txCount = await alchemyProvider.getTransactionCount(userAddress);
+      const gasUsed = await alchemyProvider.getGasPrice();
 
-.tab-button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 0.85rem;
-  font-weight: bold;
-  cursor: pointer;
-}
+      latestActivity.textContent = `Bought Token on Zora`;
+      activityResult.textContent = `+ $${(ethers.utils.formatEther(balance) * 3000).toFixed(2)} Win`;
+      tokensMinted.textContent = `${txCount} st`;
+      ethMoved.textContent = `${ethers.utils.formatEther(balance)} ETH total`;
+      gasSpent.textContent = `${ethers.utils.formatEther(gasUsed)} ETH (~$${(ethers.utils.formatEther(gasUsed) * 3000).toFixed(2)})`;
+      connectedDapps.innerHTML = `<li>Zora</li><li>OpenSea</li><li>Base</li>`;
+    } catch (error) {
+      console.error('Error fetching onchain data:', error);
+    }
+  }
 
-.tab-button.active {
-  color: #a674ff;
-  text-decoration: underline;
-}
+  // Button Actions
+  claimXpBtn.addEventListener('click', () => {
+    let xp = parseInt(currentXP.textContent.match(/\d+/)[0]) || 0;
+    xp += 10;
+    currentXP.textContent = `🔥 ${xp} XP`;
+    totalXP.textContent = xp;
+    xpDisplay.textContent = `${xp} XP 🔥`;
+    alert('Claimed 10 XP!');
+  });
 
-/* MAIN */
-main {
-  padding: 0.6rem 0.5rem;
-  max-width: 480px;
-  margin: auto;
-}
+  buyTokenBtn.addEventListener('click', async () => {
+    if (!signer) {
+      alert('Please connect your wallet first.');
+      return;
+    }
+    try {
+      const tx = await signer.sendTransaction({
+        to: '0x0cd1e9c691af8d4d34efcc089a40b31c691d0482',
+        value: ethers.utils.parseEther('0.01')
+      });
+      await tx.wait();
+      alert('Token purchase successful!');
+      let xp = parseInt(currentXP.textContent.match(/\d+/)[0]) || 0;
+      xp += 50;
+      currentXP.textContent = `🔥 ${xp} XP`;
+      totalXP.textContent = xp;
+      xpDisplay.textContent = `${xp} XP 🔥`;
+    } claimAddressBtn.addEventListener('click', () => {
+      if (!userAddress) {
+        alert('Please connect your wallet first.');
+        return;
+      }
+      alert('Claim another address feature is premium only.');
+    });
 
-/* HERO */
-.hero {
-  text-align: center;
-  margin-bottom: 0.5rem;
-}
+    trackRandomBtn.addEventListener('click', () => {
+      alert('Track random wallet feature is premium only.');
+    });
 
-.hero h2 {
-  font-size: 1.4rem;
-  margin-bottom: 0.2rem;
-  color: #a674ff;
-}
+    copyReferralBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText('https://warpai.com/referral/' + userAddress);
+      alert('Referral link copied!');
+    });
 
-.subtitle {
-  font-size: 0.9rem;
-  color: #bbb;
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
+    shareOnXBtn.addEventListener('click', () => {
+      window.open('https://twitter.com/intent/tweet?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank');
+    });
 
-/* CARDS */
-.card-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.6rem;
-}
+    shareOnFarcasterBtn.addEventListener('click', () => {
+      window.open('https://warpcast.com/~/compose?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank');
+    });
 
-.card {
-  background-color: #1b1d23;
-  padding: 0.6rem;
-  border-radius: 10px;
-  font-size: 0.75rem;
-  text-align: center;
-}
+    shareFarcasterBtn.addEventListener('click', () => {
+      window.open('https://warpcast.com/~/compose?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank');
+    });
 
-.card h3 {
-  margin: 0 0 0.5rem;
-  font-size: 0.85rem;
-}
+    shareXBtn.addEventListener('click', () => {
+      window.open('https://twitter.com/intent/tweet?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank');
+    });
 
-.card p,
-.card ul {
-  margin: 0 0 0.5rem;
-  font-size: 0.7rem;
-  color: #ccc;
-}
+    upgradeBtn.addEventListener('click', () => {
+      alert('Upgrade to Premium for $5 to unlock all features!');
+    });
 
-.card ul {
-  padding-left: 1rem;
-  text-align: left;
-}
+    claimTokenBtn.addEventListener('click', () => {
+      let balance = parseFloat(waiBalance.textContent.match(/\d+\.\d+/)[0]) || 0;
+      balance += 5;
+      waiBalance.textContent = `Balance: ${balance} WAI`;
+      let history = claimHistory.innerHTML;
+      claimHistory.innerHTML = `<li>+5 WAI – claimed token</li>${history}`;
+      alert('Claimed 5 WAI!');
+    });
 
-.card button {
-  padding: 0.35rem 0.7rem;
-  background-color: #4caf50;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.7rem;
-  font-weight: bold;
-  color: white;
-  cursor: pointer;
-}
-
-/* VARIANTS */
-.card.green { background-color: #2c9463; }
-.card.dark { background-color: #333; }
-.card.blue { background-color: #264e70; }
-.card.purple { background-color: #3b1d5e; }
-
-.card.purple .btn-row {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.card.purple button {
-  background-color: #9146ff;
-  width: 100%;
-}
-
-.card.full {
-  grid-column: span 2;
-  margin-top: 0.5rem;
-}
-
-.card.premium ul {
-  list-style: none;
-  padding-left: 0;
-  font-size: 0.75rem;
-  color: #ccc;
-  text-align: left;
-}
-
-.card.premium ul li::before {
-  content: "⭐ ";
-  color: #f39c12;
-}
-
-.card.highlighted-premium {
-  border: 1px solid orange;
-  padding: 1rem;
-  background-color: #12141a;
-}
-
-.card.earn {
-  background-color: #1b1d23;
-  border-left: 4px solid #4caf50;
-}
-
-.card.earn button {
-  margin-top: 0.4rem;
-  padding: 0.4rem;
-  background-color: #2c9463;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  width: 100%;
-  cursor: pointer;
-}
-
-/* XP JOURNEY */
-.card.journey {
-  background-color: #20232a;
-  padding: 1rem;
-  color: white;
-}
-
-.xp-bar {
-  background-color: #444;
-  border-radius: 10px;
-  overflow: hidden;
-  height: 10px;
-  margin: 0.5rem 0;
-}
-
-.xp-fill {
-  height: 100%;
-  background: linear-gradient(to right, #4caf50, #00e676);
-  width: 0%;
-  transition: width 0.5s ease-in-out;
-}
-
-/* MODALS */
-.modal {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.75);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.modal.hidden {
-  display: none;
-}
-
-.modal-content {
-  background-color: #1b1d23;
-  padding: 1.2rem;
-  border-radius: 10px;
-  max-width: 300px;
-  color: white;
-  text-align: left;
-  box-shadow: 0 0 10px #000;
-}
-
-/* INFO-BUTTONS */
-.info-btn,
-.faq-btn {
-  background-color: #333;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.info-btn:hover,
-.faq-btn:hover {
-  background-color: #555;
-}
-
-.info-btn.green {
-  background-color: #4caf50;
-  color: white;
-  font-weight: bold;
-}
-
-.info-btn.green:hover {
-  background-color: #45a049;
-}
-
-/* EXTRAS */
-.faq-top-right {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 50;
-}
-
-.position-relative {
-  position: relative;
-}
-
-.mini-info-btn {
-  background: none;
-  border: none;
-  color: #ccc;
-  font-size: 0.9rem;
-  margin-left: 8px;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.mini-info-btn:hover {
-  color: white;
-}
-
-.compact-track-hero {
-  margin-bottom: 0.5rem;
-  padding-bottom: 0;
-}
-
-/* Premium låsta kort */
-.card.dark[disabled],
-.card.dark button[disabled] {
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-button[disabled] {
-  background: #666 !important;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 16px;
-}
+    viewHistoryBtn.addEventListener('click', () => {
+      alert('View full NFT history (premium feature).');
+    });
+  });
+});
