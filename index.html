@@ -53,10 +53,10 @@
             <button id="claimXpBtn">Claim</button>
           </div>
           <div class="card dark">
-            <h3>Buy Token</h3>
-            <p>Pre-launch $WARP</p>
-            <button id="buyTokenBtn">Buy Now</button>
-          </div>
+  <h3>Buy $WARP</h3>
+  <p>Pre-launch on Zora</p>
+  <button id="buyTokenBtn" onclick="toggleWarpInfo()">Buy Now</button>
+</div>
           <div class="card dark">
   <h3><span id="currentXP">🔥 0 XP</span></h3>
   <p>0-day streak</p>
@@ -241,17 +241,16 @@
         </div>
       </div>
 
-      <div id="xpInfoModal" class="modal hidden">
+      <div id="warpInfoModal" class="modal hidden">
   <div class="modal-content">
-    <h3>Welcome to WarpAi!</h3>
-    <p>Track your onchain activity and earn rewards!</p>
+    <h3>$WARP Token</h3>
+    <p>Buy our pre-launch token on Zora!</p>
     <ul>
-      <li><strong>XP:</strong> Earn by logging in daily, making transactions, or minting NFTs.</li>
-      <li><strong>Streak:</strong> Keep logging in to boost your XP!</li>
-      <li><strong>WAI Tokens:</strong> Earn by sharing or referring friends. Swap for premium or $WARP.</li>
-      <li><strong>$WARP:</strong> Our token, buy it on Zora to unlock perks.</li>
+      <li><strong>Price:</strong> 0.01 ETH per 100 $WARP</li>
+      <li><strong>Use:</strong> Unlock premium, boost XP, or trade.</li>
+      <li><strong>Zora:</strong> <a href="https://zora.co/YOUR_ZORA_LINK" target="_blank">Buy on Zora</a></li>
     </ul>
-    <button onclick="toggleXpInfo()">Start Tracking!</button>
+    <button onclick="toggleWarpInfo()">Close</button>
   </div>
 </div>
 
