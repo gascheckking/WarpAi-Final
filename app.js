@@ -143,7 +143,7 @@ if (claimTokenBtn) claimTokenBtn.addEventListener('click', () => {
 
       async function connectWithWalletConnect() {
         try {
-          const walletConnectProvider = new WalletConnectProvider({
+          const walletConnectProvider = new window.WalletConnectProvider.default({
             rpc: { 8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}` },
             chainId: 8453
           });
