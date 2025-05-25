@@ -269,20 +269,7 @@ if (latestTx.length > 0) {
           console.error('Error fetching onchain data:', error);
         }
       }
-
-      if (connectWalletBtn) {
-  connectWalletBtn.addEventListener('click', async () => {
-    if (userAddress) {
-  disconnectWallet();
-  return;
-}
-
-
-    // 🔄 Connect-läge
-    await connectWithWalletConnect();
-  });
-}
-
+     
 
           }
 
