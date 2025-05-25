@@ -146,9 +146,9 @@ if (claimTokenBtn) claimTokenBtn.addEventListener('click', () => {
         if (connectWalletBtn) {
   connectWalletBtn.addEventListener('click', async () => {
     if (userAddress) {
-      disconnectWallet(); // ✅ Använd funktionen
-      return;
-    }
+  disconnectWallet();
+  return;
+}
 
     // 🔄 Connect-läge
     await connectWithWalletConnect();
@@ -273,18 +273,10 @@ if (latestTx.length > 0) {
       if (connectWalletBtn) {
   connectWalletBtn.addEventListener('click', async () => {
     if (userAddress) {
-      // 🔌 Disconnect-läge
-      provider = null;
-      signer = null;
-      userAddress = null;
-      connectWalletBtn.textContent = 'Connect Wallet';
-      if (walletAddress) walletAddress.textContent = 'Not Connected';
-      if (xpDisplay) xpDisplay.textContent = '0 XP 🔥';
-      if (totalXP) totalXP.textContent = '0';
-      if (currentXP) currentXP.textContent = '🔥 0 XP';
-      localStorage.clear();
-      return;
-    }
+  disconnectWallet();
+  return;
+}
+
 
     // 🔄 Connect-läge
     await connectWithWalletConnect();
