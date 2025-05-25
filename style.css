@@ -472,6 +472,37 @@ body.dark-mode .modal-content {
 .upgrade-button-green:hover {
   background-color: #228b53;
 }
+
+.track-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.track-grid .card.full {
+  grid-column: span 2;
+}
+
+.track-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#refreshTrackBtn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+#refreshTrackBtn:hover {
+  opacity: 1;
+}
+
 .custom-home-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
