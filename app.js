@@ -1,15 +1,26 @@
 let walletConnected = false;
 
 // Wallet Connect Button Toggle
-document.getElementById("connectWallet").addEventListener("click", () => {
+document.getElementById("connectWallet").addEventListener("click", async () => {
   walletConnected = !walletConnected;
-
   const button = document.getElementById("connectWallet");
   const xpDisplay = document.getElementById("xpDisplay");
 
   if (walletConnected) {
-    button.textContent = "Connected";
-    xpDisplay.textContent = "🔥 87 XP";
+    try {
+      // Modern dApp browsers
+      if (window.ethereum) {
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        button.textContent = "Connected";
+        xpDisplay.textContent = "🔥 87 XP";
+      } else {
+        alert("MetaMask or WalletConnect not found.");
+        walletConnected = false;
+      }
+    } catch (err) {
+      console.error("Wallet connection error:", err);
+      walletConnected = false;
+    }
   } else {
     button.textContent = "Connect Wallet";
     xpDisplay.textContent = "0 XP 🔥";
@@ -96,7 +107,10 @@ function toggleXpInfo() {
   document.getElementById("xpInfoModal").classList.toggle("hidden");
 }
 
-// Earn XP modal toggle
+// Earn XP modal toggle (if used)
 function toggleHowToEarn() {
-  document.getElementById("earnExplanation").classList.toggle("hidden");
+  const modal = document.getElementById("earnExplanation");
+  if (modal) {
+    modal.classList.toggle("hidden");
+  }
 }
