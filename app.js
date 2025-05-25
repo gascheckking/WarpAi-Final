@@ -204,43 +204,45 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
       if (connectWalletBtn) {
-        connectWalletBtn.addEventListener('click', async () => {
-          if (userAddress) {
-            disconnectWallet();
-            return;
-          }
+  connectWalletBtn.addEventListener('click', async () => {
+    if (userAddress) {
+      disconnectWallet();
+      return;
+    }
 
-          if (!confirm('Are you sure you want to connect your wallet?')) {
-            return;
-          }
+    if (!confirm('Are you sure you want to connect your wallet?')) {
+      return;
+    }
 
-          if (window.ethereum) {
-            try {
-              provider = new ethers.providers.Web3Provider(window.ethereum);
-              await window.ethereum.request({ method: 'eth_requestAccounts' });
-              await window.ethereum.request({
-                method: 'wallet_switchEthereumChain',
-                params: [{ chainId: '0x2105' }],
-              });
-              signer = provider.getSigner();
-              userAddress = await signer.getAddress();
-              if (connectWalletBtn) {
-                connectWalletBtn.textContent = 'Disconnect';
-              }
-              if (xpDisplay) xpDisplay.textContent = '180 XP 🔥';
-              if (totalXP) totalXP.textContent = '180';
-              if (currentXP) currentXP.textContent = '🔥 180 XP';
-              if (walletAddress) walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
-              loadOnchainData();
-            } catch (error) {
-              console.error('MetaMask failed:', error);
-              alert('MetaMask failed: ' + error.message);
-            }
-          } else {
-            await connectWithWalletConnect();
-          }
+    if (window.ethereum && typeof ethers !== 'undefined') {
+      try {
+        provider = new ethers.providers.Web3Provider(window.ethereum);
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x2105' }],
         });
+        signer = provider.getSigner();
+        userAddress = await signer.getAddress();
+        if (connectWalletBtn) connectWalletBtn.textContent = 'Disconnect';
+        if (xpDisplay) xpDisplay.textContent = '180 XP 🔥';
+        if (totalXP) totalXP.textContent = '180';
+        if (currentXP) currentXP.textContent = '🔥 180 XP';
+        if (walletAddress) walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
+        loadOnchainData();
+      } catch (error) {
+        console.error('MetaMask failed:', error);
+        alert('MetaMask failed: ' + error.message);
       }
+    } else {
+      if (typeof ethers === 'undefined') {
+        alert('Ethers.js failed to load. Please refresh the page or check your internet connection.');
+        return;
+      }
+      await connectWithWalletConnect();
+    }
+  });
+}
 
       if (claimXpBtn) {
         claimXpBtn.addEventListener('click', () => {
