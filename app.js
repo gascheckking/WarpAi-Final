@@ -1,116 +1,349 @@
-let walletConnected = false;
-
-// Wallet Connect Button Toggle
-document.getElementById("connectWallet").addEventListener("click", async () => {
-  walletConnected = !walletConnected;
-  const button = document.getElementById("connectWallet");
-  const xpDisplay = document.getElementById("xpDisplay");
-
-  if (walletConnected) {
-    try {
-      // Modern dApp browsers
-      if (window.ethereum) {
-        await window.ethereum.request({ method: "eth_requestAccounts" });
-        button.textContent = "Connected";
-        xpDisplay.textContent = "🔥 87 XP";
-      } else {
-        alert("MetaMask or WalletConnect not found.");
-        walletConnected = false;
-      }
-    } catch (err) {
-      console.error("Wallet connection error:", err);
-      walletConnected = false;
-    }
-  } else {
-    button.textContent = "Connect Wallet";
-    xpDisplay.textContent = "0 XP 🔥";
-  }
-});
-
-// Tab switching logic
-const tabs = document.querySelectorAll(".tab-button");
-const sections = document.querySelectorAll(".tab-content");
-
-tabs.forEach((tab, i) => {
-  tab.addEventListener("click", () => {
-    tabs.forEach(btn => btn.classList.remove("active"));
-    tab.classList.add("active");
-
-    sections.forEach(sec => sec.style.display = "none");
-    sections[i].style.display = "block";
-  });
-});
-
-// Settings dropdown toggle
-const settingsBtn = document.getElementById("settingsBtn");
-const settingsMenu = document.getElementById("settingsMenu");
-
-settingsBtn.addEventListener("click", () => {
-  const isVisible = settingsMenu.style.display === "block";
-  settingsMenu.style.display = isVisible ? "none" : "block";
-});
-
-// Hide settings menu if clicking outside
-document.addEventListener("click", (e) => {
-  if (!settingsBtn.contains(e.target) && !settingsMenu.contains(e.target)) {
-    settingsMenu.style.display = "none";
-  }
-});
-
-// Dark mode toggle
-document.getElementById("toggleTheme").addEventListener("change", (e) => {
-  if (e.target.checked) {
-    document.body.style.backgroundColor = "#ffffff";
-    document.body.style.color = "#000000";
-  } else {
-    document.body.style.backgroundColor = "#0f1115";
-    document.body.style.color = "#ffffff";
-  }
-});
-
-// Onboarding animation delay
-window.addEventListener("load", () => {
-  const onboarding = document.getElementById("onboardingOverlay");
-
-  setTimeout(() => {
-    onboarding.classList.add("fade-out");
-    setTimeout(() => {
-      onboarding.style.display = "none";
-    }, 1000);
-  }, 3000);
-});
-
-// Referral link + share buttons
-function copyReferral() {
-  const link = "https://warp-ai-final.vercel.app/?ref=yourUser123";
-  navigator.clipboard.writeText(link);
-  alert("Referral link copied!");
+/* RESET & BODY */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #0f1115;
+  color: #ffffff;
 }
 
-function shareOnX() {
-  const text = encodeURIComponent("Track your wallet live with WarpAi! Get XP + WAI rewards:");
-  const url = encodeURIComponent("https://warp-ai-final.vercel.app");
-  window.open(`https://twitter.com/intent/tweet?text=${text}%20${url}`, "_blank");
+/* HEADER */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.8rem 0.2rem;
+  background-color: #12141a;
+  border-bottom: 1px solid #292d36;
 }
 
-function shareOnFarcaster() {
-  alert("Farcaster share coming soon – stay tuned!");
+.logo-title {
+  display: flex;
+  align-items: center;
 }
 
-// FAQ toggle
-function toggleFAQ() {
-  document.getElementById("faqModal").classList.toggle("hidden");
+.logo-icon-fixed {
+  width: 180px;
+  height: auto;
 }
 
-// XP Info toggle
-function toggleXpInfo() {
-  document.getElementById("xpInfoModal").classList.toggle("hidden");
+.wallet-ui {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-// Earn XP modal toggle (if used)
-function toggleHowToEarn() {
-  const modal = document.getElementById("earnExplanation");
-  if (modal) {
-    modal.classList.toggle("hidden");
-  }
+/* SETTINGS */
+.settings-wrapper {
+  position: relative;
+}
+
+.settings-icon {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: white;
+}
+
+.settings-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 2rem;
+  background-color: #1b1d23;
+  padding: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #000;
+  z-index: 100;
+  width: 180px;
+}
+
+.settings-dropdown button,
+.settings-dropdown label {
+  display: block;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 0.8rem;
+  text-align: left;
+  padding: 0.3rem 0;
+  cursor: pointer;
+}
+
+.settings-dropdown hr {
+  border: 0;
+  border-top: 1px solid #333;
+  margin: 0.5rem 0;
+}
+
+/* NAVIGATION */
+.nav-tabs {
+  display: flex;
+  justify-content: space-around;
+  padding: 0.3rem 0;
+  background-color: #12141a;
+  border-top: 1px solid #292d36;
+  border-bottom: 1px solid #292d36;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.tab-button.active {
+  color: #a674ff;
+  text-decoration: underline;
+}
+
+/* MAIN */
+main {
+  padding: 0.6rem 0.5rem;
+  max-width: 480px;
+  margin: auto;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.hero h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.2rem;
+  color: #a674ff;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: #bbb;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* CARDS */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.card {
+  background-color: #1b1d23;
+  padding: 0.6rem;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+}
+
+.card p,
+.card ul {
+  margin: 0 0 0.5rem;
+  font-size: 0.7rem;
+  color: #ccc;
+}
+
+.card ul {
+  padding-left: 1rem;
+  text-align: left;
+}
+
+.card button {
+  padding: 0.35rem 0.7rem;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+
+/* VARIANTS */
+.card.green { background-color: #2c9463; }
+.card.dark { background-color: #333; }
+.card.blue { background-color: #264e70; }
+.card.purple { background-color: #3b1d5e; }
+
+.card.purple .btn-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.card.purple button {
+  background-color: #9146ff;
+  width: 100%;
+}
+
+.card.full {
+  grid-column: span 2;
+  margin-top: 0.5rem;
+}
+
+.card.premium ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 0.75rem;
+  color: #ccc;
+  text-align: left;
+}
+
+.card.premium ul li::before {
+  content: "⭐ ";
+  color: #f39c12;
+}
+
+.card.highlighted-premium {
+  border: 1px solid orange;
+  padding: 1rem;
+  background-color: #12141a;
+}
+
+.card.earn {
+  background-color: #1b1d23;
+  border-left: 4px solid #4caf50;
+}
+
+.card.earn button {
+  margin-top: 0.4rem;
+  padding: 0.4rem;
+  background-color: #2c9463;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* XP JOURNEY */
+.card.journey {
+  background-color: #20232a;
+  padding: 1rem;
+  color: white;
+}
+
+.xp-bar {
+  background-color: #444;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 10px;
+  margin: 0.5rem 0;
+}
+
+.xp-fill {
+  height: 100%;
+  background: linear-gradient(to right, #4caf50, #00e676);
+  width: 0%;
+  transition: width 0.5s ease-in-out;
+}
+
+/* MODALS */
+.modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background-color: #1b1d23;
+  padding: 1.2rem;
+  border-radius: 10px;
+  max-width: 300px;
+  color: white;
+  text-align: left;
+  box-shadow: 0 0 10px #000;
+}
+
+/* INFO-BUTTONS */
+.info-btn,
+.faq-btn {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.info-btn:hover,
+.faq-btn:hover {
+  background-color: #555;
+}
+
+.info-btn.green {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+}
+
+.info-btn.green:hover {
+  background-color: #45a049;
+}
+
+/* EXTRAS */
+.faq-top-right {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 50;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.mini-info-btn {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 0.9rem;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.mini-info-btn:hover {
+  color: white;
+}
+
+.compact-track-hero {
+  margin-bottom: 0.5rem;
+  padding-bottom: 0;
+}
+
+/* Premium låsta kort */
+.card.dark[disabled],
+.card.dark button[disabled] {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+button[disabled] {
+  background: #666 !important;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
 }
