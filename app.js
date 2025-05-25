@@ -162,14 +162,19 @@ setTimeout(() => claimedPopup.remove(), 2000);
             chainId: 8453
           });
           walletConnectProvider.on('display_uri', (uri) => {
+  // 📱 Om mobil → öppna direkt i TrustWallet
+  if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+    window.open(`https://link.trustwallet.com/wc?uri=${encodeURIComponent(uri)}`, '_blank');
+    return;
+  }
+
+  // 💻 Visa QR + länkar (desktop)
   if (qrCodeDiv) {
     qrCodeDiv.innerHTML = '';
     new QRCode(qrCodeDiv, { text: uri, width: 200, height: 200 });
     qrModal.classList.remove('hidden');
 
-    // 🔥 Lägg till deep links här:
     const encodedUri = encodeURIComponent(uri);
-
     const walletLinks = {
       MetaMask: `https://metamask.app.link/wc?uri=${encodedUri}`,
       TrustWallet: `https://link.trustwallet.com/wc?uri=${encodedUri}`,
