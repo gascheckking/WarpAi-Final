@@ -3,7 +3,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const appContent = document.getElementById('appContent');
   const qrModal = document.getElementById('qrModal');
   const qrCodeDiv = document.getElementById('qrCode');
+const shareFarcasterBtn = document.getElementById('shareFarcasterBtn');
+const shareXBtn = document.getElementById('shareXBtn');
+const waiBalance = document.getElementById('waiBalance');
+const claimHistory = document.getElementById('claimHistory');
+const claimTokenBtn = document.getElementById('claimTokenBtn');
 
+if (shareFarcasterBtn) shareFarcasterBtn.addEventListener('click', () => window.open('https://warpcast.com/~/compose?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank'));
+
+if (shareXBtn) shareXBtn.addEventListener('click', () => window.open('https://twitter.com/intent/tweet?text=Check out WarpAi! https://warpai.com/referral/' + userAddress + ' @YOUR_X_USERNAME', '_blank'));
+
+if (claimTokenBtn) claimTokenBtn.addEventListener('click', () => {
+  let balance = parseFloat(waiBalance.textContent.match(/\d+\.\d+/)[0]) || 0;
+  balance += 5;
+  waiBalance.textContent = `Balance: ${balance} WAI`;
+  let history = claimHistory.innerHTML;
+  claimHistory.innerHTML = `<li>+5 WAI – claimed token</li>${history}`;
+  alert('Claimed 5 WAI!');
+});
   // Onboarding Animation (3 sekunder totalt)
   onboardingOverlay.classList.add('fade-in-logo');
   setTimeout(() => {
