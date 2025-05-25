@@ -84,9 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       
       function toggleWarpInfo() {
-        const warpInfoModal = document.getElementById('warpInfoModal');
-        if (warpInfoModal) warpInfoModal.classList.toggle('hidden');
-      }
+  const warpInfoModal = document.getElementById('warpInfoModal');
+  if (warpInfoModal) {
+    warpInfoModal.classList.toggle('hidden');
+  } else {
+    console.error('warpInfoModal not found');
+  }
+}
 
       // Close QR Modal
       window.closeQrModal = function() {
