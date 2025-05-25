@@ -111,43 +111,39 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      connectWalletBtn.addEventListener('click', async () => {
-        if (window.ethereum) {
-          try {
-            provider = new ethers.providers.Web3Provider(window.ethereum);
-            await window.ethereum.request({ method: 'eth_requestAccounts' });
-            signer = provider.getSigner();
-            userAddress = await signer.getAddress();
-            walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
-            connectWalletBtn.style.display = 'none';
-            xpDisplay.textContent = '180 XP 🔥';
-            totalXP.textContent = '180';
-            currentXP.textContent = '🔥 180 XP';
-            loadOnchainData();
-          } catch (error) {
-            console.error('MetaMask connection failed:', error);
-            alert('MetaMask connection failed: ' + error.message);
-          }
-        } else {
-          await connectWithWalletConnect();
-        }
-      });
+     connectWalletBtn.addEventListener('click', async () => {
+  if (window.ethereum) {
+    try {
+      provider = new ethers.providers.Web3Provider(window.ethereum);
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      signer = provider.getSigner();
+      userAddress = await signer.getAddress();
+      connectWalletBtn.textContent = `Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`; // Ändra istället för att gömma
+      xpDisplay.textContent = '180 XP 🔥';
+      totalXP.textContent = '180';
+      currentXP.textContent = '🔥 180 XP';
+      loadOnchainData();
+    } catch (error) {
+      console.error('MetaMask failed:', error);
+      alert('MetaMask failed: ' + error.message);
+    }
+  } else {
+    await connectWithWalletConnect();
+  }
+});
 
       async function loadOnchainData() {
-        if (!provider || !userAddress) return;
-
-        try {
-          const alchemyProvider = new ethers.providers.AlchemyProvider('mainnet', ALCHEMY_KEY);
-          const balance = await alchemyProvider.getBalance(userAddress);
-          const txCount = await alchemyProvider.getTransactionCount(userAddress);
-          const gasUsed = await alchemyProvider.getGasPrice();
-
-          latestActivity.textContent = `Bought Token on Zora`;
-          activityResult.textContent = `+ $${(ethers.utils.formatEther(balance) * 3000).toFixed(2)} Win`;
-          tokensMinted.textContent = `${txCount} st`;
-          ethMoved.textContent = `${ethers.utils.formatEther(balance)} ETH total`;
-          gasSpent.textContent = `${ethers.utils.formatEther(gasUsed)} ETH (~$${(ethers.utils.formatEther(gasUsed) * 3000).toFixed(2)})`;
-          connectedDapps.innerHTML = `<li>Zora</li><li>OpenSea</li><li>Base</li>`;
+  if (!provider || !userAddress) return;
+  const alchemyProvider = new ethers.providers.AlchemyProvider('mainnet', 'YOUR_ALCHEMY_API_KEY');
+  const balance = await alchemyProvider.getBalance(userAddress);
+  const txCount = await alchemyProvider.getTransactionCount(userAddress);
+  const gasUsed = await alchemyProvider.getGasPrice();
+  latestActivity.textContent = `Bought Token on Zora`;
+  activityResult.textContent = `+ $${(ethers.utils.formatEther(balance) * 3000).toFixed(2)} Win`;
+  tokensMinted.textContent = `${txCount} st`;
+  ethMoved.textContent = `${ethers.utils.formatEther(balance)} ETH total`;
+  gasSpent.textContent = `${ethers.utils.formatEther(gasUsed)} ETH (~$${(ethers.utils.formatEther(gasUsed) * 3000).toFixed(2)})`;
+  connectedDapps.innerHTML = `<li>Zora</li><li>OpenSea</li><li>Base</li>`;
         } catch (error) {
           console.error('Error fetching onchain data:', error);
         }
