@@ -528,3 +528,38 @@ body.dark-mode .modal-content {
 #qrModal button:hover {
   background-color: #45a049;
 }
+
+.nav-tabs {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #444;
+  margin-bottom: 1rem;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: #fff;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.tab-button.active {
+  color: #00ff88;
+  border-bottom: 2px solid #00ff88;
+}
+
+.tab-button:hover {
+  color: #00ff88;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
