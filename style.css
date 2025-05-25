@@ -468,3 +468,26 @@ body.dark-mode .xp-bar {
 body.dark-mode .modal-content {
   background-color: #1b1d23;
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const tabButtons = document.querySelectorAll(".tab-button");
+  const tabContents = document.querySelectorAll(".tab-content");
+
+  tabButtons.forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+      // Ta bort active-klass från alla knappar
+      tabButtons.forEach((b) => b.classList.remove("active"));
+      // Göm alla sektioner
+      tabContents.forEach((section) => (section.style.display = "none"));
+
+      // Lägg till active-klass på vald knapp
+      btn.classList.add("active");
+      // Visa vald sektion
+      tabContents[index].style.display = "block";
+    });
+  });
+
+  // Visa bara första fliken från början
+  tabContents.forEach((section, i) => {
+    section.style.display = i === 0 ? "block" : "none";
+  });
+});
