@@ -137,25 +137,29 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       connectWalletBtn.addEventListener('click', async () => {
-        if (window.ethereum) {
-          try {
-            provider = new ethers.providers.Web3Provider(window.ethereum);
-            await window.ethereum.request({ method: 'eth_requestAccounts' });
-            signer = provider.getSigner();
-            userAddress = await signer.getAddress();
-            connectWalletBtn.textContent = `Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
-            xpDisplay.textContent = '180 XP 🔥';
-            totalXP.textContent = '180';
-            currentXP.textContent = '🔥 180 XP';
-            loadOnchainData();
-          } catch (error) {
-            console.error('MetaMask failed:', error);
-            alert('MetaMask failed: ' + error.message);
-          }
-        } else {
-          await connectWithWalletConnect();
-        }
-      });
+        if (!confirm('Are you sure you want to connect your wallet?')) {
+    return; // Avbryt om användaren klickar "Cancel"
+  }
+
+  if (window.ethereum) {
+    try {
+      provider = new ethers.providers.Web3Provider(window.ethereum);
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      signer = provider.getSigner();
+      userAddress = await signer.getAddress();
+      connectWalletBtn.textContent = `Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
+      xpDisplay.textContent = '180 XP 🔥';
+      totalXP.textContent = '180';
+      currentXP.textContent = '🔥 180 XP';
+      loadOnchainData();
+    } catch (error) {
+      console.error('MetaMask failed:', error);
+      alert('MetaMask failed: ' + error.message);
+    }
+  } else {
+    await connectWithWalletConnect();
+  }
+});
 
       // Button Actions
       claimXpBtn.addEventListener('click', () => {
