@@ -82,6 +82,11 @@ document.addEventListener('DOMContentLoaded', () => {
       function toggleXpInfo() {
         xpInfoModal.classList.toggle('hidden');
       }
+      
+      function toggleWarpInfo() {
+  const warpInfoModal = document.getElementById('warpInfoModal');
+  if (warpInfoModal) warpInfoModal.classList.toggle('hidden');
+}
 
       // Close QR Modal
 window.closeQrModal = function() {
