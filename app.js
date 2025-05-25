@@ -36,7 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
         disconnectWallet();
         return;
       }
-      await connectWithWalletConnect();
+      await connectWithMetaMask();
+
     });
   }
 
@@ -55,30 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ✅ Connect-funktion
-  async function connectWithWalletConnect() {
-    try {
-      const walletConnectProvider = new window.WalletConnectProvider.default({
-        rpc: { 8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}` },
-        chainId: 8453
-      });
-
-      walletConnectProvider.on('display_uri', (uri) => {
-        if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
-  setTimeout(() => {
-    window.open(`https://link.trustwallet.com/wc?uri=${encodeURIComponent(uri)}`, '_blank');
-  }, 500); // ge mobilen tid att hinna ladda
-  return;
-}
-
-        if (qrCodeDiv) {
-          qrCodeDiv.innerHTML = '';
-          new QRCode(qrCodeDiv, { text: uri, width: 200, height: 200 });
-          qrModal.classList.remove('hidden');
-        }
-      });
-
-      await walletConnectProvider.enable();
-      provider = new ethers.providers.Web3Provider(walletConnectProvider);
+  async function connectWithMetaMask() {
+  try {
+    if (window.ethereum) {
+      provider = new ethers.providers.Web3Provider(window.ethereum);
+      await provider.send("eth_requestAccounts", []);
       signer = provider.getSigner();
       userAddress = await signer.getAddress();
 
@@ -86,12 +68,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (walletAddress) walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
 
       loadOnchainData();
-      if (qrModal) qrModal.classList.add('hidden');
-    } catch (error) {
-      console.error('WalletConnect failed:', error);
-      alert('WalletConnect failed: ' + error.message);
+    } else {
+      alert("MetaMask not found. Please install MetaMask extension.");
     }
+  } catch (error) {
+    console.error("MetaMask connect failed:", error);
+    alert("Connection failed: " + error.message);
   }
+}
+
 
   // ✅ Hämta data till gränssnitt
   async function loadOnchainData() {
