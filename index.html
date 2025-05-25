@@ -47,33 +47,44 @@
     <main>
       <!-- HOME -->
       <section class="tab-content home" data-tab="home" style="display: block;">
-        <div class="card-grid">
-          <div class="card dark">
-            <h3>Claim XP</h3>
-            <p>Daily XP bonus</p>
-            <button id="claimXpBtn">Claim</button>
-          </div>
-          <div class="card dark">
-            <h3>Buy WarpAi Token</h3>
-            <p>Purchase on Zora!</p>
-            <button id="buyTokenBtn" onclick="toggleWarpInfo()">Buy Now</button>
-          </div>
-          <div class="card dark">
-            <h3><span id="currentXP">🔥 0 XP</span></h3>
-            <p>0-day streak</p>
-            <button class="info-btn green" onclick="toggleXpInfo()">About XP & WAI</button>
-          </div>
-                    <div class="card full journey">
-            <h3>🎁 Claim Daily Bonus</h3>
-<p>Earn XP & grow your streak</p>
-<button>Claim Now</button>
-          </div>
-        </div>
-        <div class="card dark">
-  <h3>🔥 Daily Streak</h3>
-  <p>Current streak: 5 days</p>
-  <button>Boost Streak</button>
-</div>
+  <div class="custom-home-grid">
+    <!-- RUTA 1 -->
+    <div class="card dark tall">
+      <h3>🎯 Your Activity</h3>
+      <p>XP: 0 🔥<br>Streak: 5 days<br>Claimed: ✅</p>
+      <button disabled>Claim Again Tomorrow</button>
+    </div>
+
+    <!-- RUTA 2 -->
+    <div class="card dark">
+      <h3>🏆 Level & Bonus</h3>
+      <p>Level 1 → 200 XP</p>
+      <div class="xp-bar small">
+        <div class="xp-fill" style="width: 25%;"></div>
+      </div>
+      <small>Bonus: +10%</small>
+    </div>
+
+    <!-- RUTA 3 -->
+    <div class="card dark">
+      <h3>🔗 Referral & Earn</h3>
+      <p>Earn WAI for every invite</p>
+      <button id="copyReferralBtn">Copy Link</button>
+    </div>
+
+    <!-- RUTA 4 -->
+    <div class="card dark full">
+      <h3>ℹ️ About WarpAi & WAI</h3>
+      <p>
+        WarpAi tracks your onchain activity.  
+        Earn XP for every interaction.  
+        Claim WAI tokens daily.  
+        Unlock premium perks and level up.
+      </p>
+    </div>
+  </div>
+</section>
+
 
       </section>
 
