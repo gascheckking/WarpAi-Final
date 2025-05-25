@@ -66,17 +66,24 @@ if (claimTokenBtn) claimTokenBtn.addEventListener('click', () => {
 
       // Tab Switching
       tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          tabButtons.forEach(btn => btn.classList.remove('active'));
-          button.classList.add('active');
-          tabContents.forEach(content => {
-            content.style.display = 'none';
-            if (content.getAttribute('data-tab') === button.getAttribute('data-tab')) {
-              content.style.display = 'block';
-            }
-          });
-        });
-      });
+  button.addEventListener('click', () => {
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
+    tabContents.forEach(content => {
+      content.style.display = 'none';
+      if (content.getAttribute('data-tab') === button.getAttribute('data-tab')) {
+        content.style.display = 'block';
+
+        // ⏱️ Refresh funktioner beroende på flik
+        const selectedTab = button.getAttribute('data-tab');
+        if (selectedTab === 'track') loadOnchainData();
+        if (selectedTab === 'profile') updateProfileUI(); // om du har nån
+        // Lägg till fler flik-refresh om du vill
+      }
+    });
+  });
+});
+
 
       // Settings Menu
       settingsBtn.addEventListener('click', () => {
