@@ -193,6 +193,70 @@
 
     <!-- PROFILE -->
     <!-- (Din tidigare kod för Profile & Modals fortsätter här) -->
+<!-- PROFILE -->
+<section class="tab-content" style="display:none;">
+  <div class="hero">
+    <h2>👤 My Profile</h2>
+    <p class="subtitle">Account overview & referral bonuses</p>
+  </div>
+  <div class="card-grid">
+    <div class="card dark">
+      <h3>Wallet</h3>
+      <p>0x1234...ABCD</p>
+      <p>Total XP: <strong>87</strong></p>
+    </div>
+    <div class="card dark">
+      <h3>WarpAi Token</h3>
+      <p>Balance: 342.50 WAI</p>
+      <p>Level Bonus: 10%</p>
+    </div>
+    <div class="card dark">
+      <h3>Claim Token</h3>
+      <p>Reward: 5 WAI</p>
+      <button>Claim</button>
+    </div>
+    <div class="card dark">
+      <h3>Share Link</h3>
+      <p>Earn 5 WAI per share</p>
+      <button onclick="shareOnFarcaster()">Share on Farcaster</button>
+      <button onclick="shareOnX()">Share on X</button>
+    </div>
+    <div class="card full premium">
+      <h3>📦 Claim History</h3>
+      <ul>
+        <li>+5 WAI – shared on X</li>
+        <li>+5 WAI – referred friend</li>
+        <li>+10 WAI – weekly login</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- MODALS -->
+<div id="faqModal" class="modal hidden">
+  <div class="modal-content">
+    <h3>❓ How WarpAi Works</h3>
+    <ul>
+      <li><strong>XP:</strong> Earned daily via login, invites, and actions.</li>
+      <li><strong>WAI Tokens:</strong> Earned through shares and claims.</li>
+      <li><strong>Premium:</strong> Unlock extra tools and 2x XP.</li>
+    </ul>
+    <button onclick="toggleFAQ()">Close</button>
+  </div>
+</div>
+
+<div id="xpInfoModal" class="modal hidden">
+  <div class="modal-content">
+    <h3>❓ About XP & WAI</h3>
+    <ul>
+      <li><strong>XP:</strong> Earned daily via login, invites, and actions.</li>
+      <li><strong>Streak Bonus:</strong> Keep your login streak alive.</li>
+      <li><strong>WAI:</strong> Token rewarded for activity & sharing.</li>
+      <li><strong>Premium:</strong> Track wallets, get analytics & more.</li>
+    </ul>
+    <button onclick="toggleXpInfo()">Got it!</button>
+  </div>
+</div>
 
   </main>
 
