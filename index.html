@@ -93,45 +93,37 @@
 
       <!-- TRACK -->
       <section class="tab-content track" data-tab="track" style="display: none;">
-        <div class="hero">
-          <h2>📈 Onchain Activity</h2>
-        </div>
-        <div class="card-grid">
-          <div class="card dark">
-            <h3>Latest Activity</h3>
-            <p id="latestActivity">Loading...</p>
-<small id="activityResult">$0</small>
-          </div>
-          <div class="card dark">
-            <h3>Tokens Minted</h3>
-            <p id="tokensMinted">23 st</p>
-          </div>
-          <div class="card dark">
-            <h3>ETH Moved</h3>
-            <p id="ethMoved">1.65 ETH total</p>
-          </div>
-          <div class="card dark">
-            <h3>Gas Spent</h3>
-            <p id="gasSpent">0.14 ETH (~$42)</p>
-          </div>
-          <div class="card dark">
-            <h3>Connected dApps</h3>
-            <ul id="connectedDapps">
-              <li>Zora</li>
-              <li>OpenSea</li>
-              <li>Base</li>
-            </ul>
-          </div>
-          <div class="card dark">
-            <h3>🎨 NFT Mint History</h3>
-            <ul id="nftHistory" style="text-align: left; padding-left: 1rem; font-size: 0.75rem; line-height: 1.5;">
-              <li><strong>BaseBuddies #024</strong> – 0.02 ETH – Zora</li>
-              <li><strong>MintQuest #7</strong> – Free – Base</li>
-              <li><strong>OnchainSticker</strong> – 0.004 ETH – Optimism</li>
-            </ul>
-            <button id="viewHistoryBtn">View Full History</button>
-          </div>
-        </div>
+  <div class="track-grid">
+    <div class="card dark">
+      <h3>Tokens Minted</h3>
+      <p id="tokensMinted">0 st</p>
+    </div>
+    <div class="card dark">
+      <h3>ETH Moved</h3>
+      <p id="ethMoved">0 ETH total</p>
+    </div>
+    <div class="card dark">
+      <h3>Gas Spent</h3>
+      <p id="gasSpent">0 ETH</p>
+    </div>
+    <div class="card dark">
+      <h3>Connected dApps</h3>
+      <ul id="connectedDapps">
+        <li>-</li>
+      </ul>
+    </div>
+
+    <!-- Latest Activity Full Width -->
+    <div class="card dark full">
+      <div class="track-header-row">
+        <h3>📜 Latest Activity</h3>
+        <button id="refreshTrackBtn">↻</button>
+      </div>
+      <p id="latestActivity">Loading...</p>
+      <small id="activityResult">$0</small>
+    </div>
+  </div>
+</section>
       </section>
 
       <!-- REWARDS -->
