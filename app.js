@@ -143,13 +143,18 @@ if (claimTokenBtn) claimTokenBtn.addEventListener('click', () => {
         provider = null;
         signer = null;
         userAddress = null;
-        if (connectWalletBtn) connectWalletBtn.textContent = 'Connect Wallet';
-        xpDisplay.textContent = '0 XP 🔥';
-        totalXP.textContent = '0';
-        currentXP.textContent = '🔥 0 XP';
-        walletAddress.textContent = 'Not Connected';
-        document.querySelector('.subtitle').textContent = 'Track your own wallet activity';
-      }
+        if (connectWalletBtn) {
+  connectWalletBtn.addEventListener('click', async () => {
+    if (userAddress) {
+      disconnectWallet(); // ✅ Använd funktionen
+      return;
+    }
+
+    // 🔄 Connect-läge
+    await connectWithWalletConnect();
+  });
+}
+
 
       // Wallet Connection with Ethers.js and WalletConnect
       const ETHERSCAN_KEY = 'Y1VRJKQB1A4K2JTA8GE1YDH3W54W4I35D5';
