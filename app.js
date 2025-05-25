@@ -156,21 +156,30 @@ function disconnectWallet() {
   if (!provider || !userAddress) return;
 
   try {
-    const alchemyProvider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
-    const balance = await alchemyProvider.getBalance(userAddress);
-    const txCount = await alchemyProvider.getTransactionCount(userAddress);
-    const gasUsed = await alchemyProvider.getGasPrice();
+  const alchemyProvider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
+  const balance = await alchemyProvider.getBalance(userAddress);
+  const txCount = await alchemyProvider.getTransactionCount(userAddress);
+  // Calculate XP based on transactions (10 XP per tx)
+  const xp = txCount * 10;
+  if (currentXP) currentXP.textContent = `🔥 ${xp} XP`;
+  if (totalXP) totalXP.textContent = xp;
+  if (xpDisplay) xpDisplay.textContent = `${xp} XP 🔥`;
+  // Update progress bar (assuming 200 XP for next level)
+  const progressPercent = Math.min((xp / 200) * 100, 100);
+  const xpFill = document.querySelector('.xp-fill');
+  if (xpFill) xpFill.style.width = `${progressPercent}%`;
+  const gasUsed = await alchemyProvider.getGasPrice();
 
-    if (latestActivity) latestActivity.textContent = `Bought Token on Zora`;
-    if (activityResult) activityResult.textContent = `+ $${(ethers.utils.formatEther(balance) * 3000).toFixed(2)} Win`;
-    if (tokensMinted) tokensMinted.textContent = `${txCount} st`;
-    if (ethMoved) ethMoved.textContent = `${ethers.utils.formatEther(balance)} ETH total`;
-    if (gasSpent) gasSpent.textContent = `${ethers.utils.formatEther(gasUsed)} ETH (~$${(ethers.utils.formatEther(gasUsed) * 3000).toFixed(2)})`;
-    if (connectedDapps) connectedDapps.innerHTML = `<li>Zora</li><li>OpenSea</li><li>Base</li>`;
+  if (latestActivity) latestActivity.textContent = `Bought Token on Zora`;
+  if (activityResult) activityResult.textContent = `+ $${(ethers.utils.formatEther(balance) * 3000).toFixed(2)} Win`;
+  if (tokensMinted) tokensMinted.textContent = `${txCount} st`;
+  if (ethMoved) ethMoved.textContent = `${ethers.utils.formatEther(balance)} ETH total`;
+  if (gasSpent) gasSpent.textContent = `${ethers.utils.formatEther(gasUsed)} ETH (~$${(ethers.utils.formatEther(gasUsed) * 3000).toFixed(2)})`;
+  if (connectedDapps) connectedDapps.innerHTML = `<li>Zora</li><li>OpenSea</li><li>Base</li>`;
 
-    if (document.querySelector('.subtitle')) {
-      document.querySelector('.subtitle').textContent = `Track your own wallet activity (Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)})`;
-    }
+  if (document.querySelector('.subtitle')) {
+    document.querySelector('.subtitle').textContent = `Track your own wallet activity (Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)})`;
+  }
     if (viewHistoryBtn) {
       viewHistoryBtn.addEventListener('click', () => {
         alert('Full NFT history for your wallet: Check console for details');
