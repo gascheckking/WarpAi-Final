@@ -29,7 +29,7 @@
             <button>🔔 Notifications</button>
             <button>🌐 Language: English</button>
             <button>📲 Device Settings</button>
-            <button>🚪 Logout</button>
+            <button>🚪 Disconnect</button>
           </div>
         </div>
       </div>
@@ -40,12 +40,11 @@
       <button class="tab-button" data-tab="track">📈 Track</button>
       <button class="tab-button" data-tab="rewards">🎁 Rewards</button>
       <button class="tab-button" data-tab="premium">💎 Premium</button>
-      <button class="tab-button" data-tab="profile">👤 Profile</button>
     </nav>
 
     <main>
-      <!-- HOME – visas först -->
-      <section class="tab-content home" data-tab="home" style="display:block;">
+      <!-- HOME -->
+      <section class="tab-content home" data-tab="home" style="display: block;">
         <div class="card-grid">
           <div class="card green">
             <h3>Claim XP</h3>
@@ -53,36 +52,43 @@
             <button id="claimXpBtn">Claim</button>
           </div>
           <div class="card dark">
-  <h3>Buy $WARP</h3>
-  <p>Pre-launch on Zora</p>
-  <button id="buyTokenBtn" onclick="toggleWarpInfo()">Buy Now</button>
-</div>
-          <div class="card dark">
-  <h3><span id="currentXP">🔥 0 XP</span></h3>
-  <p>0-day streak</p>
-  <button class="info-btn green" onclick="toggleXpInfo()">About XP & WAI</button>
-</div>
-          
+            <h3>Buy WarpAi Token</h3>
+            <p>Purchase on Zora!</p>
+            <button id="buyTokenBtn" onclick="toggleWarpInfo()">Buy Now</button>
+          </div>
+          <div class="card green">
+            <h3><span id="currentXP">🔥 0 XP</span></h3>
+            <p>0-day streak</p>
+            <button class="info-btn green" onclick="toggleXpInfo()">About XP & WAI</button>
+          </div>
+          <div class="card dark full">
+            <h3>🎨 Recent NFT Mint</h3>
+            <ul id="recentNftMint">
+              <li>BaseBuddies #024 – 0.02 ETH – Zora</li>
+              <li>MintQuest #7 – Free – Base</li>
+            </ul>
+            <button id="viewRecentMintBtn">View More</button>
           </div>
           <div class="card full journey">
-  <h3>🎯 Your XP Journey</h3>
-  <p>Level <span id="level">1</span> → Next Level: <span id="nextLevelXP">200</span> XP</p>
-  <div class="xp-bar">
-    <div class="xp-fill" id="xpFill" style="width: 0%;"></div>
-  </div>
-  <small><span id="currentXPProgress">0</span> / <span id="nextLevelXP">200</span> XP</small>
-  <p id="badge" style="display:none;">🏆 Streak Master</p>
-</div>
+            <h3>🎯 Your XP Journey</h3>
+            <p>Level <span id="level">1</span> → Next Level: <span id="nextLevelXP">200</span> XP</p>
+            <div class="xp-bar">
+              <div class="xp-fill" id="xpFill" style="width: 0%;"></div>
+            </div>
+            <small><span id="currentXPProgress">0</span> / <span id="nextLevelXP">200</span> XP</small>
+            <p id="badge" style="display: none;">🏆 Streak Master</p>
+          </div>
+        </div>
       </section>
 
       <!-- TRACK -->
-      <section class="tab-content track" data-tab="track" style="display:none;">
+      <section class="tab-content track" data-tab="track" style="display: none;">
         <div class="hero">
           <h2>📈 Onchain Tracker</h2>
           <p class="subtitle">Track your own wallet activity</p>
         </div>
         <div class="card-grid">
-          <div class="card blue">
+          <div class="card green">
             <h3>Latest Activity</h3>
             <p id="latestActivity">Ex Bought Token on Zora</p>
             <small id="activityResult">+ $5.23 Win</small>
@@ -97,7 +103,7 @@
           </div>
           <div class="card dark">
             <h3>Gas Spent</h3>
-            <p id="gasPrice">0.14 ETH (~$42)</p>
+            <p id="gasSpent">0.14 ETH (~$42)</p>
           </div>
           <div class="card dark">
             <h3>Connected dApps</h3>
@@ -107,9 +113,9 @@
               <li>Base</li>
             </ul>
           </div>
-          <div class="card dark">
+          <div class="card dark full">
             <h3>🎨 NFT Mint History</h3>
-            <ul id="nftHistory" style="text-align:left; padding-left:1rem; font-size:0.75rem; line-height:1.5;">
+            <ul id="nftHistory" style="text-align: left; padding-left: 1rem; font-size: 0.75rem; line-height: 1.5;">
               <li><strong>BaseBuddies #024</strong> – 0.02 ETH – Zora</li>
               <li><strong>MintQuest #7</strong> – Free – Base</li>
               <li><strong>OnchainSticker</strong> – 0.004 ETH – Optimism</li>
@@ -120,46 +126,47 @@
       </section>
 
       <!-- REWARDS -->
-      <section class="tab-content rewards" data-tab="rewards" style="display:none;">
-        <div class="full earn rewards">
- <h2>🚀 Rewards & XP</h2>
+      <section class="tab-content rewards" data-tab="rewards" style="display: none;">
+        <div class="hero">
+          <h2>🚀 Rewards & XP</h2>
           <p class="subtitle">Boost your journey and earn daily perks</p>
+        </div>
         <div class="card-grid">
-          <div class="card full earn">
+          <div class="card dark full earn">
             <h3>🚀 Earn More WAI</h3>
             <p>Share the app and invite friends to earn WarpAi Tokens.</p>
             <button id="copyReferralBtn">Copy Referral Link</button>
-            <button id="shareOnXBtn()">Share on X</button>
-            <button id="shareOnFarcasterBtn()">Share on Farcaster</button>
+            <button id="shareOnXBtn">Share on X</button>
+            <button id="shareOnFarcasterBtn">Share on Farcaster</button>
           </div>
         </div>
       </section>
 
       <!-- PREMIUM -->
-      <section class="tab-content" data-tab="premium" style="display:none;">
+      <section class="tab-content premium" data-tab="premium" style="display: none;">
         <div class="hero">
           <h2>💎 Premium Tools</h2>
           <p class="subtitle">Upgrade to premium to unlock full features</p>
         </div>
         <div class="card-grid">
           <div class="card dark">
-            <h3>🔒 Wallet Tracker<br><span style="color:orange;">Premium</span></h3>
+            <h3>🔒 Wallet Tracker<br><span style="color: orange;">Premium</span></h3>
             <p>Track any public address</p>
           </div>
           <div class="card dark">
-            <h3>🔒 Multi-Wallet Support<br><span style="color:orange;">Premium</span></h3>
+            <h3>🔒 Multi-Wallet Support<br><span style="color: orange;">Premium</span></h3>
             <p>Claim & manage more wallets</p>
           </div>
           <div class="card dark">
-            <h3>🔒 Full Analytics<br><span style="color:orange;">Premium</span></h3>
+            <h3>🔒 Full Analytics<br><span style="color: orange;">Premium</span></h3>
             <p>Win/Loss, gas, performance over time</p>
           </div>
           <div class="card dark">
-            <h3>🔒 Advanced Alerts<br><span style="color:orange;">Premium</span></h3>
+            <h3>🔒 Advanced Alerts<br><span style="color: orange;">Premium</span></h3>
             <p>Set alerts for any wallet</p>
           </div>
-          <div class="card full dark">
-            <h3>🔍 Followed Wallets <span style="color:orange;">(Premium)</span></h3>
+          <div class="card dark full">
+            <h3>🔍 Followed Wallets <span style="color: orange;">(Premium)</span></h3>
             <p style="font-size: 0.9rem;">See recent activity for wallets you follow</p>
             <ul id="followedWallets" style="text-align: left; font-size: 0.75rem; padding-left: 1rem;">
               <li><strong>0xFanArt.eth</strong> – Minted on Zora</li>
@@ -167,7 +174,7 @@
               <li><strong>0xAIHunter</strong> – Bridged 0.5 ETH to Base</li>
             </ul>
             <div style="margin-top: 0.5rem;">
-              <button id="addWalletBtn" disabled style="opacity:0.6; cursor: not-allowed;">➕ Add Wallet (Premium)</button>
+              <button id="addWalletBtn" disabled style="opacity: 0.6; cursor: not-allowed;">➕ Add Wallet (Premium)</button>
             </div>
           </div>
           <div class="card full highlighted-premium" style="margin-top: 1rem;">
@@ -180,45 +187,6 @@
               <li>📦 Get full claim history & reports</li>
             </ul>
             <button id="upgradeBtn" class="upgrade-button-green">Upgrade Now</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- PROFILE -->
-      <section class="tab-content profile" data-tab="profile" style="display:none;">
-        <div class="hero">
-          <h2>👤 My Profile</h2>
-          <p class="subtitle">Account overview & referral bonuses</p>
-        </div>
-        <div class="card-grid">
-          <div class="card dark">
-            <h3>Wallet</h3>
-            <p id="walletAddress">Not Connected</p>
-            <p>Total XP: <strong id="totalXP">180</strong></p>
-          </div>
-          <div class="card dark">
-            <h3>WarpAi Token</h3>
-            <p id="waiBalance">Balance: 342.50 WAI</p>
-            <p>Level Bonus: 10%</p>
-          </div>
-          <div class="card dark">
-            <h3>Claim Token</h3>
-            <p>Reward: 5 WAI</p>
-            <button id="claimTokenBtn">Claim</button>
-          </div>
-          <div class="card dark">
-            <h3>Share Link</h3>
-            <p>Earn 5 WAI per share</p>
-            <button id="shareFarcasterBtn">Share on Farcaster</button>
-            <button id="shareXBtn">Share on X</button>
-          </div>
-          <div class="card full premium">
-            <h3>📦 Claim History</h3>
-            <ul id="claimHistory">
-              <li>+5 WAI – shared on X</li>
-              <li>+5 WAI – referred friend</li>
-              <li>+10 WAI – weekly login</li>
-            </ul>
           </div>
         </div>
       </section>
@@ -236,18 +204,30 @@
         </div>
       </div>
 
-     <div id="warpInfoModal" class="modal hidden">
-  <div class="modal-content">
-    <h3>Buy WarpAi Token</h3>
-    <p>Purchase WarpAi Token on Zora!</p>
-    <ul>
-      <li><strong>Price:</strong> 0.01 ETH per 100 $WARP</li>
-      <li><strong>Use:</strong> Unlock premium, boost XP, or trade.</li>
-      <li><strong>Zora:</strong> <a href="https://zora.co/coin/base:0x0cd1e9c691af8d4d34efcc089a40b31c691d0482?referrer=0xa8b817f09702c8d77fdb6d7d677a30cba5c9d7b9" target="_blank">Buy on Zora</a></li>
-    </ul>
-    <button onclick="toggleWarpInfo()">Close</button>
-  </div>
-</div>
+      <div id="xpInfoModal" class="modal hidden">
+        <div class="modal-content">
+          <h3>ℹ️ XP & WAI Info</h3>
+          <ul>
+            <li><strong>XP:</strong> Earned from wallet activity and daily logins.</li>
+            <li><strong>WAI:</strong> Tokens earned via referrals and claims, usable for premium.</li>
+            <li><strong>Level Up:</strong> Reach 200 XP for next level and perks!</li>
+          </ul>
+          <button onclick="toggleXpInfo()">Close</button>
+        </div>
+      </div>
+
+      <div id="warpInfoModal" class="modal hidden">
+        <div class="modal-content">
+          <h3>Buy WarpAi Token</h3>
+          <p>Purchase WarpAi Token on Zora!</p>
+          <ul>
+            <li><strong>Price:</strong> 0.01 ETH per 100 $WARP</li>
+            <li><strong>Use:</strong> Unlock premium, boost XP, or trade.</li>
+            <li><strong>Zora:</strong> <a href="https://zora.co/coin/base:0x0cd1e9c691af8d4d34efcc089a40b31c691d0482?referrer=0xa8b817f09702c8d77fdb6d7d677a30cba5c9d7b9" target="_blank">Buy on Zora</a></li>
+          </ul>
+          <button onclick="toggleWarpInfo()">Close</button>
+        </div>
+      </div>
 
       <!-- QR Code Modal -->
       <div id="qrModal" class="modal hidden">
