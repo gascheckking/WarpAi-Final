@@ -146,14 +146,14 @@ if (claimTokenBtn) claimTokenBtn.addEventListener('click', () => {
         if (connectWalletBtn) {
   connectWalletBtn.addEventListener('click', async () => {
     if (userAddress) {
-  disconnectWallet();
-  return;
-}
+      disconnectWallet();
+      return;
+    }
 
-    // 🔄 Connect-läge
-    await connectWithWalletConnect();
+    await connectWithWalletConnect(); // ✅ nu funkar await
   });
 }
+
 
 
       // Wallet Connection with Ethers.js and WalletConnect
