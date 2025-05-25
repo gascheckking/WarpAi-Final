@@ -254,11 +254,21 @@
           <button onclick="toggleXpInfo()">Got it!</button>
         </div>
       </div>
+
+      <!-- QR Code Modal -->
+      <div id="qrModal" class="modal hidden">
+        <div class="modal-content">
+          <h3>Scan QR Code to Connect Wallet</h3>
+          <div id="qrCode"></div>
+          <button onclick="closeQrModal()">Close</button>
+        </div>
+      </div>
     </main>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
