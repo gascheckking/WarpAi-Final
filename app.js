@@ -84,10 +84,28 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Close QR Modal
-      window.closeQrModal = function() {
-        qrModal.classList.add('hidden');
-        qrCodeDiv.innerHTML = ''; // Rensa QR-kod
-      };
+window.closeQrModal = function() {
+  qrModal.classList.add('hidden');
+  qrCodeDiv.innerHTML = ''; // Rensa QR-kod
+};
+
+// Disconnect Wallet
+function disconnectWallet() {
+  if (provider && provider.close) {
+    provider.close(); // Stäng WalletConnect
+  }
+  provider = null;
+  signer = null;
+  userAddress = null;
+  if (connectWalletBtn) {
+    connectWalletBtn.textContent = 'Connect Wallet';
+  }
+  xpDisplay.textContent = '0 XP 🔥';
+  totalXP.textContent = '0';
+  currentXP.textContent = '🔥 0 XP';
+  walletAddress.textContent = 'Not Connected';
+  document.querySelector('.subtitle').textContent = 'Track your own wallet activity';
+}
 
       // Wallet Connection with Ethers.js and WalletConnect
       const ETHERSCAN_KEY = 'Y1VRJKQB1A4K2JTA8GE1YDH3W54W4I35D5';
@@ -95,93 +113,113 @@ document.addEventListener('DOMContentLoaded', () => {
       let provider, signer, userAddress;
 
       async function connectWithWalletConnect() {
-        try {
-          const walletConnectProvider = new WalletConnectProvider({
-            rpc: {
-              8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
-            },
-            chainId: 8453,
-          });
-          // Visa QR-kod
-          walletConnectProvider.on('display_uri', (uri) => {
-            qrCodeDiv.innerHTML = '';
-            new QRCode(qrCodeDiv, {
-              text: uri,
-              width: 200,
-              height: 200,
-            });
-            qrModal.classList.remove('hidden');
-          });
-          await walletConnectProvider.enable();
-          provider = new ethers.providers.Web3Provider(walletConnectProvider);
-          signer = provider.getSigner();
-          userAddress = await signer.getAddress();
-          connectWalletBtn.textContent = `Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
-          xpDisplay.textContent = '180 XP 🔥';
-          totalXP.textContent = '180';
-          currentXP.textContent = '🔥 180 XP';
-          qrModal.classList.add('hidden');
-          loadOnchainData();
-        } catch (error) {
-          console.error('WalletConnect failed:', error);
-          alert('WalletConnect failed: ' + error.message);
-          qrModal.classList.add('hidden');
-        }
+  try {
+    const walletConnectProvider = new WalletConnectProvider({
+      rpc: {
+        8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
+      },
+      chainId: 8453,
+    });
+    // Visa QR-kod
+    walletConnectProvider.on('display_uri', (uri) => {
+      if (qrCodeDiv) {
+        qrCodeDiv.innerHTML = '';
+        new QRCode(qrCodeDiv, {
+          text: uri,
+          width: 200,
+          height: 200,
+        });
+        qrModal.classList.remove('hidden');
       }
+    });
+    await walletConnectProvider.enable();
+    provider = new ethers.providers.Web3Provider(walletConnectProvider);
+    signer = provider.getSigner();
+    userAddress = await signer.getAddress();
+    if (connectWalletBtn) {
+      connectWalletBtn.textContent = 'Disconnect';
+    }
+    if (xpDisplay) xpDisplay.textContent = '180 XP 🔥';
+    if (totalXP) totalXP.textContent = '180';
+    if (currentXP) currentXP.textContent = '🔥 180 XP';
+    if (walletAddress) walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
+    if (qrModal) qrModal.classList.add('hidden');
+    loadOnchainData();
+  } catch (error) {
+    console.error('WalletConnect failed:', error);
+    alert('WalletConnect failed: ' + error.message);
+    if (qrModal) qrModal.classList.add('hidden');
+  }
+}
 
       async function loadOnchainData() {
-        if (!provider || !userAddress) return;
+  if (!provider || !userAddress) return;
 
-        try {
-          const alchemyProvider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
-          const balance = await alchemyProvider.getBalance(userAddress);
-          const txCount = await alchemyProvider.getTransactionCount(userAddress);
-          const gasUsed = await alchemyProvider.getGasPrice();
+  try {
+    const alchemyProvider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
+    const balance = await alchemyProvider.getBalance(userAddress);
+    const txCount = await alchemyProvider.getTransactionCount(userAddress);
+    const gasUsed = await alchemyProvider.getGasPrice();
 
-          latestActivity.textContent = `Bought Token on Zora`;
-          activityResult.textContent = `+ $${(ethers.utils.formatEther(balance) * 3000).toFixed(2)} Win`;
-          tokensMinted.textContent = `${txCount} st`;
-          ethMoved.textContent = `${ethers.utils.formatEther(balance)} ETH total`;
-          gasSpent.textContent = `${ethers.utils.formatEther(gasUsed)} ETH (~$${(ethers.utils.formatEther(gasUsed) * 3000).toFixed(2)})`;
-          connectedDapps.innerHTML = `<li>Zora</li><li>OpenSea</li><li>Base</li>`;
+    if (latestActivity) latestActivity.textContent = `Bought Token on Zora`;
+    if (activityResult) activityResult.textContent = `+ $${(ethers.utils.formatEther(balance) * 3000).toFixed(2)} Win`;
+    if (tokensMinted) tokensMinted.textContent = `${txCount} st`;
+    if (ethMoved) ethMoved.textContent = `${ethers.utils.formatEther(balance)} ETH total`;
+    if (gasSpent) gasSpent.textContent = `${ethers.utils.formatEther(gasUsed)} ETH (~$${(ethers.utils.formatEther(gasUsed) * 3000).toFixed(2)})`;
+    if (connectedDapps) connectedDapps.innerHTML = `<li>Zora</li><li>OpenSea</li><li>Base</li>`;
 
-          document.querySelector('.subtitle').textContent = `Track your own wallet activity (Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)})`;
-          viewHistoryBtn.addEventListener('click', () => {
-            alert('Full NFT history for your wallet: Check console for details');
-          });
-        } catch (error) {
-          console.error('Error fetching onchain data:', error);
-        }
-      }
-
-      connectWalletBtn.addEventListener('click', async () => {
-        if (!confirm('Are you sure you want to connect your wallet?')) {
-          return;
-        }
-
-        if (window.ethereum) {
-          try {
-            provider = new ethers.providers.Web3Provider(window.ethereum);
-            await window.ethereum.request({ method: 'eth_requestAccounts' });
-            await window.ethereum.request({
-              method: 'wallet_switchEthereumChain',
-              params: [{ chainId: '0x2105' }], // Base chain ID (8453)
-            });
-            signer = provider.getSigner();
-            userAddress = await signer.getAddress();
-            connectWalletBtn.textContent = `Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
-            xpDisplay.textContent = '180 XP 🔥';
-            totalXP.textContent = '180';
-            currentXP.textContent = '🔥 180 XP';
-            loadOnchainData();
-          } catch (error) {
-            console.error('MetaMask failed:', error);
-            alert('MetaMask failed: ' + error.message);
-          }
-        } else {
-          await connectWithWalletConnect();
-        }
+    if (document.querySelector('.subtitle')) {
+      document.querySelector('.subtitle').textContent = `Track your own wallet activity (Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)})`;
+    }
+    if (viewHistoryBtn) {
+      viewHistoryBtn.addEventListener('click', () => {
+        alert('Full NFT history for your wallet: Check console for details');
       });
+    }
+  } catch (error) {
+    console.error('Error fetching onchain data:', error);
+  }
+}
+
+      if (connectWalletBtn) {
+  connectWalletBtn.addEventListener('click', async () => {
+    if (userAddress) {
+      // Already connected, so disconnect
+      disconnectWallet();
+      return;
+    }
+
+    if (!confirm('Are you sure you want to connect your wallet?')) {
+      return;
+    }
+
+    if (window.ethereum) {
+      try {
+        provider = new ethers.providers.Web3Provider(window.ethereum);
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x2105' }], // Base chain ID (8453)
+        });
+        signer = provider.getSigner();
+        userAddress = await signer.getAddress();
+        if (connectWalletBtn) {
+          connectWalletBtn.textContent = 'Disconnect';
+        }
+        if (xpDisplay) xpDisplay.textContent = '180 XP 🔥';
+        if (totalXP) totalXP.textContent = '180';
+        if (currentXP) currentXP.textContent = '🔥 180 XP';
+        if (walletAddress) walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
+        loadOnchainData();
+      } catch (error) {
+        console.error('MetaMask failed:', error);
+        alert('MetaMask failed: ' + error.message);
+      }
+    } else {
+      await connectWithWalletConnect();
+    }
+  });
+}
 
       // Button Actions
       claimXpBtn.addEventListener('click', () => {
