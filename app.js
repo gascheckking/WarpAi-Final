@@ -269,6 +269,20 @@ if (latestTx.length > 0) {
           if (userAddress) {
             disconnectWallet();
             return;
+            if (connectWalletBtn.textContent === 'Disconnect') {
+  connectWalletBtn.addEventListener('click', () => {
+    provider = null;
+    signer = null;
+    userAddress = null;
+    connectWalletBtn.textContent = 'Connect Wallet';
+    if (walletAddress) walletAddress.textContent = 'Not Connected';
+    if (xpDisplay) xpDisplay.textContent = '0 XP 🔥';
+    if (totalXP) totalXP.textContent = '0';
+    if (currentXP) currentXP.textContent = '🔥 0 XP';
+    localStorage.clear(); // Rensar eventuell XP/cache
+  });
+}
+
           }
 
           if (!confirm('Are you sure you want to connect your wallet?')) return;
