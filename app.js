@@ -1,10 +1,3 @@
-// ✅ FULLSTÄNDIG OMRUSKAD & FIXAD app.js
-
-// Globala nycklar och variabler
-const ETHERSCAN_KEY = 'Y1VRJKQB1A4K2JTA8GE1YDH3W54W4I35D5';
-const ALCHEMY_KEY = 'aH4-X2bNp1BarPcBcHiWR6vHxJz_lGbA';
-let provider, signer, userAddress;
-
 document.addEventListener('DOMContentLoaded', () => {
   const onboardingOverlay = document.getElementById('onboardingOverlay');
   const appContent = document.getElementById('appContent');
