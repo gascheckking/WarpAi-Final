@@ -174,6 +174,22 @@ function disconnectWallet() {
   const xpFill = document.querySelector('.xp-fill');
   if (xpFill) xpFill.style.width = `${progressPercent}%`;
   const gasUsed = await alchemyProvider.getGasPrice();
+    // Update level and badge
+const level = Math.floor(xp / 200) + 1;
+const nextLevelXP = level * 200;
+if (document.getElementById('level')) document.getElementById('level').textContent = level;
+if (document.getElementById('nextLevelXP')) document.getElementById('nextLevelXP').textContent = nextLevelXP;
+if (document.getElementById('currentXPProgress')) document.getElementById('currentXPProgress').textContent = xp;
+// Show badge for 5+ day streak (mocked for now)
+const streak = 5; // Replace with real streak logic later
+if (document.getElementById('badge') && streak >= 5) {
+  document.getElementById('badge').style.display = 'block';
+}
+// Animate progress bar
+if (xpFill) {
+  xpFill.style.transition = 'width 1s ease-in-out';
+  xpFill.style.width = `${progressPercent}%`;
+}
 
   if (latestActivity) latestActivity.textContent = `Bought Token on Zora`;
   if (activityResult) activityResult.textContent = `+ $${(ethers.utils.formatEther(balance) * 3000).toFixed(2)} Win`;
@@ -320,3 +336,11 @@ function disconnectWallet() {
     }, 500); // Match fadeOut duration
   }, 3000); // Show for 3 seconds
 });
+.xp-fill {
+  transition: width 1s ease-in-out;
+}
+#badge {
+  color: #f39c12;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
