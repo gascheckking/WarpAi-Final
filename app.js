@@ -8,6 +8,13 @@ const shareXBtn = document.getElementById('shareXBtn');
 const waiBalance = document.getElementById('waiBalance');
 const claimHistory = document.getElementById('claimHistory');
 const claimTokenBtn = document.getElementById('claimTokenBtn');
+const refreshTrackBtn = document.getElementById('refreshTrackBtn');
+if (refreshTrackBtn) {
+  refreshTrackBtn.addEventListener('click', () => {
+    loadOnchainData();
+  });
+}
+
 
 if (shareFarcasterBtn) shareFarcasterBtn.addEventListener('click', () => window.open('https://warpcast.com/~/compose?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank'));
 
