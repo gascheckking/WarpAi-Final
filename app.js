@@ -122,24 +122,41 @@ document.addEventListener('DOMContentLoaded', () => {
       let provider, signer, userAddress;
 
       async function connectWithWalletConnect() {
-        try {
-          const walletConnectProvider = new WalletConnectProvider({
-            rpc: {
-              8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
-            },
-            chainId: 8453,
-          });
-          // Visa QR-kod
-          walletConnectProvider.on('display_uri', (uri) => {
-            if (qrCodeDiv) {
-              qrCodeDiv.innerHTML = '';
-              new QRCode(qrCodeDiv, {
-                text: uri,
-                width: 200,
-                height: 200,
-              });
-              qrModal.classList.remove('hidden');
-            }
+  try {
+    const walletConnectProvider = new WalletConnectProvider({
+      rpc: {
+        8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
+      },
+      chainId: 8453
+    });
+    walletConnectProvider.on('display_uri', (uri) => {
+      if (qrCodeDiv) {
+        qrCodeDiv.innerHTML = '';
+        new QRCode(qrCodeDiv, {
+          text: uri,
+          width: 200,
+          height: 200,
+        });
+        qrModal.classList.remove('hidden');
+      }
+    });
+    await walletConnectProvider.enable();
+    provider = new ethers.providers.Web3Provider(walletConnectProvider);
+    signer = provider.getSigner();
+    userAddress = await signer.getAddress();
+    if (connectWalletBtn) connectWalletBtn.textContent = 'Disconnect';
+    if (xpDisplay) xpDisplay.textContent = '180 XP 🔥';
+    if (totalXP) totalXP.textContent = '180';
+    if (currentXP) currentXP.textContent = '🔥 180 XP';
+    if (walletAddress) walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
+    if (qrModal) qrModal.classList.add('hidden');
+    loadOnchainData();
+  } catch (error) {
+    console.error('WalletConnect failed:', error);
+    alert('WalletConnect failed: ' + error.message);
+    if (qrModal) qrModal.classList.add('hidden');
+  }
+}
           });
           await walletConnectProvider.enable();
           provider = new ethers.providers.Web3Provider(walletConnectProvider);
