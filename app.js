@@ -174,6 +174,18 @@ if (claimTokenBtn) claimTokenBtn.addEventListener('click', () => {
           if (xpFill) {
             xpFill.style.transition = 'width 1s ease-in-out';
             xpFill.style.width = `${progressPercent}%`;
+            // Hämta senaste transaktionen
+const latestTx = await alchemyProvider.getHistory(userAddress, "latest");
+
+if (latestTx.length > 0) {
+  const last = latestTx[latestTx.length - 1];
+  const ethValue = ethers.utils.formatEther(last.value);
+  if (latestActivity) latestActivity.textContent = `↪ ${last.to.slice(0, 6)}... — ${ethValue} ETH`;
+  if (activityResult) activityResult.textContent = `+ $${(ethValue * 3000).toFixed(2)} est.`;
+} else {
+  if (latestActivity) latestActivity.textContent = `No recent tx`;
+  if (activityResult) activityResult.textContent = `+ $0`;
+}
           }
           const gasUsed = await alchemyProvider.getGasPrice();
           const level = Math.floor(xp / 200) + 1;
