@@ -86,30 +86,31 @@ document.addEventListener('DOMContentLoaded', () => {
       const ALCHEMY_KEY = 'YOUR_ALCHEMY_API_KEY'; // Ersätt med din Alchemy-nyckel
       let provider, signer, userAddress;
 
-      async function connectWithWalletConnect() {
-        const walletConnectProvider = new WalletConnectProvider({
-          infuraId: 'YOUR_INFURA_PROJECT_ID', // Ersätt med din Infura Project ID
-          rpc: {
-            1: `https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID`,
-          },
-        });
+      async function loadOnchainData() {
+  if (!provider || !userAddress) return;
 
-        try {
-          await walletConnectProvider.enable();
-          provider = new ethers.providers.Web3Provider(walletConnectProvider);
-          signer = provider.getSigner();
-          userAddress = await signer.getAddress();
-          walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
-          connectWalletBtn.style.display = 'none';
-          xpDisplay.textContent = '180 XP 🔥';
-          totalXP.textContent = '180';
-          currentXP.textContent = '🔥 180 XP';
-          loadOnchainData();
-        } catch (error) {
-          console.error('WalletConnect failed:', error);
-          alert('WalletConnect failed: ' + error.message);
-        }
-      }
+  try {
+    const alchemyProvider = new ethers.providers.AlchemyProvider('mainnet', 'YOUR_ALCHEMY_API_KEY');
+    const balance = await alchemyProvider.getBalance(userAddress);
+    const txCount = await alchemyProvider.getTransactionCount(userAddress);
+    const gasUsed = await alchemyProvider.getGasPrice();
+
+    latestActivity.textContent = `Bought Token on Zora`;
+    activityResult.textContent = `+ $${(ethers.utils.formatEther(balance) * 3000).toFixed(2)} Win`;
+    tokensMinted.textContent = `${txCount} st`;
+    ethMoved.textContent = `${ethers.utils.formatEther(balance)} ETH total`;
+    gasSpent.textContent = `${ethers.utils.formatEther(gasUsed)} ETH (~$${(ethers.utils.formatEther(gasUsed) * 3000).toFixed(2)})`;
+    connectedDapps.innerHTML = `<li>Zora</li><li>OpenSea</li><li>Base</li>`;
+
+    // Här lägger vi in den nya koden för att visa wallet-adress och aktivera knappen
+    document.querySelector('.subtitle').textContent = `Track your own wallet activity (Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)})`;
+    viewHistoryBtn.addEventListener('click', () => {
+      alert('Full NFT history for your wallet: Check console for details'); // Lägg till logik senare
+    });
+  } catch (error) {
+    console.error('Error fetching onchain data:', error);
+  }
+}
 
      connectWalletBtn.addEventListener('click', async () => {
   if (window.ethereum) {
