@@ -532,3 +532,16 @@ body.dark-mode .modal-content {
   transition: width 0.5s ease-in-out;
 }
 
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+main {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+
