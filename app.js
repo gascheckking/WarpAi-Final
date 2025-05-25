@@ -1,3 +1,6 @@
+const ALCHEMY_KEY = document.querySelector('meta[name="alchemy-key"]').content;
+const ETHERSCAN_KEY = document.querySelector('meta[name="etherscan-key"]').content;
+
 document.addEventListener('DOMContentLoaded', () => {
   const onboardingOverlay = document.getElementById('onboardingOverlay');
   const appContent = document.getElementById('appContent');
