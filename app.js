@@ -197,8 +197,6 @@ if (latestTx.length > 0) {
           const streak = 5;
           if (document.getElementById('badge') && streak >= 5) document.getElementById('badge').style.display = 'block';
           if (gasSpent) gasSpent.textContent = `${ethers.utils.formatEther(gasUsed)} ETH (~$${(ethers.utils.formatEther(gasUsed) * 3000).toFixed(2)})`;
-          if (latestActivity) latestActivity.textContent = `Bought Token on Zora`;
-          if (activityResult) activityResult.textContent = `+ $${(ethers.utils.formatEther(balance) * 3000).toFixed(2)} Win`;
           if (tokensMinted) tokensMinted.textContent = `${txCount} st`;
           if (ethMoved) ethMoved.textContent = `${ethers.utils.formatEther(balance)} ETH total`;
           if (connectedDapps) connectedDapps.innerHTML = `<li>Zora</li><li>OpenSea</li><li>Base</li>`;
