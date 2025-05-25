@@ -86,69 +86,76 @@ document.addEventListener('DOMContentLoaded', () => {
       const ALCHEMY_KEY = 'YOUR_ALCHEMY_API_KEY'; // Ersätt med din Alchemy-nyckel
       let provider, signer, userAddress;
 
-      async function loadOnchainData() {
-  if (!provider || !userAddress) return;
+      async function connectWithWalletConnect() {
+        const walletConnectProvider = new WalletConnectProvider({
+          infuraId: 'YOUR_INFURA_PROJECT_ID', // Ersätt med din Infura Project ID
+          rpc: {
+            1: `https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID`,
+          },
+        });
 
-  try {
-    const alchemyProvider = new ethers.providers.AlchemyProvider('mainnet', 'YOUR_ALCHEMY_API_KEY');
-    const balance = await alchemyProvider.getBalance(userAddress);
-    const txCount = await alchemyProvider.getTransactionCount(userAddress);
-    const gasUsed = await alchemyProvider.getGasPrice();
-
-    latestActivity.textContent = `Bought Token on Zora`;
-    activityResult.textContent = `+ $${(ethers.utils.formatEther(balance) * 3000).toFixed(2)} Win`;
-    tokensMinted.textContent = `${txCount} st`;
-    ethMoved.textContent = `${ethers.utils.formatEther(balance)} ETH total`;
-    gasSpent.textContent = `${ethers.utils.formatEther(gasUsed)} ETH (~$${(ethers.utils.formatEther(gasUsed) * 3000).toFixed(2)})`;
-    connectedDapps.innerHTML = `<li>Zora</li><li>OpenSea</li><li>Base</li>`;
-
-    // Här lägger vi in den nya koden för att visa wallet-adress och aktivera knappen
-    document.querySelector('.subtitle').textContent = `Track your own wallet activity (Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)})`;
-    viewHistoryBtn.addEventListener('click', () => {
-      alert('Full NFT history for your wallet: Check console for details'); // Lägg till logik senare
-    });
-  } catch (error) {
-    console.error('Error fetching onchain data:', error);
-  }
-}
-
-     connectWalletBtn.addEventListener('click', async () => {
-  if (window.ethereum) {
-    try {
-      provider = new ethers.providers.Web3Provider(window.ethereum);
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
-      signer = provider.getSigner();
-      userAddress = await signer.getAddress();
-      connectWalletBtn.textContent = `Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`; // Ändra istället för att gömma
-      xpDisplay.textContent = '180 XP 🔥';
-      totalXP.textContent = '180';
-      currentXP.textContent = '🔥 180 XP';
-      loadOnchainData();
-    } catch (error) {
-      console.error('MetaMask failed:', error);
-      alert('MetaMask failed: ' + error.message);
-    }
-  } else {
-    await connectWithWalletConnect();
-  }
-});
+        try {
+          await walletConnectProvider.enable();
+          provider = new ethers.providers.Web3Provider(walletConnectProvider);
+          signer = provider.getSigner();
+          userAddress = await signer.getAddress();
+          connectWalletBtn.textContent = `Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
+          xpDisplay.textContent = '180 XP 🔥';
+          totalXP.textContent = '180';
+          currentXP.textContent = '🔥 180 XP';
+          loadOnchainData();
+        } catch (error) {
+          console.error('WalletConnect failed:', error);
+          alert('WalletConnect failed: ' + error.message);
+        }
+      }
 
       async function loadOnchainData() {
-  if (!provider || !userAddress) return;
-  const alchemyProvider = new ethers.providers.AlchemyProvider('mainnet', 'YOUR_ALCHEMY_API_KEY');
-  const balance = await alchemyProvider.getBalance(userAddress);
-  const txCount = await alchemyProvider.getTransactionCount(userAddress);
-  const gasUsed = await alchemyProvider.getGasPrice();
-  latestActivity.textContent = `Bought Token on Zora`;
-  activityResult.textContent = `+ $${(ethers.utils.formatEther(balance) * 3000).toFixed(2)} Win`;
-  tokensMinted.textContent = `${txCount} st`;
-  ethMoved.textContent = `${ethers.utils.formatEther(balance)} ETH total`;
-  gasSpent.textContent = `${ethers.utils.formatEther(gasUsed)} ETH (~$${(ethers.utils.formatEther(gasUsed) * 3000).toFixed(2)})`;
-  connectedDapps.innerHTML = `<li>Zora</li><li>OpenSea</li><li>Base</li>`;
+        if (!provider || !userAddress) return;
+
+        try {
+          const alchemyProvider = new ethers.providers.AlchemyProvider('mainnet', 'YOUR_ALCHEMY_API_KEY');
+          const balance = await alchemyProvider.getBalance(userAddress);
+          const txCount = await alchemyProvider.getTransactionCount(userAddress);
+          const gasUsed = await alchemyProvider.getGasPrice();
+
+          latestActivity.textContent = `Bought Token on Zora`;
+          activityResult.textContent = `+ $${(ethers.utils.formatEther(balance) * 3000).toFixed(2)} Win`;
+          tokensMinted.textContent = `${txCount} st`;
+          ethMoved.textContent = `${ethers.utils.formatEther(balance)} ETH total`;
+          gasSpent.textContent = `${ethers.utils.formatEther(gasUsed)} ETH (~$${(ethers.utils.formatEther(gasUsed) * 3000).toFixed(2)})`;
+          connectedDapps.innerHTML = `<li>Zora</li><li>OpenSea</li><li>Base</li>`;
+
+          // Visa wallet-adress och aktivera knappen
+          document.querySelector('.subtitle').textContent = `Track your own wallet activity (Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)})`;
+          viewHistoryBtn.addEventListener('click', () => {
+            alert('Full NFT history for your wallet: Check console for details'); // Lägg till logik senare
+          });
         } catch (error) {
           console.error('Error fetching onchain data:', error);
         }
       }
+
+      connectWalletBtn.addEventListener('click', async () => {
+        if (window.ethereum) {
+          try {
+            provider = new ethers.providers.Web3Provider(window.ethereum);
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+            signer = provider.getSigner();
+            userAddress = await signer.getAddress();
+            connectWalletBtn.textContent = `Connected wallet: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
+            xpDisplay.textContent = '180 XP 🔥';
+            totalXP.textContent = '180';
+            currentXP.textContent = '🔥 180 XP';
+            loadOnchainData();
+          } catch (error) {
+            console.error('MetaMask failed:', error);
+            alert('MetaMask failed: ' + error.message);
+          }
+        } else {
+          await connectWithWalletConnect();
+        }
+      });
 
       // Button Actions
       claimXpBtn.addEventListener('click', () => {
@@ -167,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         try {
           const tx = await signer.sendTransaction({
-            to: 'YOUR_ZORA_ADDRESS', // Ersätt med din Zora-adress
+            to: 'YOUR_ZORA_ADDRESS',
             value: ethers.utils.parseEther('0.01')
           });
           await tx.wait();
@@ -201,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       shareOnXBtn.addEventListener('click', () => {
-        window.open('https://twitter.com/intent/tweet?text=Check out WarpAi! https://warpai.com/referral/' + userAddress + ' @YOUR_X_USERNAME', '_blank'); // Ersätt @YOUR_X_USERNAME med ditt X-användarnamn
+        window.open('https://twitter.com/intent/tweet?text=Check out WarpAi! https://warpai.com/referral/' + userAddress + ' @YOUR_X_USERNAME', '_blank');
       });
 
       shareOnFarcasterBtn.addEventListener('click', () => {
@@ -213,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       shareXBtn.addEventListener('click', () => {
-        window.open('https://twitter.com/intent/tweet?text=Check out WarpAi! https://warpai.com/referral/' + userAddress + ' @YOUR_X_USERNAME', '_blank'); // Ersätt @YOUR_X_USERNAME
+        window.open('https://twitter.com/intent/tweet?text=Check out WarpAi! https://warpai.com/referral/' + userAddress + ' @YOUR_X_USERNAME', '_blank');
       });
 
       upgradeBtn.addEventListener('click', () => {
