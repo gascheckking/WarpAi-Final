@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const onboardingOverlay = document.getElementById('onboardingOverlay');
+  const appContent = document.getElementById('appContent');
   const settingsBtn = document.getElementById('settingsBtn');
   const settingsMenu = document.getElementById('settingsMenu');
   const toggleTheme = document.getElementById('toggleTheme');
@@ -37,12 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabContents = document.querySelectorAll('.tab-content');
 
   // Onboarding Animation Fix
+  onboardingOverlay.classList.add('fade-in-logo');
   setTimeout(() => {
+    onboardingOverlay.classList.remove('fade-in-logo');
     onboardingOverlay.classList.add('fade-out-logo');
     setTimeout(() => {
       onboardingOverlay.style.display = 'none';
-    }, 500);
-  }, 2000);
+      appContent.style.display = 'block';
+    }, 500); // Match fadeOut duration
+  }, 2000); // Show for 2 seconds
 
   // Tab Switching
   tabButtons.forEach(button => {
@@ -151,54 +155,59 @@ document.addEventListener('DOMContentLoaded', () => {
       currentXP.textContent = `🔥 ${xp} XP`;
       totalXP.textContent = xp;
       xpDisplay.textContent = `${xp} XP 🔥`;
-    } claimAddressBtn.addEventListener('click', () => {
-      if (!userAddress) {
-        alert('Please connect your wallet first.');
-        return;
-      }
-      alert('Claim another address feature is premium only.');
-    });
+    } catch (error) {
+      console.error('Token purchase failed:', error);
+      alert('Token purchase failed: ' + error.message);
+    }
+  });
 
-    trackRandomBtn.addEventListener('click', () => {
-      alert('Track random wallet feature is premium only.');
-    });
+  claimAddressBtn.addEventListener('click', () => {
+    if (!userAddress) {
+      alert('Please connect your wallet first.');
+      return;
+    }
+    alert('Claim another address feature is premium only.');
+  });
 
-    copyReferralBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText('https://warpai.com/referral/' + userAddress);
-      alert('Referral link copied!');
-    });
+  trackRandomBtn.addEventListener('click', () => {
+    alert('Track random wallet feature is premium only.');
+  });
 
-    shareOnXBtn.addEventListener('click', () => {
-      window.open('https://twitter.com/intent/tweet?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank');
-    });
+  copyReferralBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText('https://warpai.com/referral/' + userAddress);
+    alert('Referral link copied!');
+  });
 
-    shareOnFarcasterBtn.addEventListener('click', () => {
-      window.open('https://warpcast.com/~/compose?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank');
-    });
+  shareOnXBtn.addEventListener('click', () => {
+    window.open('https://twitter.com/intent/tweet?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank');
+  });
 
-    shareFarcasterBtn.addEventListener('click', () => {
-      window.open('https://warpcast.com/~/compose?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank');
-    });
+  shareOnFarcasterBtn.addEventListener('click', () => {
+    window.open('https://warpcast.com/~/compose?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank');
+  });
 
-    shareXBtn.addEventListener('click', () => {
-      window.open('https://twitter.com/intent/tweet?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank');
-    });
+  shareFarcasterBtn.addEventListener('click', () => {
+    window.open('https://warpcast.com/~/compose?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank');
+  });
 
-    upgradeBtn.addEventListener('click', () => {
-      alert('Upgrade to Premium for $5 to unlock all features!');
-    });
+  shareXBtn.addEventListener('click', () => {
+    window.open('https://twitter.com/intent/tweet?text=Check out WarpAi! https://warpai.com/referral/' + userAddress, '_blank');
+  });
 
-    claimTokenBtn.addEventListener('click', () => {
-      let balance = parseFloat(waiBalance.textContent.match(/\d+\.\d+/)[0]) || 0;
-      balance += 5;
-      waiBalance.textContent = `Balance: ${balance} WAI`;
-      let history = claimHistory.innerHTML;
-      claimHistory.innerHTML = `<li>+5 WAI – claimed token</li>${history}`;
-      alert('Claimed 5 WAI!');
-    });
+  upgradeBtn.addEventListener('click', () => {
+    alert('Upgrade to Premium for $5 to unlock all features!');
+  });
 
-    viewHistoryBtn.addEventListener('click', () => {
-      alert('View full NFT history (premium feature).');
-    });
+  claimTokenBtn.addEventListener('click', () => {
+    let balance = parseFloat(waiBalance.textContent.match(/\d+\.\d+/)[0]) || 0;
+    balance += 5;
+    waiBalance.textContent = `Balance: ${balance} WAI`;
+    let history = claimHistory.innerHTML;
+    claimHistory.innerHTML = `<li>+5 WAI – claimed token</li>${history}`;
+    alert('Claimed 5 WAI!');
+  });
+
+  viewHistoryBtn.addEventListener('click', () => {
+    alert('View full NFT history (premium feature).');
   });
 });
