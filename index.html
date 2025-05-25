@@ -46,7 +46,7 @@
       <!-- HOME -->
       <section class="tab-content home" data-tab="home" style="display: block;">
         <div class="card-grid">
-          <div class="card green">
+          <div class="card dark">
             <h3>Claim XP</h3>
             <p>Daily XP bonus</p>
             <button id="claimXpBtn">Claim</button>
@@ -56,20 +56,12 @@
             <p>Purchase on Zora!</p>
             <button id="buyTokenBtn" onclick="toggleWarpInfo()">Buy Now</button>
           </div>
-          <div class="card green">
+          <div class="card dark">
             <h3><span id="currentXP">🔥 0 XP</span></h3>
             <p>0-day streak</p>
             <button class="info-btn green" onclick="toggleXpInfo()">About XP & WAI</button>
           </div>
-          <div class="card dark full">
-            <h3>🎨 Recent NFT Mint</h3>
-            <ul id="recentNftMint">
-              <li>BaseBuddies #024 – 0.02 ETH – Zora</li>
-              <li>MintQuest #7 – Free – Base</li>
-            </ul>
-            <button id="viewRecentMintBtn">View More</button>
-          </div>
-          <div class="card full journey">
+                    <div class="card full journey">
             <h3>🎯 Your XP Journey</h3>
             <p>Level <span id="level">1</span> → Next Level: <span id="nextLevelXP">200</span> XP</p>
             <div class="xp-bar">
@@ -79,6 +71,12 @@
             <p id="badge" style="display: none;">🏆 Streak Master</p>
           </div>
         </div>
+        <div class="card dark">
+  <h3>🔥 Daily Streak</h3>
+  <p>Current streak: 5 days</p>
+  <button>Boost Streak</button>
+</div>
+
       </section>
 
       <!-- TRACK -->
@@ -140,6 +138,12 @@
             <button id="shareOnFarcasterBtn">Share on Farcaster</button>
           </div>
         </div>
+        <div class="card dark">
+  <h3>🏆 Referral Stats</h3>
+  <p>Friends invited: 3</p>
+  <p>Total earned: 15 WAI</p>
+</div>
+
       </section>
 
       <!-- PREMIUM -->
