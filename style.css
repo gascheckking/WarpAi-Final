@@ -472,3 +472,32 @@ body.dark-mode .modal-content {
 .upgrade-button-green:hover {
   background-color: #228b53;
 }
+.custom-home-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 0.6rem;
+}
+
+.card.tall {
+  grid-row: span 2;
+}
+
+.card.small {
+  font-size: 0.7rem;
+}
+
+.xp-bar.small {
+  background-color: #444;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 6px;
+  margin: 0.4rem 0;
+}
+
+.xp-bar.small .xp-fill {
+  height: 100%;
+  background: linear-gradient(to right, #4caf50, #00e676);
+  transition: width 0.5s ease-in-out;
+}
+
