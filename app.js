@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('level')) document.getElementById('level').textContent = level;
     if (document.getElementById('nextLevelXP')) document.getElementById('nextLevelXP').textContent = nextLevelXP;
     if (document.getElementById('currentXPProgress')) document.getElementById('currentXPProgress').textContent = xp;
-    const streak = 5; // Mockad streak
+    const streak = 5;
     if (document.getElementById('badge') && streak >= 5) {
       document.getElementById('badge').style.display = 'block';
     }
