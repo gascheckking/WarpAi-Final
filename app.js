@@ -64,9 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       walletConnectProvider.on('display_uri', (uri) => {
         if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
-          window.open(`https://link.trustwallet.com/wc?uri=${encodeURIComponent(uri)}`, '_blank');
-          return;
-        }
+  setTimeout(() => {
+    window.open(`https://link.trustwallet.com/wc?uri=${encodeURIComponent(uri)}`, '_blank');
+  }, 500); // ge mobilen tid att hinna ladda
+  return;
+}
+
         if (qrCodeDiv) {
           qrCodeDiv.innerHTML = '';
           new QRCode(qrCodeDiv, { text: uri, width: 200, height: 200 });
