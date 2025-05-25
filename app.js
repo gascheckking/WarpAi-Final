@@ -148,12 +148,35 @@ if (claimTokenBtn) claimTokenBtn.addEventListener('click', () => {
             chainId: 8453
           });
           walletConnectProvider.on('display_uri', (uri) => {
-            if (qrCodeDiv) {
-              qrCodeDiv.innerHTML = '';
-              new QRCode(qrCodeDiv, { text: uri, width: 200, height: 200 });
-              qrModal.classList.remove('hidden');
-            }
-          });
+  if (qrCodeDiv) {
+    qrCodeDiv.innerHTML = '';
+    new QRCode(qrCodeDiv, { text: uri, width: 200, height: 200 });
+    qrModal.classList.remove('hidden');
+
+    // 🔥 Lägg till deep links här:
+    const encodedUri = encodeURIComponent(uri);
+
+    const walletLinks = {
+      MetaMask: `https://metamask.app.link/wc?uri=${encodedUri}`,
+      TrustWallet: `https://link.trustwallet.com/wc?uri=${encodedUri}`,
+      CoinbaseWallet: `https://go.cb-w.com/wc?uri=${encodedUri}`,
+      Rainbow: `https://rnbwapp.com/wc?uri=${encodedUri}`,
+      Uniswap: `https://uniswap.wallet/wc?uri=${encodedUri}`
+    };
+
+    const walletLinksDiv = document.getElementById('walletLinks');
+    if (walletLinksDiv) {
+      walletLinksDiv.innerHTML = `
+        <button onclick="window.open('${walletLinks.MetaMask}', '_blank')">MetaMask</button>
+        <button onclick="window.open('${walletLinks.TrustWallet}', '_blank')">TrustWallet</button>
+        <button onclick="window.open('${walletLinks.CoinbaseWallet}', '_blank')">Coinbase</button>
+        <button onclick="window.open('${walletLinks.Rainbow}', '_blank')">Rainbow</button>
+        <button onclick="window.open('${walletLinks.Uniswap}', '_blank')">Uniswap</button>
+      `;
+    }
+  }
+});
+
           await walletConnectProvider.enable();
           provider = new ethers.providers.Web3Provider(walletConnectProvider);
           signer = provider.getSigner();
