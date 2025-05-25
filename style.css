@@ -63,8 +63,8 @@ body {
 }
 
 .logo-icon-fixed {
-  width: 250px;
-  height: 240px;
+  width: 40px;
+  height: 40px;
   background: transparent;
   border: none;
 }
@@ -230,20 +230,19 @@ main {
 }
 
 /* VARIANTS */
-.card.green { background-color: #2c9463; }
-.card.dark { background-color: #333; }
-.card.blue { background-color: #264e70; }
-.card.purple { background-color: #3b1d5e; }
-
-.card.purple .btn-row {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+.card.green {
+  background: linear-gradient(135deg, #00ff88, #00cc66);
+  color: #000;
 }
 
-.card.purple button {
-  background-color: #9146ff;
-  width: 100%;
+.card.dark {
+  background: linear-gradient(135deg, #8a4af3, #6a1b9a);
+  color: #fff;
+}
+
+.card.journey {
+  background-color: #20232a;
+  color: white;
 }
 
 .card.full {
@@ -290,39 +289,8 @@ main {
 .card:hover {
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
-.card:nth-child(odd) {
-  background-color: #2c9463; /* Green */
-}
-.card:nth-child(even) {
-  background-color: #3b1d5e; /* Purple */
-}
-.card.journey {
-  background-color: #20232a; /* Keep unique for Journey */
-}
-
-.upgrade-button-green {
-  background-color: #2c9463;
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  font-weight: bold;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.upgrade-button-green:hover {
-  background-color: #228b53;
-}
 
 /* XP JOURNEY */
-.card.journey {
-  background-color: #20232a;
-  padding: 1rem;
-  color: white;
-}
-
 .xp-bar {
   background-color: #444;
   border-radius: 10px;
@@ -383,8 +351,7 @@ main {
 }
 
 /* INFO-BUTTONS */
-.info-btn,
-.faq-btn {
+.info-btn {
   background-color: #333;
   color: #fff;
   border: none;
@@ -395,8 +362,7 @@ main {
   transition: background 0.3s ease;
 }
 
-.info-btn:hover,
-.faq-btn:hover {
+.info-btn:hover {
   background-color: #555;
 }
 
@@ -483,83 +449,26 @@ body.dark-mode .modal-content {
 }
 
 /* QR Modal */
-#qrModal {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.75);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-#qrModal.hidden {
-  display: none;
-}
-
 #qrModal .modal-content {
-  background-color: #1b1d23;
-  padding: 1.2rem;
-  border-radius: 10px;
-  max-width: 300px;
   text-align: center;
-  color: white;
-}
-
-#qrModal h3 {
-  margin-top: 0;
-  font-size: 1rem;
 }
 
 #qrCode {
   margin: 1rem auto;
 }
 
-#qrModal button {
+.upgrade-button-green {
+  background-color: #2c9463;
   padding: 0.5rem 1rem;
-  background-color: #4caf50;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: white;
   border: none;
   border-radius: 6px;
-  color: white;
-  font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-#qrModal button:hover {
-  background-color: #45a049;
-}
-
-.nav-tabs {
-  display: flex;
-  justify-content: space-around;
-  border-bottom: 1px solid #444;
-  margin-bottom: 1rem;
-}
-
-.tab-button {
-  background: none;
-  border: none;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  color: #fff;
-  cursor: pointer;
-  transition: color 0.3s ease;
-  border-bottom: 2px solid transparent;
-}
-
-.tab-button.active {
-  color: #00ff88;
-  border-bottom: 2px solid #00ff88;
-}
-
-.tab-button:hover {
-  color: #00ff88;
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
+.upgrade-button-green:hover {
+  background-color: #228b53;
 }
