@@ -2,10 +2,9 @@ let provider = null;
 let signer = null;
 let userAddress = null;
 
+document.addEventListener('DOMContentLoaded', () => {
 const ALCHEMY_KEY = document.querySelector('meta[name="alchemy-key"]').content;
 const ETHERSCAN_KEY = document.querySelector('meta[name="etherscan-key"]').content;
-
-document.addEventListener('DOMContentLoaded', () => {
   const onboardingOverlay = document.getElementById('onboardingOverlay');
   const appContent = document.getElementById('appContent');
   const qrModal = document.getElementById('qrModal');
