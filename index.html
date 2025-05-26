@@ -245,53 +245,76 @@
   </div>
 </section>
 
-      <!-- PREMIUM -->
-      <section class="tab-content premium" data-tab="premium" style="display: none;">
-        <div class="hero">
-          <h2>💎 Premium Tools</h2>
-        </div>
-        <div class="card-grid">
-          <div class="card dark">
-            <h3>🔒 Wallet Tracker<br><span style="color: orange;">Premium</span></h3>
-            <p>Track any public address</p>
-          </div>
-          <div class="card dark">
-            <h3>🔒 Multi-Wallet Support<br><span style="color: orange;">Premium</span></h3>
-            <p>Claim & manage more wallets</p>
-          </div>
-          <div class="card dark">
-            <h3>🔒 Full Analytics<br><span style="color: orange;">Premium</span></h3>
-            <p>Win/Loss, gas, performance over time</p>
-          </div>
-          <div class="card dark">
-            <h3>🔒 Advanced Alerts<br><span style="color: orange;">Premium</span></h3>
-            <p>Set alerts for any wallet</p>
-          </div>
-          <div class="card dark full">
-            <h3>🔒 Followed Wallets <span style="color: orange;">(Premium)</span></h3>
-            <p style="font-size: 0.9rem;">See recent activity for wallets you follow</p>
-            <ul id="followedWallets" style="text-align: left; font-size: 0.75rem; padding-left: 1rem;">
-              <li><strong>0xFanArt.eth</strong> – Minted on Zora</li>
-              <li><strong>0xCollector42</strong> – Bought token on OpenSea</li>
-              <li><strong>0xAIHunter</strong> – Bridged 0.5 ETH to Base</li>
-            </ul>
-            <div style="margin-top: 0.5rem;">
-              <button id="addWalletBtn" disabled style="opacity: 0.6; cursor: not-allowed;">➕ Add Wallet (Premium)</button>
-            </div>
-          </div>
-          <div class="card full highlighted-premium" style="margin-top: 1rem;">
-            <h3>🔓 Unlock Premium Access</h3>
-            <p>One-time $5 to unlock everything:</p>
-            <ul>
-              <li>🧠 Track any wallet</li>
-              <li>📊 View advanced analytics</li>
-              <li>⛽ Analyze gas across dApps</li>
-              <li>📦 Get full claim history & reports</li>
-            </ul>
-            <button id="upgradeBtn" class="upgrade-button-green">Upgrade Now</button>
-          </div>
-        </div>
-      </section>
+      <!-- PROFILE -->
+<section class="tab-content profile" data-tab="profile" style="display: none;">
+  <div class="hero">
+    <h2>👤 My Profile</h2>
+  </div>
+
+  <div class="card-grid">
+    <!-- Wallet Info -->
+    <div class="card dark">
+      <h3>Wallet Info</h3>
+      <p>
+        <img id="userAvatar" src="placeholder-avatar.png" alt="Avatar"
+          style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #555;" />
+      </p>
+      <p id="walletAddress">Not Connected</p>
+      <p><small>Koppla din plånbok för att visa din Farcaster/ENS-avatar!</small></p>
+      <button id="connectWalletBtn">Connect Wallet</button>
+      <button id="viewFarcasterProfileBtn" disabled style="margin-top: 5px;">Visa min Farcaster-profil</button>
+      <p>Total XP: <strong id="totalXP">0</strong></p>
+      <p>Level: <strong id="userLevel">Level 1: Bronze</strong></p>
+      <progress value="0" max="200" style="width: 100%; height: 6px;"></progress>
+      <p><small>0/200 XP to Level 2</small></p>
+      <p>Total Mints: <span id="totalMints">0</span></p>
+      <p>Total Transactions: <span id="totalTxs">0</span></p>
+      <a href="#" id="editProfileBtn" style="font-size: 12px;">Redigera profil</a>
+    </div>
+
+    <!-- WAI Balance -->
+    <div class="card dark">
+      <h3>WarpAI Token</h3>
+      <p id="waiBalance">Balance: 0 WAI</p>
+      <p>Level Bonus: +10%</p>
+      <p><small>+10% extra WAI på dagliga claims (t.ex. tjäna 5 WAI → få 5.5 WAI)</small></p>
+    </div>
+
+    <!-- Share Stats -->
+    <div class="card dark">
+      <h3>📤 Share Stats</h3>
+      <p>Earn 5 WAI for every share</p>
+      <p>You've shared: <strong id="shareCount">3 times (+15 WAI)</strong></p>
+      <button id="shareFarcasterBtn">Share on Farcaster</button>
+      <button id="shareOnXBtn" style="margin-top: 5px;">Share on X</button>
+      <p id="shareFeedbackProfile" style="display: none; color: #4caf50; font-size: 12px;">Shared! +5 WAI 🎉</p>
+    </div>
+
+    <!-- Achievements -->
+    <div class="card dark">
+      <h3>🏆 Achievements</h3>
+      <ul style="font-size: 0.9rem; padding-left: 1rem; text-align: left;">
+        <li>✅ Early Adopter</li>
+        <li>🔓 Mint Master (unlock at 10 mints)</li>
+        <li>🔓 Referral Pro (unlock at 5 invites)</li>
+        <li>🔓 Streak Master (nå 7 dagars streak)</li>
+        <li>🔓 Token Collector (samla 100 WAI)</li>
+      </ul>
+    </div>
+
+    <!-- Claim History -->
+    <div class="card dark full">
+      <h3>📦 Claim History</h3>
+      <p>Totalt intjänat: <strong>15 WAI</strong></p>
+      <ul id="claimHistory" style="font-size: 0.85rem;">
+        <li>2025-05-26: +5 WAI</li>
+        <li>2025-05-25: +5 WAI</li>
+        <li>2025-05-24: +5 WAI</li>
+      </ul>
+      <button id="showMoreClaimsBtn" style="font-size: 12px;">View More Claims</button>
+    </div>
+  </div>
+</section>
 
       <!-- PROFILE -->
       <section class="tab-content profile" data-tab="profile" style="display: none;">
