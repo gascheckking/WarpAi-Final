@@ -266,24 +266,24 @@ function showWaiClaimedMessage() {
 // ------------------ SIMPLE CONFETTI EFFECT ------------------
 
 function showConfetti() {
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 40; i++) {
     const confetti = document.createElement('div');
     confetti.style.position = 'fixed';
-    confetti.style.width = '8px';
-    confetti.style.height = '8px';
+    confetti.style.width = '10px';
+    confetti.style.height = '10px';
     confetti.style.background = `hsl(${Math.random() * 360}, 100%, 60%)`;
-    confetti.style.top = `${Math.random() * 20 + 10}%`;
+    confetti.style.top = `${Math.random() * 10 + 10}%`;
     confetti.style.left = `${Math.random() * 100}%`;
     confetti.style.borderRadius = '50%';
-    confetti.style.opacity = '0.8';
+    confetti.style.opacity = '0.9';
     confetti.style.zIndex = '9999';
-    confetti.style.transition = 'transform 1.5s ease-out, opacity 1.5s ease-out';
+    confetti.style.transition = 'transform 2.5s ease-out, opacity 2.5s ease-out';
     document.body.appendChild(confetti);
     requestAnimationFrame(() => {
-      confetti.style.transform = `translateY(${Math.random() * 100 + 100}px) rotate(${Math.random() * 360}deg)`;
+      confetti.style.transform = `translateY(${Math.random() * 200 + 100}px) rotate(${Math.random() * 360}deg)`;
       confetti.style.opacity = '0';
     });
-    setTimeout(() => confetti.remove(), 2000);
+    setTimeout(() => confetti.remove(), 3000);
   }
 }
 
