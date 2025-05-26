@@ -243,3 +243,57 @@ document.addEventListener('DOMContentLoaded', () => {
   window.toggleXpInfo = () => document.getElementById('xpInfoModal').classList.toggle('hidden');
   window.toggleWarpInfo = () => document.getElementById('warpInfoModal').classList.toggle('hidden');
 });
+
+// ------------------ WAI CLAIM NOTIFICATION ------------------
+
+function showWaiClaimedMessage() {
+  const msg = document.createElement('div');
+  msg.textContent = '✅ You claimed 5 WAI!';
+  msg.style.position = 'fixed';
+  msg.style.top = '20%';
+  msg.style.left = '50%';
+  msg.style.transform = 'translate(-50%, -50%)';
+  msg.style.background = '#2c9463';
+  msg.style.color = '#fff';
+  msg.style.padding = '1rem 2rem';
+  msg.style.borderRadius = '10px';
+  msg.style.fontSize = '1.2rem';
+  msg.style.fontWeight = 'bold';
+  msg.style.zIndex = '9999';
+  msg.style.boxShadow = '0 0 10px #000';
+  document.body.appendChild(msg);
+  setTimeout(() => msg.remove(), 2000);
+}
+
+// ------------------ SIMPLE CONFETTI EFFECT ------------------
+
+function showConfetti() {
+  for (let i = 0; i < 30; i++) {
+    const confetti = document.createElement('div');
+    confetti.style.position = 'fixed';
+    confetti.style.width = '8px';
+    confetti.style.height = '8px';
+    confetti.style.background = `hsl(${Math.random() * 360}, 100%, 60%)`;
+    confetti.style.top = `${Math.random() * 20 + 10}%`;
+    confetti.style.left = `${Math.random() * 100}%`;
+    confetti.style.borderRadius = '50%';
+    confetti.style.opacity = '0.8';
+    confetti.style.zIndex = '9999';
+    confetti.style.transition = 'transform 1.5s ease-out, opacity 1.5s ease-out';
+    document.body.appendChild(confetti);
+    requestAnimationFrame(() => {
+      confetti.style.transform = `translateY(${Math.random() * 100 + 100}px) rotate(${Math.random() * 360}deg)`;
+      confetti.style.opacity = '0';
+    });
+    setTimeout(() => confetti.remove(), 2000);
+  }
+}
+
+// Använd dessa två funktioner såhär i din claimTokenBtn-händelse:
+if (claimTokenBtn) {
+  claimTokenBtn.addEventListener('click', () => {
+    // ...din vanliga kod här
+    showWaiClaimedMessage();
+    showConfetti();
+  });
+}
