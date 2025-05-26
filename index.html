@@ -301,35 +301,66 @@
           style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #555;" />
       </p>
       <p id="walletAddress">Not Connected</p>
-      <p><small>Koppla din plånbok för att visa din Farcaster/ENS-avatar!</small></p>
+      <p><small>Connect your wallet to show your Farcaster/ENS avatar!</small></p>
       <button id="connectWalletBtn">Connect Wallet</button>
-      <button id="viewFarcasterProfileBtn" disabled style="margin-top: 5px;">Visa min Farcaster-profil</button>
+      <button id="disconnectWalletBtn" style="display: none; margin-top: 5px;">Disconnect Wallet</button>
+      <button id="viewFarcasterProfileBtn" disabled style="margin-top: 5px;">View My Farcaster Profile</button>
+      <p id="farcasterProfileTooltip" style="font-size: 12px; color: #888;">Connect wallet to view!</p>
       <p>Total XP: <strong id="totalXP">0</strong></p>
       <p>Level: <strong id="userLevel">Level 1: Bronze</strong></p>
       <progress value="0" max="200" style="width: 100%; height: 6px;"></progress>
       <p><small>0/200 XP to Level 2</small></p>
       <p>Total Mints: <span id="totalMints">0</span></p>
       <p>Total Transactions: <span id="totalTxs">0</span></p>
-      <a href="#" id="editProfileBtn" style="font-size: 12px;">Redigera profil</a>
+      <a href="#" id="editProfileBtn" style="font-size: 12px;">Edit Profile</a>
     </div>
 
     <!-- WAI Balance -->
     <div class="card dark">
       <h3>WarpAI Token</h3>
       <p id="waiBalance">Balance: 0 WAI</p>
+      <p>Total Earned: <strong>15 WAI</strong></p>
       <p>Level Bonus: +10%</p>
-      <p><small>+10% extra WAI på dagliga claims (t.ex. tjäna 5 WAI → få 5.5 WAI)</small></p>
+      <p><small>+10% extra WAI on daily claims (e.g. earn 5 WAI → get 5.5 WAI)</small></p>
+      <p>Next Bonus Milestone: <strong>Reach Level 3 for +15% Bonus</strong></p>
+      <a href="#" id="learnMoreWaiBtn" style="font-size: 12px;">Learn More About WAI</a>
     </div>
 
     <!-- Share Stats -->
     <div class="card dark">
-      <h3>📤 Share Stats</h3>
+      <h3>📤 Showcase Your Stats</h3>
       <p>Earn 5 WAI for every share</p>
       <p>You've shared: <strong id="shareCount">3 times (+15 WAI)</strong></p>
       <button id="shareFarcasterBtn">Share on Farcaster</button>
       <button id="shareOnXBtn" style="margin-top: 5px;">Share on X</button>
       <p id="shareFeedbackProfile" style="display: none; color: #4caf50; font-size: 12px;">Shared! +5 WAI 🎉</p>
     </div>
+
+    <!-- Achievements -->
+    <div class="card dark">
+      <h3>🏆 Achievements</h3>
+      <ul style="font-size: 0.9rem; padding-left: 1rem; text-align: left;">
+        <li>✅ Early Adopter</li>
+        <li>🔓 Mint Master (0/10 mints)</li>
+        <li>🔓 Referral Pro (2/5 invites)</li>
+        <li>🔓 Streak Master (reach 7-day streak)</li>
+        <li>🔓 Token Collector (collect 100 WAI)</li>
+      </ul>
+    </div>
+
+    <!-- Claim History -->
+    <div class="card dark full">
+      <h3>📦 Claim History</h3>
+      <p>Total earned: <strong>15 WAI</strong></p>
+      <ul id="claimHistory" style="font-size: 0.85rem;">
+        <li>2025-05-26: +5 WAI</li>
+        <li>2025-05-25: +5 WAI</li>
+        <li>2025-05-24: +5 WAI</li>
+      </ul>
+      <button id="showMoreClaimsBtn" style="font-size: 12px;">View More Claims</button>
+    </div>
+  </div>
+</section>
 
     <!-- Achievements -->
     <div class="card dark">
