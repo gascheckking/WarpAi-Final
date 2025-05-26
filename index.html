@@ -60,32 +60,67 @@
 
     <main>
       <!-- HOME -->
-      <section class="tab-content home" data-tab="home" style="display: block;">
-        <div class="custom-home-grid">
-          <div class="card dark tall">
-            <h3>🎯 Your Activity</h3>
-            <p>XP: <span id="currentXP">🔥 0 XP</span><br>Streak: 5 days<br>Claimed: ✅</p>
-          </div> 
-           <div class="card dark">
+<section class="tab-content home" data-tab="home" style="display: block;">
+  <div class="custom-home-grid">
+
+    <!-- Activity, Level & Progress -->
+    <div class="card dark tall">
+      <h3>🎯 Your Activity</h3>
+      <p>
+        Level: <span id="userLevel">Level 1: Bronze</span><br>
+        XP: <span id="currentXP">🔥 0 XP</span><br>
+        <progress id="xpProgress" value="0" max="200" style="width: 100%; height: 8px;"></progress><br>
+        Streak: 5 days<br>
+        Latest: Minted on Zora<br>
+        Claimed: ✅
+      </p>
+    </div>
+
+    <!-- Daily Claim -->
+    <div class="card dark">
       <h3>💰 Claim WAI</h3>
-      <p>Daily reward: 5 WAI</p>
+      <p>
+        Daily reward: 5 WAI<br>
+        Next claim: <span id="claimTimer">23h 45m</span>
+      </p>
       <button id="claimTokenBtn">Claim</button>
-    </div><div class="card dark">
-  <h3>🔗 Referral & Earn</h3>
-  <p>Earn WAI for every invite</p>
-  <button id="copyReferralBtn">Copy Link</button>
-</div>
-          <div class="card dark full">
-            <h3>ℹ️ About WarpAi & WAI</h3>
-            <p>
-              WarpAi tracks your onchain activity.<br>
-              Earn XP for every interaction.<br>
-              Claim WAI tokens daily.<br>
-              Unlock premium perks and level up.
-            </p>
-          </div>
-        </div>
-      </section>
+      <p id="claimFeedback" style="display: none; color: #4caf50; font-weight: bold;">Claimed! +5 WAI 🎉</p>
+    </div>
+
+    <!-- Referral & Share -->
+    <div class="card dark">
+      <h3>🔗 Referral & Earn</h3>
+      <p>
+        Invite friends & earn WAI<br>
+        Invited: <span id="invitedCount">2/5</span> for +10 WAI
+      </p>
+      <button id="copyReferralBtn">Copy Link</button>
+      <button id="shareFarcasterBtn" style="margin-top: 5px;">Share on Farcaster</button>
+    </div>
+
+    <!-- Milestone Tracker -->
+    <div class="card dark">
+      <h3>🏆 Next Milestone</h3>
+      <p>
+        Reach 7-day streak → +50 WAI<br>
+        Complete your first mint → +20 XP
+      </p>
+    </div>
+
+    <!-- Info Block -->
+    <div class="card dark full">
+      <h3>ℹ️ About WarpAi & WAI</h3>
+      <p>
+        WarpAi tracks your onchain activity.<br>
+        Earn XP for every interaction.<br>
+        <small>Mint: +10 XP, Tx: +5 XP, Daily login: +2 XP</small><br>
+        Claim WAI tokens daily.<br>
+        Unlock premium perks and level up.
+      </p>
+    </div>
+
+  </div>
+</section>
 
       <!-- TRACK -->
 <section class="tab-content track" data-tab="track" style="display: none;">
