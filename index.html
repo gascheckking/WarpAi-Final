@@ -229,54 +229,65 @@
 
       <!-- REWARDS -->
 <section class="tab-content rewards" data-tab="rewards" style="display: none;">
-  <div class="hero">
-    <h2></h2>
-  </div>
-
   <div class="card-grid">
-    <!-- Invite System -->
-    <div class="card dark full earn">
+
+    <!-- Invite & Earn -->
+    <div class="card dark">
       <h3>🚀 Invite & Earn</h3>
       <p>Invite friends and earn WAI for each signup!</p>
       <p>You've invited: <strong id="invitedCount">2</strong></p>
-      <p><small>Invite 5 friends before Sunday to get +20 WAI bonus!</small></p>
+      <p><small>Invite 5 friends before Sunday 23:59 UTC to get +20 WAI bonus!</small></p>
       <button id="copyReferralBtn">Copy Referral Link</button>
-      <button id="shareOnXBtn">Share on X</button>
-      <button id="shareFarcasterBtn">Share on Farcaster</button>
+      <button id="shareOnXBtn" style="margin-top: 5px;">Share on X</button>
+      <button id="shareFarcasterBtn" style="margin-top: 5px;">Share on Farcaster</button>
       <p id="shareFeedback" style="display: none; color: #4caf50; font-size: 12px;">Shared! +5 WAI 🎉</p>
     </div>
 
-    <!-- Stats -->
+    <!-- Referral Stats -->
     <div class="card dark">
       <h3>📊 Referral Stats</h3>
       <p>Friends Invited: <strong>2</strong></p>
       <p>Total Earned: <strong>10 WAI</strong></p>
       <p>Next reward: Invite 3 more for +15 WAI</p>
       <progress value="2" max="5" style="width: 100%; height: 6px;"></progress>
+      <p><small>Bjud in 3 till och lås upp Referral Pro-prestationen!</small></p>
     </div>
 
     <!-- Leaderboard -->
-    <div class="card dark full">
-      <h3>🏅 Leaderboard</h3>
-      <ul style="font-size: 0.85rem; padding-left: 1rem;">
+    <div class="card dark">
+      <h3>🥇 Leaderboard</h3>
+      <p><small>Weekly top inviters – ends Sunday 23:59 UTC</small></p>
+      <p><small>1:a: 100 WAI, 2:a: 50 WAI, 3–5:e: 20 WAI</small></p>
+      <ul style="font-size: 0.8rem; padding-left: 1rem;">
         <li>🥇 0xAlphaMint — 12 invites</li>
         <li>🥈 0xZoraKing — 9 invites</li>
         <li>🥉 0xFanArtist — 7 invites</li>
         <li>4. 0xMintBot — 6 invites</li>
         <li>5. You — 2 invites</li>
       </ul>
+      <p><small>Invite 5 more to beat 0xFanArtist (7 invites)!</small></p>
       <button id="viewFullLeaderboardBtn" style="font-size: 12px;">See full leaderboard</button>
     </div>
 
-    <!-- Bonus Tasks -->
+    <!-- Bonus Rewards -->
     <div class="card dark">
       <h3>🎉 Bonus Rewards</h3>
-      <p>Post about WarpAI on Farcaster → +10 WAI</p>
-      <p>Mint a token using WarpAI → +5 WAI</p>
+      <p>Total bonus earned: <strong>0 WAI</strong></p>
+      <p><small>Tjäna din första bonus nu!</small></p>
+      <p>
+        Post about WarpAI on Farcaster → +10 WAI
+        <small>(innan onsdag 23:59 UTC: +20 WAI!)</small>
+        <button id="postFarcasterBtn" style="font-size: 12px; margin-left: 5px;">Post now</button>
+      </p>
+      <p>
+        Mint a token via app → +5 WAI
+        <a href="#" id="mintTokenBtn" style="font-size: 12px; margin-left: 5px;">Mint now</a>
+      </p>
+      <p id="bonusFeedback" style="display: none; color: #4caf50; font-size: 12px;">Postat! +10 WAI 🎉</p>
     </div>
+
   </div>
 </section>
-
       <!-- PROFILE -->
 <section class="tab-content profile" data-tab="profile" style="display: none;">
   <div class="hero">
