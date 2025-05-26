@@ -87,12 +87,12 @@ document.addEventListener('DOMContentLoaded', () => {
   async function connectWithWalletConnect() {
     try {
       const walletConnectProvider = new window.WalletConnectProvider({
-        projectId: 'YOUR_WALLETCONNECT_PROJECT_ID', // Ersätt med ditt WalletConnect Project ID
-        chains: [8453], // Base chain ID
-        rpcMap: {
-          8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
-        }
-      });
+  projectId: 'c0aa1ca206eb7d58226102b102ec49e9',
+  chains: [8453],
+  rpcMap: {
+    8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
+  }
+});
 
       walletConnectProvider.on('display_uri', (uri) => {
         if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
