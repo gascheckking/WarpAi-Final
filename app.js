@@ -127,38 +127,52 @@ updateTrackTabData(); // <--- Lägg till detta här
   }
 
   // Hämta onchain-data
-  async function loadOnchainData() {
-    if (!provider || !userAddress) return;
-    try {
-      const alchemyProvider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
-      const balance = await alchemyProvider.getBalance(userAddress);
-      const txCount = await alchemyProvider.getTransactionCount(userAddress);
-      const xp = txCount * 10;
-      if (currentXP) currentXP.textContent = `🔥 ${xp} XP`;
-      if (totalXP) totalXP.textContent = xp;
-      if (xpDisplay) xpDisplay.textContent = `${xp} XP 🔥`;
-      const progressPercent = Math.min((xp / 200) * 100, 100);
-      const xpFill = document.querySelector('.xp-fill');
-      if (xpFill) xpFill.style.width = `${progressPercent}%`;
-const xpBannerFill = document.getElementById('xpBannerFill');
-if (xpBannerFill) xpBannerFill.style.width = `${progressPercent}%`;
-      if (latestActivity && activityResult) {
-        const block = await alchemyProvider.getBlockNumber();
-        const txs = await alchemyProvider.getHistory(userAddress, block - 1000, block);
-        if (txs.length > 0) {
-          const last = txs[txs.length - 1];
-          const ethValue = ethers.utils.formatEther(last.value || 0);
-          latestActivity.textContent = `↪ ${last.to.slice(0, 6)}... — ${ethValue} ETH`;
-          activityResult.textContent = `+ $${(ethValue * 3000).toFixed(2)} est.`;
-        } else {
-          latestActivity.textContent = `No recent tx`;
-          activityResult.textContent = `+ $0`;
-        }
+async function loadOnchainData() {
+  if (!provider || !userAddress) return;
+
+  try {
+    const alchemyProvider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
+
+    // Hämta balans & transaktioner
+    const balance = await alchemyProvider.getBalance(userAddress);
+    const txCount = await alchemyProvider.getTransactionCount(userAddress);
+
+    // XP-beräkning
+    const xp = txCount * 10;
+    updateUserXP(xp); // Använd det nya nivåsystemet
+
+    // Fallback/visuell XP-display om nivåsystemet inte laddat
+    if (currentXP) currentXP.textContent = `🔥 ${xp} XP`;
+    if (totalXP) totalXP.textContent = xp;
+    if (xpDisplay) xpDisplay.textContent = `${xp} XP 🔥`;
+
+    // XP progressbars
+    const progressPercent = Math.min((xp / 200) * 100, 100);
+    const xpFill = document.querySelector('.xp-fill');
+    if (xpFill) xpFill.style.width = `${progressPercent}%`;
+    
+    const xpBannerFill = document.getElementById('xpBannerFill');
+    if (xpBannerFill) xpBannerFill.style.width = `${progressPercent}%`;
+
+    // Senaste aktivitet
+    if (latestActivity && activityResult) {
+      const block = await alchemyProvider.getBlockNumber();
+      const txs = await alchemyProvider.getHistory(userAddress, block - 1000, block);
+      if (txs.length > 0) {
+        const last = txs[txs.length - 1];
+        const ethValue = ethers.utils.formatEther(last.value || 0);
+        latestActivity.textContent = `↪ ${last.to.slice(0, 6)}... — ${ethValue} ETH`;
+        activityResult.textContent = `+ $${(ethValue * 3000).toFixed(2)} est.`;
+      } else {
+        latestActivity.textContent = `No recent tx`;
+        activityResult.textContent = `+ $0`;
       }
-    } catch (error) {
-      console.error('Error fetching onchain data:', error);
     }
+
+  } catch (error) {
+    console.error('Error fetching onchain data:', error);
   }
+}
 
   // XP-Claim
   if (claimXpBtn) {
@@ -347,3 +361,54 @@ if (userAddress) {
 document.getElementById('refreshTrackBtn').addEventListener('click', () => {
   updateTrackTabData();
 });
+
+function updateUserXP(xp) {
+  const levelThresholds = [0, 200, 400, 700, 1000];
+  const maxLevel = levelThresholds.length;
+  let level = 1;
+  let levelUpFeedback = false;
+
+  for (let i = levelThresholds.length - 1; i >= 0; i--) {
+    if (xp >= levelThresholds[i]) {
+      level = i + 1;
+      break;
+    }
+  }
+
+  const previousXP = parseInt(document.getElementById('totalXP')?.innerText || '0');
+  const previousLevel = parseInt(document.getElementById('userLevel')?.innerText.match(/\d+/) || '1');
+
+  if (xp >= levelThresholds[level - 1] && previousXP < levelThresholds[level - 1] && level > previousLevel) {
+    levelUpFeedback = true;
+  }
+
+  const currentLevelXP = levelThresholds[level - 1];
+  const nextLevelXP = level < maxLevel ? levelThresholds[level] : currentLevelXP;
+  const progress = Math.min(100, ((xp - currentLevelXP) / (nextLevelXP - currentLevelXP)) * 100);
+  const progressLabel = level < maxLevel
+    ? `${xp - currentLevelXP}/${nextLevelXP - currentLevelXP} XP to Level ${level + 1}`
+    : 'Max Level Reached!';
+
+  document.getElementById('currentXP')?.innerText = `🔥 ${xp} XP`;
+  document.getElementById('totalXP')?.innerText = xp;
+  document.getElementById('userLevel')?.innerText = `Level ${level}: ${getLevelName(level)}${level === maxLevel ? ' (Max)' : ''}`;
+  document.getElementById('xpProgress')?.setAttribute('value', xp - currentLevelXP);
+  document.getElementById('xpProgress')?.setAttribute('max', nextLevelXP - currentLevelXP);
+
+  const label = document.getElementById('xpProgressLabel');
+  if (label) {
+    if (levelUpFeedback) {
+      label.innerText = '🎉 Level Up!';
+      setTimeout(() => label.innerText = progressLabel, 2000);
+    } else {
+      label.innerText = progressLabel;
+    }
+  }
+}
+
+function getLevelName(level) {
+  if (level >= 5) return 'Platinum';
+  if (level >= 4) return 'Gold';
+  if (level >= 3) return 'Silver';
+  return 'Bronze';
+}
