@@ -2,17 +2,38 @@ let provider = null;
 let signer = null;
 let userAddress = null;
 
-const ALCHEMY_KEY = document.querySelector('meta[name="alchemy-key"]').content;
-const ETHERSCAN_KEY = document.querySelector('meta[name="etherscan-key"]').content;
-
 document.addEventListener('DOMContentLoaded', () => {
+  const ALCHEMY_KEY = document.querySelector('meta[name="alchemy-key"]')?.content;
+  const ETHERSCAN_KEY = document.querySelector('meta[name="etherscan-key"]')?.content;
+
   const onboardingOverlay = document.getElementById('onboardingOverlay');
   const appContent = document.getElementById('appContent');
-  const qrModal = document.getElementById('qrModal');
-  const qrCodeDiv = document.getElementById('qrCode');
+
+  // Visa app efter onboarding
+  if (onboardingOverlay && appContent) {
+    setTimeout(() => {
+      onboardingOverlay.classList.add('fade-out-logo');
+      setTimeout(() => {
+        onboardingOverlay.style.display = 'none';
+        appContent.style.display = 'block';
+      }, 500);
+    }, 2000);
+  }
+
+  // Tabbar
+  document.querySelectorAll('.tab-button').forEach(button => {
+    button.addEventListener('click', () => {
+      document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+      button.classList.add('active');
+      const targetTab = document.querySelector(`.tab-content[data-tab="${button.dataset.tab}"]`);
+      if (targetTab) targetTab.style.display = 'block';
+    });
+  });
+
   const connectWalletBtn = document.getElementById('connectWallet');
-  const xpDisplay = document.getElementById('xpDisplay');
   const walletAddress = document.getElementById('walletAddress');
+  const xpDisplay = document.getElementById('xpDisplay');
   const totalXP = document.getElementById('totalXP');
   const currentXP = document.getElementById('currentXP');
   const claimXpBtn = document.getElementById('claimXpBtn');
@@ -28,75 +49,47 @@ document.addEventListener('DOMContentLoaded', () => {
   const activityResult = document.getElementById('activityResult');
   const tokensMinted = document.getElementById('tokensMinted');
   const ethMoved = document.getElementById('ethMoved');
-  const gasSpent = document.getElementById('gasSpent');
   const connectedDapps = document.getElementById('connectedDapps');
+  const qrModal = document.getElementById('qrModal');
+  const qrCodeDiv = document.getElementById('qrCode');
 
-
-  
-  // Visa onboarding och dölj efter 2 sekunder
-  setTimeout(() => {
-    onboardingOverlay.classList.add('fade-out-logo');
-    setTimeout(() => {
-      onboardingOverlay.style.display = 'none';
-      appContent.style.display = 'block';
-    }, 500);
-  }, 2000);
-
-  // Tab-hantering
-  document.querySelectorAll('.tab-button').forEach(button => {
-    button.addEventListener('click', () => {
-      document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
-      button.classList.add('active');
-      document.querySelector(`.tab-content[data-tab="${button.dataset.tab}"]`).style.display = 'block';
-    });
-  });
-
-  // Connect-knapp
   if (connectWalletBtn) {
     connectWalletBtn.addEventListener('click', async () => {
       if (userAddress) {
         disconnectWallet();
-        return;
+      } else {
+        await connectWithWalletConnect();
       }
-      await connectWithWalletConnect();
     });
   }
 
-  // Disconnect-funktion
   function disconnectWallet() {
-    if (provider && provider.disconnect) provider.disconnect();
+    if (provider?.disconnect) provider.disconnect();
     provider = null;
     signer = null;
     userAddress = null;
     if (connectWalletBtn) connectWalletBtn.textContent = 'Connect Wallet';
     if (walletAddress) walletAddress.textContent = 'Not Connected';
-    if (xpDisplay) xpDisplay.textContent = '0 XP 🔥';
-    if (totalXP) totalXP.textContent = '0';
-    if (currentXP) currentXP.textContent = '🔥 0 XP';
+    updateXPUI(0);
     localStorage.clear();
   }
 
-  // Connect-funktion med WalletConnect v2
   async function connectWithWalletConnect() {
     try {
       const walletConnectProvider = new window.WalletConnectProvider({
-  projectId: 'c0aa1ca206eb7d58226102b102ec49e9',
-  chains: [8453],
-  rpcMap: {
-    8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
-  }
-});
+        projectId: 'c0aa1ca206eb7d58226102b102ec49e9',
+        chains: [8453],
+        rpcMap: {
+          8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
+        }
+      });
 
       walletConnectProvider.on('display_uri', (uri) => {
         if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
           setTimeout(() => {
             window.open(`https://link.trustwallet.com/wc?uri=${encodeURIComponent(uri)}`, '_blank');
           }, 500);
-          return;
-        }
-
-        if (qrCodeDiv) {
+        } else if (qrCodeDiv && qrModal) {
           qrCodeDiv.innerHTML = '';
           new QRCode(qrCodeDiv, { text: uri, width: 200, height: 200 });
           qrModal.classList.remove('hidden');
@@ -107,11 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
       provider = new ethers.providers.Web3Provider(walletConnectProvider);
       signer = provider.getSigner();
       userAddress = await signer.getAddress();
-updateTrackTabData(); // <--- Lägg till detta här
 
+      updateTrackTabData();
       if (connectWalletBtn) connectWalletBtn.textContent = 'Disconnect';
       if (walletAddress) walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
-
       loadOnchainData();
       if (qrModal) qrModal.classList.add('hidden');
     } catch (error) {
@@ -120,174 +112,144 @@ updateTrackTabData(); // <--- Lägg till detta här
     }
   }
 
-  // Hämta onchain-data
-async function loadOnchainData() {
-  if (!provider || !userAddress) return;
+  async function loadOnchainData() {
+    if (!userAddress || !ALCHEMY_KEY) return;
+    try {
+      const readProvider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
+      const txCount = await readProvider.getTransactionCount(userAddress);
+      const xp = txCount * 10;
+      updateXPUI(xp);
 
-  try {
-    const alchemyProvider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
+      if (latestActivity && activityResult) {
+        const block = await readProvider.getBlockNumber();
+        const txs = await readProvider.getHistory(userAddress, block - 1000, block);
+        if (txs.length > 0) {
+          const last = txs[txs.length - 1];
+          const ethValue = ethers.utils.formatEther(last.value || 0);
+          latestActivity.textContent = `↪ ${last.to.slice(0, 6)}... — ${ethValue} ETH`;
+          activityResult.textContent = `+ $${(ethValue * 3000).toFixed(2)}`;
+        } else {
+          latestActivity.textContent = `No recent tx`;
+          activityResult.textContent = `+ $0`;
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching onchain data:', error);
+    }
+  }
 
-    // Hämta balans & transaktioner
-    const balance = await alchemyProvider.getBalance(userAddress);
-    const txCount = await alchemyProvider.getTransactionCount(userAddress);
-
-    // XP-beräkning
-    const xp = txCount * 10;
-    updateUserXP(xp); // Använd det nya nivåsystemet
-
-    // Fallback/visuell XP-display om nivåsystemet inte laddat
+  function updateXPUI(xp) {
     if (currentXP) currentXP.textContent = `🔥 ${xp} XP`;
     if (totalXP) totalXP.textContent = xp;
     if (xpDisplay) xpDisplay.textContent = `${xp} XP 🔥`;
 
-    // XP progressbars
     const progressPercent = Math.min((xp / 200) * 100, 100);
-    const xpFill = document.querySelector('.xp-fill');
-    if (xpFill) xpFill.style.width = `${progressPercent}%`;
-    
-    const xpBannerFill = document.getElementById('xpBannerFill');
-    if (xpBannerFill) xpBannerFill.style.width = `${progressPercent}%`;
-
-    // Senaste aktivitet
-    if (latestActivity && activityResult) {
-      const block = await alchemyProvider.getBlockNumber();
-      const txs = await alchemyProvider.getHistory(userAddress, block - 1000, block);
-      if (txs.length > 0) {
-        const last = txs[txs.length - 1];
-        const ethValue = ethers.utils.formatEther(last.value || 0);
-        latestActivity.textContent = `↪ ${last.to.slice(0, 6)}... — ${ethValue} ETH`;
-        activityResult.textContent = `+ $${(ethValue * 3000).toFixed(2)} est.`;
-      } else {
-        latestActivity.textContent = `No recent tx`;
-        activityResult.textContent = `+ $0`;
-      }
-    }
-
-  } catch (error) {
-    console.error('Error fetching onchain data:', error);
+    document.querySelectorAll('.xp-fill, #xpBannerFill').forEach(el => {
+      el.style.width = `${progressPercent}%`;
+    });
   }
-}
 
-  // XP-Claim
   if (claimXpBtn) {
     claimXpBtn.addEventListener('click', () => {
-      let xp = parseInt(totalXP.textContent) || 0;
-      xp += 10;
-      currentXP.textContent = `🔥 ${xp} XP`;
-      totalXP.textContent = xp;
-      xpDisplay.textContent = `${xp} XP 🔥`;
-      const progressPercent = Math.min((xp / 200) * 100, 100);
-      const xpFill = document.querySelector('.xp-fill');
-      if (xpFill) xpFill.style.width = `${progressPercent}%`;
+      const xp = parseInt(totalXP?.textContent) || 0;
+      updateXPUI(xp + 10);
       alert('Claimed 10 XP!');
     });
   }
 
-  // Token claim
   if (claimTokenBtn) {
     claimTokenBtn.addEventListener('click', () => {
-      let balance = parseFloat(waiBalance.textContent.match(/\d+\.\d+/)?.[0]) || 0;
+      let balance = parseFloat(waiBalance?.textContent.match(/\d+\.\d+/)?.[0]) || 0;
       balance += 5;
-      waiBalance.textContent = `Balance: ${balance.toFixed(2)} WAI`;
-      let history = claimHistory.innerHTML;
-      claimHistory.innerHTML = `<li>+5 WAI – claimed token</li>${history}`;
-
-      const claimedPopup = document.createElement('div');
-      claimedPopup.textContent = '🎉 5 WAI Claimed!';
-      claimedPopup.style.position = 'fixed';
-      claimedPopup.style.top = '40%';
-      claimedPopup.style.left = '50%';
-      claimedPopup.style.transform = 'translate(-50%, -50%)';
-      claimedPopup.style.background = '#333';
-      claimedPopup.style.color = '#fff';
-      claimedPopup.style.padding = '1rem 2rem';
-      claimedPopup.style.borderRadius = '10px';
-      claimedPopup.style.fontSize = '1.2rem';
-      claimedPopup.style.zIndex = '9999';
-      document.body.appendChild(claimedPopup);
-      setTimeout(() => claimedPopup.remove(), 2000);
+      if (waiBalance) waiBalance.textContent = `Balance: ${balance.toFixed(2)} WAI`;
+      if (claimHistory) claimHistory.innerHTML = `<li>+5 WAI – claimed token</li>` + claimHistory.innerHTML;
+      showWaiClaimedMessage();
+      showConfetti();
     });
   }
 
-  // Kopiera länk
   if (copyReferralBtn) {
     copyReferralBtn.addEventListener('click', () => {
-      const referralLink = userAddress ? `https://warpai.com/referral/${userAddress}` : 'https://warpai.com';
-      navigator.clipboard.writeText(referralLink);
-      const toast = document.createElement('div');
-      toast.textContent = '✅ Copied';
-      toast.style.position = 'fixed';
-      toast.style.bottom = '1rem';
-      toast.style.right = '1rem';
-      toast.style.background = '#4caf50';
-      toast.style.color = '#fff';
-      toast.style.padding = '0.5rem 1rem';
-      toast.style.borderRadius = '6px';
-      toast.style.zIndex = '9999';
-      document.body.appendChild(toast);
-      setTimeout(() => toast.remove(), 2000);
+      const link = userAddress ? `https://warpai.com/referral/${userAddress}` : 'https://warpai.com';
+      navigator.clipboard.writeText(link);
+      showToast('✅ Copied');
     });
   }
 
-  // Delning
   if (shareOnXBtn) {
     shareOnXBtn.addEventListener('click', () => {
-      const referralLink = userAddress ? `https://warpai.com/referral/${userAddress}` : 'https://warpai.com';
-      window.open(`https://twitter.com/intent/tweet?text=Check out WarpAi! ${referralLink} @YOUR_X_USERNAME`, '_blank');
-    });
-  }
-  if (shareOnFarcasterBtn) {
-    shareOnFarcasterBtn.addEventListener('click', () => {
-      const referralLink = userAddress ? `https://warpai.com/referral/${userAddress}` : 'https://warpai.com';
-      window.open(`https://warpcast.com/~/compose?text=Check out WarpAi! ${referralLink}`, '_blank');
+      const link = userAddress ? `https://warpai.com/referral/${userAddress}` : 'https://warpai.com';
+      window.open(`https://twitter.com/intent/tweet?text=Check out WarpAi! ${link}`, '_blank');
     });
   }
 
-  // Köp-knapp
+  if (shareOnFarcasterBtn) {
+    shareOnFarcasterBtn.addEventListener('click', () => {
+      const link = userAddress ? `https://warpai.com/referral/${userAddress}` : 'https://warpai.com';
+      window.open(`https://warpcast.com/~/compose?text=Check out WarpAi! ${link}`, '_blank');
+    });
+  }
+
   if (buyTokenBtn) buyTokenBtn.addEventListener('click', () => alert('Token buy logic here'));
   if (upgradeBtn) upgradeBtn.addEventListener('click', () => alert('Upgrade to Premium for $5'));
 
-  // Modal-stängning
-  window.closeQrModal = () => qrModal.classList.add('hidden');
-  window.toggleFAQ = () => document.getElementById('faqModal').classList.toggle('hidden');
-  window.toggleXpInfo = () => document.getElementById('xpInfoModal').classList.toggle('hidden');
-  window.toggleWarpInfo = () => document.getElementById('warpInfoModal').classList.toggle('hidden');
+  window.closeQrModal = () => qrModal?.classList.add('hidden');
+  window.toggleFAQ = () => document.getElementById('faqModal')?.classList.toggle('hidden');
+  window.toggleXpInfo = () => document.getElementById('xpInfoModal')?.classList.toggle('hidden');
+  window.toggleWarpInfo = () => document.getElementById('warpInfoModal')?.classList.toggle('hidden');
 });
-
-// ------------------ WAI CLAIM NOTIFICATION ------------------
 
 function showWaiClaimedMessage() {
   const msg = document.createElement('div');
   msg.textContent = '✅ You claimed 5 WAI!';
-  msg.style.position = 'fixed';
-  msg.style.top = '40%';
-  msg.style.left = '50%';
-  msg.style.transform = 'translate(-50%, -50%)';
-  msg.style.background = 'transparent';
-  msg.style.color = '#4caf50';
-  msg.style.fontSize = '1.5rem';
-  msg.style.fontWeight = 'bold';
-  msg.style.zIndex = '9999';
-  msg.style.textShadow = '0 0 5px black';
+  Object.assign(msg.style, {
+    position: 'fixed',
+    top: '40%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    background: 'transparent',
+    color: '#4caf50',
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+    zIndex: '9999',
+    textShadow: '0 0 5px black'
+  });
   document.body.appendChild(msg);
   setTimeout(() => msg.remove(), 2500);
 }
 
-// ------------------ SIMPLE CONFETTI EFFECT ------------------
+function showToast(message) {
+  const toast = document.createElement('div');
+  toast.textContent = message;
+  Object.assign(toast.style, {
+    position: 'fixed',
+    bottom: '1rem',
+    right: '1rem',
+    background: '#4caf50',
+    color: '#fff',
+    padding: '0.5rem 1rem',
+    borderRadius: '6px',
+    zIndex: '9999'
+  });
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2000);
+}
 
 function showConfetti() {
   for (let i = 0; i < 40; i++) {
     const confetti = document.createElement('div');
-    confetti.style.position = 'fixed';
-    confetti.style.width = '10px';
-    confetti.style.height = '10px';
-    confetti.style.background = `hsl(${Math.random() * 360}, 100%, 60%)`;
-    confetti.style.top = `${Math.random() * 10 + 10}%`;
-    confetti.style.left = `${Math.random() * 100}%`;
-    confetti.style.borderRadius = '50%';
-    confetti.style.opacity = '0.9';
-    confetti.style.zIndex = '9999';
-    confetti.style.transition = 'transform 2.5s ease-out, opacity 2.5s ease-out';
+    Object.assign(confetti.style, {
+      position: 'fixed',
+      width: '10px',
+      height: '10px',
+      background: `hsl(${Math.random() * 360}, 100%, 60%)`,
+      top: `${Math.random() * 10 + 10}%`,
+      left: `${Math.random() * 100}%`,
+      borderRadius: '50%',
+      opacity: '0.9',
+      zIndex: '9999',
+      transition: 'transform 2.5s ease-out, opacity 2.5s ease-out'
+    });
     document.body.appendChild(confetti);
     requestAnimationFrame(() => {
       confetti.style.transform = `translateY(${Math.random() * 200 + 100}px) rotate(${Math.random() * 360}deg)`;
@@ -297,112 +259,24 @@ function showConfetti() {
   }
 }
 
-// Använd dessa två funktioner såhär i din claimTokenBtn-händelse:
-if (claimTokenBtn) {
-  claimTokenBtn.addEventListener('click', () => {
-    // ...din vanliga kod här
-    showWaiClaimedMessage();
-    showConfetti();
-  });
-}
-
-// ------------------ TRACK TAB ONCHAIN DATA FETCH ------------------
-
 async function updateTrackTabData() {
+  if (!userAddress) return;
   try {
-    const provider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
-    
-    // Base Gas Fee
-    const gasPrice = await provider.getGasPrice();
-    const gwei = ethers.utils.formatUnits(gasPrice, 'gwei');
-    document.getElementById('baseGas').textContent = parseFloat(gwei).toFixed(2);
-
-    // Example mocked gas summary
+    const readProvider = new ethers.providers.AlchemyProvider('base', document.querySelector('meta[name="alchemy-key"]')?.content);
+    const gasPrice = await readProvider.getGasPrice();
+    document.getElementById('baseGas').textContent = parseFloat(ethers.utils.formatUnits(gasPrice, 'gwei')).toFixed(2);
     document.getElementById('gasFees30d').textContent = "$12.34";
     document.getElementById('avgGas').textContent = "45.67 Gwei";
-
-    // PnL Today (mocked)
     document.getElementById('pnlToday').textContent = "+ $1.25";
 
-    // Tokens Minted, ETH Moved, Volume
-    const txCount = await provider.getTransactionCount(userAddress);
+    const txCount = await readProvider.getTransactionCount(userAddress);
     document.getElementById('tokensMinted').textContent = txCount;
 
-    const balanceMoved = await provider.getBalance(userAddress);
-    document.getElementById('ethMoved').textContent = ethers.utils.formatEther(balanceMoved) + " ETH";
-
-    document.getElementById('volume30d').textContent = "$" + (parseFloat(ethers.utils.formatEther(balanceMoved)) * 3000).toFixed(2);
-
-    // Connected dApps (mocked)
-    const connectedList = document.getElementById('connectedDapps');
-    connectedList.innerHTML = "<li>Zora</li><li>OpenSea</li><li>Mirror</li>";
-
-    // Latest Activity (mocked)
-    document.getElementById('latestActivity').textContent = "↪ 0x123...abc — 0.01 ETH";
-    document.getElementById('activityResult').textContent = "+ $30.00";
-
+    const balance = await readProvider.getBalance(userAddress);
+    document.getElementById('ethMoved').textContent = ethers.utils.formatEther(balance) + " ETH";
+    document.getElementById('volume30d').textContent = "$" + (parseFloat(ethers.utils.formatEther(balance)) * 3000).toFixed(2);
+    document.getElementById('connectedDapps').innerHTML = "<li>Zora</li><li>OpenSea</li><li>Mirror</li>";
   } catch (error) {
-    console.error("Track tab data fetch error:", error);
+    console.error("Track tab data error:", error);
   }
-}
-
-// Call it when wallet is connected
-if (userAddress) {
-  updateTrackTabData();
-}
-
-// Refresh button
-document.getElementById('refreshTrackBtn').addEventListener('click', () => {
-  updateTrackTabData();
-});
-
-function updateUserXP(xp) {
-  const levelThresholds = [0, 200, 400, 700, 1000];
-  const maxLevel = levelThresholds.length;
-  let level = 1;
-  let levelUpFeedback = false;
-
-  for (let i = levelThresholds.length - 1; i >= 0; i--) {
-    if (xp >= levelThresholds[i]) {
-      level = i + 1;
-      break;
-    }
-  }
-
-  const previousXP = parseInt(document.getElementById('totalXP')?.innerText || '0');
-  const previousLevel = parseInt(document.getElementById('userLevel')?.innerText.match(/\d+/) || '1');
-
-  if (xp >= levelThresholds[level - 1] && previousXP < levelThresholds[level - 1] && level > previousLevel) {
-    levelUpFeedback = true;
-  }
-
-  const currentLevelXP = levelThresholds[level - 1];
-  const nextLevelXP = level < maxLevel ? levelThresholds[level] : currentLevelXP;
-  const progress = Math.min(100, ((xp - currentLevelXP) / (nextLevelXP - currentLevelXP)) * 100);
-  const progressLabel = level < maxLevel
-    ? `${xp - currentLevelXP}/${nextLevelXP - currentLevelXP} XP to Level ${level + 1}`
-    : 'Max Level Reached!';
-
-  document.getElementById('currentXP')?.innerText = `🔥 ${xp} XP`;
-  document.getElementById('totalXP')?.innerText = xp;
-  document.getElementById('userLevel')?.innerText = `Level ${level}: ${getLevelName(level)}${level === maxLevel ? ' (Max)' : ''}`;
-  document.getElementById('xpProgress')?.setAttribute('value', xp - currentLevelXP);
-  document.getElementById('xpProgress')?.setAttribute('max', nextLevelXP - currentLevelXP);
-
-  const label = document.getElementById('xpProgressLabel');
-  if (label) {
-    if (levelUpFeedback) {
-      label.innerText = '🎉 Level Up!';
-      setTimeout(() => label.innerText = progressLabel, 2000);
-    } else {
-      label.innerText = progressLabel;
-    }
-  }
-}
-
-function getLevelName(level) {
-  if (level >= 5) return 'Platinum';
-  if (level >= 4) return 'Gold';
-  if (level >= 3) return 'Silver';
-  return 'Bronze';
 }
