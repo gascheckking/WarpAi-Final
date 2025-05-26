@@ -31,15 +31,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const gasSpent = document.getElementById('gasSpent');
   const connectedDapps = document.getElementById('connectedDapps');
 
-
-  // Visa onboarding och dölj efter 2 sekunder
-  setTimeout(() => {
-    onboardingOverlay.classList.add('fade-out-logo');
+  // Visa onboarding och dölj efter animation
+  if (!onboardingOverlay || !appContent) {
+    console.error('Onboarding-element saknas:', { onboardingOverlay, appContent });
+    if (onboardingOverlay) onboardingOverlay.style.display = 'none';
+    if (appContent) appContent.style.display = 'block';
+  } else {
     setTimeout(() => {
-      onboardingOverlay.style.display = 'none';
-      appContent.style.display = 'block';
-    }, 500);
-  }, 2000);
+      console.log('Lägger till fade-out-logo');
+      onboardingOverlay.classList.add('fade-out-logo');
+      onboardingOverlay.addEventListener('animationend', () => {
+        console.log('Fade-out-animation slutförd');
+        onboardingOverlay.style.display = 'none';
+        appContent.style.display = 'block';
+      }, { once: true });
+    }, 2000);
+  }
 
   // Tab-hantering
   document.querySelectorAll('.tab-button').forEach(button => {
@@ -80,12 +87,12 @@ document.addEventListener('DOMContentLoaded', () => {
   async function connectWithWalletConnect() {
     try {
       const walletConnectProvider = new window.WalletConnectProvider({
-  projectId: 'c0aa1ca206eb7d58226102b102ec49e9',
-  chains: [8453],
-  rpcMap: {
-    8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
-  }
-});
+        projectId: 'c0aa1ca206eb7d58226102b102ec49e9',
+        chains: [8453],
+        rpcMap: {
+          8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
+        }
+      });
 
       walletConnectProvider.on('display_uri', (uri) => {
         if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
@@ -106,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
       provider = new ethers.providers.Web3Provider(walletConnectProvider);
       signer = provider.getSigner();
       userAddress = await signer.getAddress();
-updateTrackTabData(); // <--- Lägg till detta här
+      updateTrackTabData();
 
       if (connectWalletBtn) connectWalletBtn.textContent = 'Disconnect';
       if (walletAddress) walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
@@ -119,7 +126,7 @@ updateTrackTabData(); // <--- Lägg till detta här
     }
   }
 
-// Hämta onchain-data
+  // Hämta onchain-data
   async function loadOnchainData() {
     if (!provider || !userAddress) return;
     try {
@@ -133,8 +140,8 @@ updateTrackTabData(); // <--- Lägg till detta här
       const progressPercent = Math.min((xp / 200) * 100, 100);
       const xpFill = document.querySelector('.xp-fill');
       if (xpFill) xpFill.style.width = `${progressPercent}%`;
-const xpBannerFill = document.getElementById('xpBannerFill');
-if (xpBannerFill) xpBannerFill.style.width = `${progressPercent}%`;
+      const xpBannerFill = document.getElementById('xpBannerFill');
+      if (xpBannerFill) xpBannerFill.style.width = `${progressPercent}%`;
       if (latestActivity && activityResult) {
         const block = await alchemyProvider.getBlockNumber();
         const txs = await alchemyProvider.getHistory(userAddress, block - 1000, block);
@@ -285,7 +292,6 @@ function showConfetti() {
 // Använd dessa två funktioner såhär i din claimTokenBtn-händelse:
 if (claimTokenBtn) {
   claimTokenBtn.addEventListener('click', () => {
-    // ...din vanliga kod här
     showWaiClaimedMessage();
     showConfetti();
   });
