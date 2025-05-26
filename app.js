@@ -126,53 +126,39 @@ updateTrackTabData(); // <--- Lägg till detta här
     }
   }
 
-  // Hämta onchain-data
-async function loadOnchainData() {
-  if (!provider || !userAddress) return;
-
-  try {
-    const alchemyProvider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
-
-    // Hämta balans & transaktioner
-    const balance = await alchemyProvider.getBalance(userAddress);
-    const txCount = await alchemyProvider.getTransactionCount(userAddress);
-
-    // XP-beräkning
-    const xp = txCount * 10;
-    updateUserXP(xp); // Använd det nya nivåsystemet
-
-    // Fallback/visuell XP-display om nivåsystemet inte laddat
-    if (currentXP) currentXP.textContent = `🔥 ${xp} XP`;
-    if (totalXP) totalXP.textContent = xp;
-    if (xpDisplay) xpDisplay.textContent = `${xp} XP 🔥`;
-
-    // XP progressbars
-    const progressPercent = Math.min((xp / 200) * 100, 100);
-    const xpFill = document.querySelector('.xp-fill');
-    if (xpFill) xpFill.style.width = `${progressPercent}%`;
-    
-    const xpBannerFill = document.getElementById('xpBannerFill');
-    if (xpBannerFill) xpBannerFill.style.width = `${progressPercent}%`;
-
-    // Senaste aktivitet
-    if (latestActivity && activityResult) {
-      const block = await alchemyProvider.getBlockNumber();
-      const txs = await alchemyProvider.getHistory(userAddress, block - 1000, block);
-      if (txs.length > 0) {
-        const last = txs[txs.length - 1];
-        const ethValue = ethers.utils.formatEther(last.value || 0);
-        latestActivity.textContent = `↪ ${last.to.slice(0, 6)}... — ${ethValue} ETH`;
-        activityResult.textContent = `+ $${(ethValue * 3000).toFixed(2)} est.`;
-      } else {
-        latestActivity.textContent = `No recent tx`;
-        activityResult.textContent = `+ $0`;
+// Hämta onchain-data
+  async function loadOnchainData() {
+    if (!provider || !userAddress) return;
+    try {
+      const alchemyProvider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
+      const balance = await alchemyProvider.getBalance(userAddress);
+      const txCount = await alchemyProvider.getTransactionCount(userAddress);
+      const xp = txCount * 10;
+      if (currentXP) currentXP.textContent = `🔥 ${xp} XP`;
+      if (totalXP) totalXP.textContent = xp;
+      if (xpDisplay) xpDisplay.textContent = `${xp} XP 🔥`;
+      const progressPercent = Math.min((xp / 200) * 100, 100);
+      const xpFill = document.querySelector('.xp-fill');
+      if (xpFill) xpFill.style.width = `${progressPercent}%`;
+const xpBannerFill = document.getElementById('xpBannerFill');
+if (xpBannerFill) xpBannerFill.style.width = `${progressPercent}%`;
+      if (latestActivity && activityResult) {
+        const block = await alchemyProvider.getBlockNumber();
+        const txs = await alchemyProvider.getHistory(userAddress, block - 1000, block);
+        if (txs.length > 0) {
+          const last = txs[txs.length - 1];
+          const ethValue = ethers.utils.formatEther(last.value || 0);
+          latestActivity.textContent = `↪ ${last.to.slice(0, 6)}... — ${ethValue} ETH`;
+          activityResult.textContent = `+ $${(ethValue * 3000).toFixed(2)} est.`;
+        } else {
+          latestActivity.textContent = `No recent tx`;
+          activityResult.textContent = `+ $0`;
+        }
       }
+    } catch (error) {
+      console.error('Error fetching onchain data:', error);
     }
-
-  } catch (error) {
-    console.error('Error fetching onchain data:', error);
   }
-}
 
   // XP-Claim
   if (claimXpBtn) {
