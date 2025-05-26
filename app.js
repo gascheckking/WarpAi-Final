@@ -2,9 +2,10 @@ let provider = null;
 let signer = null;
 let userAddress = null;
 
-document.addEventListener('DOMContentLoaded', () => {
 const ALCHEMY_KEY = document.querySelector('meta[name="alchemy-key"]').content;
 const ETHERSCAN_KEY = document.querySelector('meta[name="etherscan-key"]').content;
+
+document.addEventListener('DOMContentLoaded', () => {
   const onboardingOverlay = document.getElementById('onboardingOverlay');
   const appContent = document.getElementById('appContent');
   const qrModal = document.getElementById('qrModal');
@@ -29,23 +30,23 @@ const ETHERSCAN_KEY = document.querySelector('meta[name="etherscan-key"]').conte
   const ethMoved = document.getElementById('ethMoved');
   const gasSpent = document.getElementById('gasSpent');
   const connectedDapps = document.getElementById('connectedDapps');
+  setTimeout(() => {
+  onboardingOverlay.classList.add('fade-out-logo');
+  setTimeout(() => {
+    onboardingOverlay.style.display = 'none';
+    appContent.style.display = 'block';
+  }, 500);
+}, 2000);
 
-  // Visa onboarding och dölj efter animation
-  if (!onboardingOverlay || !appContent) {
-    console.error('Onboarding-element saknas:', { onboardingOverlay, appContent });
-    if (onboardingOverlay) onboardingOverlay.style.display = 'none';
-    if (appContent) appContent.style.display = 'block';
-  } else {
+
+  // Visa onboarding och dölj efter 2 sekunder
+  setTimeout(() => {
+    onboardingOverlay.classList.add('fade-out-logo');
     setTimeout(() => {
-      console.log('Lägger till fade-out-logo');
-      onboardingOverlay.classList.add('fade-out-logo');
-      onboardingOverlay.addEventListener('animationend', () => {
-        console.log('Fade-out-animation slutförd');
-        onboardingOverlay.style.display = 'none';
-        appContent.style.display = 'block';
-      }, { once: true });
-    }, 2000);
-  }
+      onboardingOverlay.style.display = 'none';
+      appContent.style.display = 'block';
+    }, 500);
+  }, 2000);
 
   // Tab-hantering
   document.querySelectorAll('.tab-button').forEach(button => {
@@ -86,12 +87,12 @@ const ETHERSCAN_KEY = document.querySelector('meta[name="etherscan-key"]').conte
   async function connectWithWalletConnect() {
     try {
       const walletConnectProvider = new window.WalletConnectProvider({
-        projectId: 'c0aa1ca206eb7d58226102b102ec49e9',
-        chains: [8453],
-        rpcMap: {
-          8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
-        }
-      });
+  projectId: 'c0aa1ca206eb7d58226102b102ec49e9',
+  chains: [8453],
+  rpcMap: {
+    8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
+  }
+});
 
       walletConnectProvider.on('display_uri', (uri) => {
         if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
@@ -112,7 +113,7 @@ const ETHERSCAN_KEY = document.querySelector('meta[name="etherscan-key"]').conte
       provider = new ethers.providers.Web3Provider(walletConnectProvider);
       signer = provider.getSigner();
       userAddress = await signer.getAddress();
-      updateTrackTabData();
+updateTrackTabData(); // <--- Lägg till detta här
 
       if (connectWalletBtn) connectWalletBtn.textContent = 'Disconnect';
       if (walletAddress) walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
@@ -126,38 +127,52 @@ const ETHERSCAN_KEY = document.querySelector('meta[name="etherscan-key"]').conte
   }
 
   // Hämta onchain-data
-  async function loadOnchainData() {
-    if (!provider || !userAddress) return;
-    try {
-      const alchemyProvider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
-      const balance = await alchemyProvider.getBalance(userAddress);
-      const txCount = await alchemyProvider.getTransactionCount(userAddress);
-      const xp = txCount * 10;
-      if (currentXP) currentXP.textContent = `🔥 ${xp} XP`;
-      if (totalXP) totalXP.textContent = xp;
-      if (xpDisplay) xpDisplay.textContent = `${xp} XP 🔥`;
-      const progressPercent = Math.min((xp / 200) * 100, 100);
-      const xpFill = document.querySelector('.xp-fill');
-      if (xpFill) xpFill.style.width = `${progressPercent}%`;
-      const xpBannerFill = document.getElementById('xpBannerFill');
-      if (xpBannerFill) xpBannerFill.style.width = `${progressPercent}%`;
-      if (latestActivity && activityResult) {
-        const block = await alchemyProvider.getBlockNumber();
-        const txs = await alchemyProvider.getHistory(userAddress, block - 1000, block);
-        if (txs.length > 0) {
-          const last = txs[txs.length - 1];
-          const ethValue = ethers.utils.formatEther(last.value || 0);
-          latestActivity.textContent = `↪ ${last.to.slice(0, 6)}... — ${ethValue} ETH`;
-          activityResult.textContent = `+ $${(ethValue * 3000).toFixed(2)} est.`;
-        } else {
-          latestActivity.textContent = `No recent tx`;
-          activityResult.textContent = `+ $0`;
-        }
+async function loadOnchainData() {
+  if (!provider || !userAddress) return;
+
+  try {
+    const alchemyProvider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
+
+    // Hämta balans & transaktioner
+    const balance = await alchemyProvider.getBalance(userAddress);
+    const txCount = await alchemyProvider.getTransactionCount(userAddress);
+
+    // XP-beräkning
+    const xp = txCount * 10;
+    updateUserXP(xp); // Använd det nya nivåsystemet
+
+    // Fallback/visuell XP-display om nivåsystemet inte laddat
+    if (currentXP) currentXP.textContent = `🔥 ${xp} XP`;
+    if (totalXP) totalXP.textContent = xp;
+    if (xpDisplay) xpDisplay.textContent = `${xp} XP 🔥`;
+
+    // XP progressbars
+    const progressPercent = Math.min((xp / 200) * 100, 100);
+    const xpFill = document.querySelector('.xp-fill');
+    if (xpFill) xpFill.style.width = `${progressPercent}%`;
+    
+    const xpBannerFill = document.getElementById('xpBannerFill');
+    if (xpBannerFill) xpBannerFill.style.width = `${progressPercent}%`;
+
+    // Senaste aktivitet
+    if (latestActivity && activityResult) {
+      const block = await alchemyProvider.getBlockNumber();
+      const txs = await alchemyProvider.getHistory(userAddress, block - 1000, block);
+      if (txs.length > 0) {
+        const last = txs[txs.length - 1];
+        const ethValue = ethers.utils.formatEther(last.value || 0);
+        latestActivity.textContent = `↪ ${last.to.slice(0, 6)}... — ${ethValue} ETH`;
+        activityResult.textContent = `+ $${(ethValue * 3000).toFixed(2)} est.`;
+      } else {
+        latestActivity.textContent = `No recent tx`;
+        activityResult.textContent = `+ $0`;
       }
-    } catch (error) {
-      console.error('Error fetching onchain data:', error);
     }
+
+  } catch (error) {
+    console.error('Error fetching onchain data:', error);
   }
+}
 
   // XP-Claim
   if (claimXpBtn) {
@@ -291,6 +306,7 @@ function showConfetti() {
 // Använd dessa två funktioner såhär i din claimTokenBtn-händelse:
 if (claimTokenBtn) {
   claimTokenBtn.addEventListener('click', () => {
+    // ...din vanliga kod här
     showWaiClaimedMessage();
     showConfetti();
   });
