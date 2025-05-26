@@ -544,4 +544,24 @@ main {
   overflow-x: hidden;
 }
 
+.xp-progress-banner {
+  background-color: #1b1d23;
+  padding: 0.3rem 1rem;
+  text-align: center;
+  font-size: 0.8rem;
+  border-top: 1px solid #292d36;
+  border-bottom: 1px solid #292d36;
+}
+.xp-progress-banner .xp-bar {
+  margin-top: 0.2rem;
+  height: 6px;
+  background: #444;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.xp-progress-banner .xp-fill {
+  height: 100%;
+  background: linear-gradient(to right, #4caf50, #00e676);
+  transition: width 0.5s ease;
+}
 
