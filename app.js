@@ -30,15 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const ethMoved = document.getElementById('ethMoved');
   const gasSpent = document.getElementById('gasSpent');
   const connectedDapps = document.getElementById('connectedDapps');
-  setTimeout(() => {
-  onboardingOverlay.classList.add('fade-out-logo');
-  setTimeout(() => {
-    onboardingOverlay.style.display = 'none';
-    appContent.style.display = 'block';
-  }, 500);
-}, 2000);
-
-
+  
   // Visa onboarding och dölj efter 2 sekunder
   setTimeout(() => {
     onboardingOverlay.classList.add('fade-out-logo');
