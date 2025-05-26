@@ -139,7 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const progressPercent = Math.min((xp / 200) * 100, 100);
       const xpFill = document.querySelector('.xp-fill');
       if (xpFill) xpFill.style.width = `${progressPercent}%`;
-
+const xpBannerFill = document.getElementById('xpBannerFill');
+if (xpBannerFill) xpBannerFill.style.width = `${progressPercent}%`;
       if (latestActivity && activityResult) {
         const block = await alchemyProvider.getBlockNumber();
         const txs = await alchemyProvider.getHistory(userAddress, block - 1000, block);
