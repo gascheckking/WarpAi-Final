@@ -88,36 +88,62 @@
       </section>
 
       <!-- TRACK -->
-      <section class="tab-content track" data-tab="track" style="display: none;">
-        <div class="track-grid">
-          <div class="card dark">
-            <h3>Tokens Minted</h3>
-            <p id="tokensMinted">0 st</p>
-          </div>
-          <div class="card dark">
-            <h3>ETH Moved</h3>
-            <p id="ethMoved">0 ETH total</p>
-          </div>
-          <div class="card dark">
-            <h3>Gas Spent</h3>
-            <p id="gasSpent">0 ETH</p>
-          </div>
-          <div class="card dark">
-            <h3>Connected dApps</h3>
-            <ul id="connectedDapps">
-              <li>-</li>
-            </ul>
-          </div>
-          <div class="card dark full">
-            <div class="track-header-row">
-              <h3>📜 Latest Activity</h3>
-              <button id="refreshTrackBtn">↻</button>
-            </div>
-            <p id="latestActivity">No recent tx</p>
-            <small id="activityResult">$0</small>
-          </div>
-        </div>
-      </section>
+<section class="tab-content track" data-tab="track" style="display: none;">
+  <div class="hero">
+    <h2>📊 Onchain Tracker</h2>
+  </div>
+
+  <div class="card-grid">
+
+    <div class="card dark">
+      <h3>⛽ Base Gas Fee</h3>
+      <p><span id="baseGas">--</span> Gwei</p>
+    </div>
+
+    <div class="card dark">
+      <h3>🧾 Gas Summary</h3>
+      <p><strong>30D:</strong> <span id="gasFees30d">$0.00</span></p>
+      <p><strong>Avg (10 TX):</strong> <span id="avgGas">-- Gwei</span></p>
+    </div>
+
+    <div class="card dark">
+      <h3>📦 Tokens Minted</h3>
+      <p id="tokensMinted">0</p>
+    </div>
+
+    <div class="card dark">
+      <h3>💰 ETH Moved</h3>
+      <p id="ethMoved">0 ETH total</p>
+    </div>
+
+    <div class="card dark">
+      <h3>🔄 Volume (30D)</h3>
+      <p id="volume30d">$0</p>
+    </div>
+
+    <div class="card dark">
+      <h3>🔌 Connected dApps</h3>
+      <ul id="connectedDapps">
+        <li>-</li>
+      </ul>
+    </div>
+
+    <div class="card dark full">
+      <div class="track-header-row">
+        <h3>📜 Latest Activity</h3>
+        <button id="refreshTrackBtn">↻</button>
+      </div>
+      <p id="latestActivity">No recent tx</p>
+      <small id="activityResult">$0</small>
+    </div>
+
+    <div class="card dark">
+      <h3>📈 PnL Today</h3>
+      <p id="pnlToday">+ $0.00</p>
+    </div>
+
+  </div>
+</section>
 
       <!-- REWARDS -->
 <section class="tab-content rewards" data-tab="rewards" style="display: none;">
