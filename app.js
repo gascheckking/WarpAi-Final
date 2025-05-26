@@ -30,6 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const ethMoved = document.getElementById('ethMoved');
   const gasSpent = document.getElementById('gasSpent');
   const connectedDapps = document.getElementById('connectedDapps');
+  const currentXPElement = document.getElementById('currentXP');
+if (currentXPElement) {
+  currentXPElement.innerText = `🔥 ${xp} XP`;
+}
+
   
   // Visa onboarding och dölj efter 2 sekunder
   setTimeout(() => {
