@@ -188,39 +188,59 @@
       <!-- REWARDS -->
 <section class="tab-content rewards" data-tab="rewards" style="display: none;">
   <div class="hero">
-    <h2>🚀 Rewards, Streaks & XP</h2>
+    <h2>🎁 Rewards & Referrals</h2>
   </div>
 
-  <div class="custom-home-grid">
-    <div class="card dark">
-      <h3>📣 Earn More WAI</h3>
-      <p>Share WarpAi to earn tokens!</p>
+  <div class="card-grid">
+    <!-- Share and Earn -->
+    <div class="card dark full earn">
+      <h3>🚀 Invite & Earn</h3>
+      <p>Invite friends and earn WAI for each signup!</p>
+      <p>You've invited: <strong id="invitedCount">2</strong></p>
+      <p><small>Invite 5 by Sunday for +20 WAI bonus!</small></p>
       <button id="copyReferralBtn">Copy Referral Link</button>
       <button id="shareOnXBtn">Share on X</button>
-      <button id="shareOnFarcasterBtn">Share on Farcaster</button>
+      <button id="shareFarcasterBtn" style="margin-top: 5px;">Share on Farcaster</button>
+      <p id="shareFeedbackRewards" style="display: none; color: #4caf50; font-size: 12px;">Shared! +5 WAI 🎉</p>
     </div>
 
+    <!-- Referral Stats -->
     <div class="card dark">
-      <h3>🏆 Referral Stats</h3>
-      <p>Friends invited: <strong>3</strong></p>
-      <p>Total earned: <strong>15 WAI</strong></p>
+      <h3>📊 Referral Stats</h3>
+      <p>Friends Invited: <strong>2</strong></p>
+      <p>Total Earned: <strong>10 WAI</strong></p>
+      <p>Next reward: Invite 3 more for +15 WAI</p>
+      <progress value="2" max="5" style="width: 100%; height: 6px;"></progress>
+      <small>2 / 5 invites</small>
     </div>
 
+    <!-- Weekly Challenge -->
     <div class="card dark">
-      <h3>✅ Daily Claim</h3>
-      <p>You’ve claimed today’s reward</p>
-      <p><strong>+5 WAI</strong></p>
+      <h3>🏆 Weekly Challenge</h3>
+      <p>Top 5 inviters win bonus WAI</p>
+      <p>1st: 100 WAI, 2nd: 50 WAI, 3rd–5th: 20 WAI</p>
+      <p>Invite 5 more to beat <strong>0xFanArtist</strong> (7 invites)</p>
+      <p><small>Ends Sunday 23:59 UTC</small></p>
     </div>
 
+    <!-- Extra Rewards -->
+    <div class="card dark">
+      <h3>🎉 Extra Rewards</h3>
+      <p>Post about WarpAI on Farcaster → +10 WAI</p>
+      <p>Mint a token via the app → +5 WAI</p>
+    </div>
+
+    <!-- Leaderboard Preview -->
     <div class="card dark full">
-      <h3>✨ Upcoming Rewards</h3>
-      <ul style="text-align: left; font-size: 0.75rem; padding-left: 1rem;">
-        <li>✅ Daily Login Bonus</li>
-        <li>🚀 Invite 3 Friends → +10 WAI</li>
-        <li>🔥 7-Day Claim Streak → XP Boost</li>
-        <li>📢 Share on X → +5 WAI</li>
-        <li>🌐 Share on Farcaster → +5 WAI</li>
+      <h3>🏅 Leaderboard (Top Inviters)</h3>
+      <ul style="font-size: 0.75rem; padding-left: 1rem; text-align: left;">
+        <li>🥇 0xAlphaMint — 12 invites</li>
+        <li>🥈 0xZoraKing — 9 invites</li>
+        <li>🥉 0xFanArtist — 7 invites</li>
+        <li>4. 0xMintBot — 6 invites</li>
+        <li>5. You — 2 invites</li>
       </ul>
+      <button id="viewFullLeaderboardBtn" style="font-size: 12px;">View Full Leaderboard</button>
     </div>
   </div>
 </section>
