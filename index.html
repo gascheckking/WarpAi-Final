@@ -94,7 +94,7 @@
   </div>
 
   <div class="card-grid">
-    <!-- Gas Info kombinerad -->
+    <!-- Gas Overview -->
     <div class="card dark">
       <h3>⛽ Gas Overview</h3>
       <p><strong>Base Fee:</strong> <span id="baseGas">--</span> Gwei</p>
@@ -102,10 +102,12 @@
       <p><strong>Avg (10 TX):</strong> <span id="avgGas">-- Gwei</span></p>
     </div>
 
-    <!-- PnL Today -->
+    <!-- Connected dApps (bytt plats med PnL) -->
     <div class="card dark">
-      <h3>📈 PnL Today</h3>
-      <p><span id="pnlToday">+ $0.00</span></p>
+      <h3>🧩 Connected dApps</h3>
+      <ul id="connectedDapps">
+        <li>-</li>
+      </ul>
     </div>
 
     <!-- Tokens Minted -->
@@ -126,12 +128,10 @@
       <p><span id="volume30d">$0</span></p>
     </div>
 
-    <!-- Connected dApps -->
+    <!-- PnL Today (flyttad ner) -->
     <div class="card dark">
-      <h3>🧩 Connected dApps</h3>
-      <ul id="connectedDapps">
-        <li>-</li>
-      </ul>
+      <h3>📈 PnL Today</h3>
+      <p><span id="pnlToday">+ $0.00</span></p>
     </div>
 
     <!-- Latest Activity -->
