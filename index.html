@@ -359,36 +359,62 @@
   </div>
 </section>
 
-      <!-- PROFILE -->
-      <section class="tab-content profile" data-tab="profile" style="display: none;">
-        <div class="hero">
-          <h2>👤 My Profile</h2>
-        </div>
-        <div class="card-grid">
-          <div class="card dark">
-            <h3>Wallet</h3>
-            <p id="walletAddress">Not Connected</p>
-            <p>Total XP: <strong id="totalXP">0</strong></p>
-          </div>
-          <div class="card dark">
-            <h3>WarpAi Token</h3>
-            <p id="waiBalance">Balance: 0 WAI</p>
-            <p>Level Bonus: 10%</p>
-          </div>
-          <div class="card dark">
-            <h3>Share Link</h3>
-            <p>Earn 5 WAI per share</p>
-            <button id="shareOnFarcasterBtn">Share on Farcaster</button>
-            <button id="shareOnXBtn">Share on X</button>
-          </div>
-          <div class="card dark full premium">
-            <h3>📦 Claim History</h3>
-            <ul id="claimHistory">
-              <li>No claims yet</li>
-            </ul>
-          </div>
-        </div>
-      </section>
+      <!-- PREMIUM -->
+<section class="tab-content premium" data-tab="premium" style="display: none;">
+  <div class="card-grid">
+
+    <!-- Intro -->
+    <div class="card dark full">
+      <h3>💎 Unlock Premium</h3>
+      <p>Get access to exclusive WarpAI tools, badges, and boost your earnings.</p>
+      <p><small>Erbjudande: Uppgradera innan 31 maj för en exklusiv badge!</small></p>
+      <ul style="padding-left: 1.2rem;">
+        <li>🔥 1.5x XP on daily actions</li>
+        <li>🎖️ VIP badge in leaderboard</li>
+        <li>🪙 +20% WAI claim bonus</li>
+        <li>📊 Track more wallets & advanced stats</li>
+        <li>🎁 Early access to airdrops</li>
+        <li>🖼️ Exklusiv Farcaster Frame för Premium-användare</li>
+      </ul>
+      <button id="upgradeBtn" class="upgrade-button-green" style="margin-top: 10px;">Upgrade to Premium – $5</button>
+      <p style="font-size: 0.75rem; margin-top: 5px;">One-time payment. Lifetime access.</p>
+      <a href="#" id="tryFreeBtn" style="font-size: 12px;">Testa Wallet Tracker gratis i 24h</a>
+    </div>
+
+    <!-- Premium Feature Preview -->
+    <div class="card dark">
+      <h3>🔍 Wallet Tracker</h3>
+      <p>Track onchain activity for other wallets.</p>
+      <input type="text" id="walletToTrack" placeholder="Paste address" style="width: 100%; padding: 4px;">
+      <button id="trackWalletBtn" style="margin-top: 5px;">Track</button>
+      <p id="walletTrackFeedback" style="font-size: 12px; display: none; color: #4caf50;">Now tracking!</p>
+      <a href="#" id="viewTrackedActivityBtn" style="font-size: 12px; display: none;">Se spårad aktivitet</a>
+    </div>
+
+    <!-- Analytics Preview -->
+    <div class="card dark">
+      <h3>📈 Advanced Analytics</h3>
+      <p>Visualize spending, mints, gas, earnings, and trends.</p>
+      <p><small>Din gasförbrukning: $0 (Uppgradera för full statistik!)</small></p>
+      <button id="comingSoonBtn" disabled style="opacity: 0.6;">Coming soon</button>
+    </div>
+
+    <!-- Perks Summary -->
+    <div class="card dark">
+      <h3>🎁 Premium Perks</h3>
+      <p id="premiumStatus" style="display: none; color: #4caf50;">✅ Du är Premium!</p>
+      <p>
+        XP Boost: <strong>+50%</strong><br>
+        WAI Bonus: <strong>+20%</strong><br>
+        Wallets Tracked: <strong>Unlimited</strong><br>
+        Airdrop Priority: <strong>Enabled</strong><br>
+        <small>Få 20% extra tokens vid nästa airdrop!</small><br>
+        Discord Role: <strong>Coming</strong>
+      </p>
+    </div>
+
+  </div>
+</section>
 
       <!-- MODALS -->
       <div id="faqModal" class="modal hidden">
