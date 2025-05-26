@@ -94,16 +94,18 @@
   </div>
 
   <div class="card-grid">
-
+    <!-- Gas Info kombinerad -->
     <div class="card dark">
-      <h3>⛽ Base Gas Fee</h3>
-      <p><span id="baseGas">--</span> Gwei</p>
-    </div>
-
-    <div class="card dark">
-      <h3>🧾 Gas Summary</h3>
+      <h3>⛽ Gas Overview</h3>
+      <p><strong>Base Fee:</strong> <span id="baseGas">--</span> Gwei</p>
       <p><strong>30D:</strong> <span id="gasFees30d">$0.00</span></p>
       <p><strong>Avg (10 TX):</strong> <span id="avgGas">-- Gwei</span></p>
+    </div>
+
+    <!-- PnL Today flyttad upp -->
+    <div class="card dark">
+      <h3>📈 PnL Today</h3>
+      <p id="pnlToday">+ $0.00</p>
     </div>
 
     <div class="card dark">
@@ -117,12 +119,12 @@
     </div>
 
     <div class="card dark">
-      <h3>🔄 Volume (30D)</h3>
+      <h3>📊 Volume (30D)</h3>
       <p id="volume30d">$0</p>
     </div>
 
     <div class="card dark">
-      <h3>🔌 Connected dApps</h3>
+      <h3>🧩 Connected dApps</h3>
       <ul id="connectedDapps">
         <li>-</li>
       </ul>
@@ -136,12 +138,6 @@
       <p id="latestActivity">No recent tx</p>
       <small id="activityResult">$0</small>
     </div>
-
-    <div class="card dark">
-      <h3>📈 PnL Today</h3>
-      <p id="pnlToday">+ $0.00</p>
-    </div>
-
   </div>
 </section>
 
