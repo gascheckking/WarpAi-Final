@@ -296,3 +296,53 @@ if (claimTokenBtn) {
     showConfetti();
   });
 }
+
+// ------------------ TRACK TAB ONCHAIN DATA FETCH ------------------
+
+async function updateTrackTabData() {
+  try {
+    const provider = new ethers.providers.AlchemyProvider('base', ALCHEMY_KEY);
+    
+    // Base Gas Fee
+    const gasPrice = await provider.getGasPrice();
+    const gwei = ethers.utils.formatUnits(gasPrice, 'gwei');
+    document.getElementById('baseGas').textContent = parseFloat(gwei).toFixed(2);
+
+    // Example mocked gas summary
+    document.getElementById('gasFees30d').textContent = "$12.34";
+    document.getElementById('avgGas').textContent = "45.67 Gwei";
+
+    // PnL Today (mocked)
+    document.getElementById('pnlToday').textContent = "+ $1.25";
+
+    // Tokens Minted, ETH Moved, Volume
+    const txCount = await provider.getTransactionCount(userAddress);
+    document.getElementById('tokensMinted').textContent = txCount;
+
+    const balanceMoved = await provider.getBalance(userAddress);
+    document.getElementById('ethMoved').textContent = ethers.utils.formatEther(balanceMoved) + " ETH";
+
+    document.getElementById('volume30d').textContent = "$" + (parseFloat(ethers.utils.formatEther(balanceMoved)) * 3000).toFixed(2);
+
+    // Connected dApps (mocked)
+    const connectedList = document.getElementById('connectedDapps');
+    connectedList.innerHTML = "<li>Zora</li><li>OpenSea</li><li>Mirror</li>";
+
+    // Latest Activity (mocked)
+    document.getElementById('latestActivity').textContent = "↪ 0x123...abc — 0.01 ETH";
+    document.getElementById('activityResult').textContent = "+ $30.00";
+
+  } catch (error) {
+    console.error("Track tab data fetch error:", error);
+  }
+}
+
+// Call it when wallet is connected
+if (userAddress) {
+  updateTrackTabData();
+}
+
+// Refresh button
+document.getElementById('refreshTrackBtn').addEventListener('click', () => {
+  updateTrackTabData();
+});
