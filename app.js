@@ -250,19 +250,17 @@ function showWaiClaimedMessage() {
   const msg = document.createElement('div');
   msg.textContent = '✅ You claimed 5 WAI!';
   msg.style.position = 'fixed';
-  msg.style.top = '20%';
+  msg.style.top = '40%';
   msg.style.left = '50%';
   msg.style.transform = 'translate(-50%, -50%)';
-  msg.style.background = '#2c9463';
-  msg.style.color = '#fff';
-  msg.style.padding = '1rem 2rem';
-  msg.style.borderRadius = '10px';
-  msg.style.fontSize = '1.2rem';
+  msg.style.background = 'transparent';
+  msg.style.color = '#4caf50';
+  msg.style.fontSize = '1.5rem';
   msg.style.fontWeight = 'bold';
   msg.style.zIndex = '9999';
-  msg.style.boxShadow = '0 0 10px #000';
+  msg.style.textShadow = '0 0 5px black';
   document.body.appendChild(msg);
-  setTimeout(() => msg.remove(), 2000);
+  setTimeout(() => msg.remove(), 2500);
 }
 
 // ------------------ SIMPLE CONFETTI EFFECT ------------------
