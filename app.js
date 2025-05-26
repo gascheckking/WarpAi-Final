@@ -113,6 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
       provider = new ethers.providers.Web3Provider(walletConnectProvider);
       signer = provider.getSigner();
       userAddress = await signer.getAddress();
+updateTrackTabData(); // <--- Lägg till detta här
 
       if (connectWalletBtn) connectWalletBtn.textContent = 'Disconnect';
       if (walletAddress) walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
