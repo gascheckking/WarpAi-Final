@@ -73,25 +73,31 @@ function disconnectWallet() {
   localStorage.clear();
 }
 
-// Web3Modal v2 Connect
 async function connectWallet() {
   try {
-    const projectId = 'c0aa1ca206eb7d58226102b102ec49e9'; // din riktiga
-    const metadata = {
-      name: 'WarpAI',
-      description: 'Onchain Activity Tracker',
-      url: 'https://warp-ai-final.vercel.app',
-      icons: ['https://warp-ai-final.vercel.app/logo.png']
-    };
-
-const modal = new window.Web3ModalStandalone({
-      projectId,
-      themeMode: 'dark',
-      metadata,
+    const walletConnectProvider = new WalletConnectProvider.default({
+      rpc: {
+        8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
+      },
+      chainId: 8453
     });
 
-    const web3provider = await modal.connect();
-    provider = new ethers.providers.Web3Provider(web3provider);
+    walletConnectProvider.connector.on('display_uri', (err, payload) => {
+      const uri = payload.params[0];
+      if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+        setTimeout(() => {
+          window.open(`https://link.trustwallet.com/wc?uri=${encodeURIComponent(uri)}`, '_blank');
+        }, 500);
+      } else if (qrCodeDiv && qrModal) {
+        qrCodeDiv.innerHTML = '';
+        new QRCode(qrCodeDiv, { text: uri, width: 200, height: 200 });
+        qrModal.classList.remove('hidden');
+      }
+    });
+
+    await walletConnectProvider.enable();
+
+    provider = new ethers.providers.Web3Provider(walletConnectProvider);
     signer = provider.getSigner();
     userAddress = await signer.getAddress();
 
@@ -99,8 +105,10 @@ const modal = new window.Web3ModalStandalone({
     if (connectWalletBtn) connectWalletBtn.textContent = 'Disconnect';
     if (walletAddress) walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
     loadOnchainData();
+    if (qrModal) qrModal.classList.add('hidden');
+
   } catch (error) {
-    console.error('Connection failed:', error);
+    console.error('WalletConnect failed:', error);
     alert('Failed to connect wallet: ' + error.message);
   }
 }
