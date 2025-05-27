@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function connectWithWalletConnect() {
     try {
-      const walletConnectProvider = new window.WalletConnectProvider({
+      const walletConnectProvider = new WalletConnectProvider({
         projectId: 'c0aa1ca206eb7d58226102b102ec49e9',
         chains: [8453],
         rpcMap: {
