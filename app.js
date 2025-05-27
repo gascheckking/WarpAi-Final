@@ -19,6 +19,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 500);
     }, 2000);
   }
+  
+  if (onboardingOverlay && appContent) {
+  console.log('Onboarding overlay and app content found');
+  setTimeout(() => {
+    onboardingOverlay.classList.add('fade-out-logo');
+    setTimeout(() => {
+      onboardingOverlay.style.display = 'none';
+      appContent.style.display = 'block';
+      console.log('Onboarding hidden, app content shown');
+    }, 500);
+  }, 2000);
+} else {
+  console.error('Onboarding overlay or app content not found');
+}
 
   // Tabbar
   document.querySelectorAll('.tab-button').forEach(button => {
@@ -53,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const qrModal = document.getElementById('qrModal');
   const qrCodeDiv = document.getElementById('qrCode');
 
-  wif (connectWalletBtn) {
+  if (connectWalletBtn) {
   connectWalletBtn.addEventListener('click', async () => {
     if (userAddress) {
       disconnectWallet();
