@@ -54,51 +54,44 @@ document.addEventListener('DOMContentLoaded', () => {
   const qrCodeDiv = document.getElementById('qrCode');
 
   if (connectWalletBtn) {
-    connectWalletBtn.addEventListener('click', async () => {
-      if (userAddress) {
-        disconnectWallet();
-      } else {
-        await connectWithWalletConnect();
-      }
-    });
-  }
+  connectWalletBtn.addEventListener('click', async () => {
+    if (userAddress) {
+      disconnectWallet();
+    } else {
+      await connectWallet(); // ← Web3Modal v2
+    }
+  });
+}
 
-  function disconnectWallet() {
-    if (provider?.disconnect) provider.disconnect();
-    provider = null;
-    signer = null;
-    userAddress = null;
-    if (connectWalletBtn) connectWalletBtn.textContent = 'Connect Wallet';
-    if (walletAddress) walletAddress.textContent = 'Not Connected';
-    updateXPUI(0);
-    localStorage.clear();
-  }
+function disconnectWallet() {
+  provider = null;
+  signer = null;
+  userAddress = null;
+  if (connectWalletBtn) connectWalletBtn.textContent = 'Connect Wallet';
+  if (walletAddress) walletAddress.textContent = 'Not Connected';
+  updateXPUI(0);
+  localStorage.clear();
+}
 
-async function connectWithWalletConnect() {
+// Web3Modal v2 Connect
+async function connectWallet() {
   try {
-    const walletConnectProvider = new WalletConnectProvider.default({
-      rpc: {
-        8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
-      },
-      chainId: 8453
+    const projectId = 'c0aa1ca206eb7d58226102b102ec49e9'; // din riktiga
+    const metadata = {
+      name: 'WarpAI',
+      description: 'Onchain Activity Tracker',
+      url: 'https://warp-ai-final.vercel.app',
+      icons: ['https://warp-ai-final.vercel.app/logo.png']
+    };
+
+    const modal = new window.WalletConnectModal.default({
+      projectId,
+      themeMode: 'dark',
+      metadata,
     });
 
-    walletConnectProvider.connector.on('display_uri', (err, payload) => {
-      const uri = payload.params[0];
-      if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
-        setTimeout(() => {
-          window.open(`https://link.trustwallet.com/wc?uri=${encodeURIComponent(uri)}`, '_blank');
-        }, 500);
-      } else if (qrCodeDiv && qrModal) {
-        qrCodeDiv.innerHTML = '';
-        new QRCode(qrCodeDiv, { text: uri, width: 200, height: 200 });
-        qrModal.classList.remove('hidden');
-      }
-    });
-
-    await walletConnectProvider.enable();
-
-    provider = new ethers.providers.Web3Provider(walletConnectProvider);
+    const web3provider = await modal.connect();
+    provider = new ethers.providers.Web3Provider(web3provider);
     signer = provider.getSigner();
     userAddress = await signer.getAddress();
 
@@ -106,10 +99,8 @@ async function connectWithWalletConnect() {
     if (connectWalletBtn) connectWalletBtn.textContent = 'Disconnect';
     if (walletAddress) walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
     loadOnchainData();
-    if (qrModal) qrModal.classList.add('hidden');
-
   } catch (error) {
-    console.error('WalletConnect failed:', error);
+    console.error('Connection failed:', error);
     alert('Failed to connect wallet: ' + error.message);
   }
 }
