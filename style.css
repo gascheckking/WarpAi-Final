@@ -552,6 +552,7 @@ main {
   border-top: 1px solid #292d36;
   border-bottom: 1px solid #292d36;
 }
+
 .xp-progress-banner .xp-bar {
   margin-top: 0.2rem;
   height: 6px;
@@ -559,9 +560,9 @@ main {
   border-radius: 6px;
   overflow: hidden;
 }
+
 .xp-progress-banner .xp-fill {
   height: 100%;
   background: linear-gradient(to right, #4caf50, #00e676);
   transition: width 0.5s ease;
 }
-
