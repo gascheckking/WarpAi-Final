@@ -76,13 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function connectWithWalletConnect() {
     try {
-      const walletConnectProvider = new WalletConnectProvider({
-        projectId: 'c0aa1ca206eb7d58226102b102ec49e9',
-        chains: [8453],
-        rpcMap: {
-          8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
-        }
-      });
+      const walletConnectProvider = new WalletConnectProvider.default({
+  rpc: {
+    8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
+  },
+  chainId: 8453
+});
 
       walletConnectProvider.on('display_uri', (uri) => {
         if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
