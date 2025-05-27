@@ -74,6 +74,45 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.clear();
   }
 
+async function connectWithWalletConnect() {
+  try {
+    const walletConnectProvider = new WalletConnectProvider.default({
+      rpc: {
+        8453: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
+      },
+      chainId: 8453
+    });
+
+    walletConnectProvider.connector.on('display_uri', (err, payload) => {
+      const uri = payload.params[0];
+      if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+        setTimeout(() => {
+          window.open(`https://link.trustwallet.com/wc?uri=${encodeURIComponent(uri)}`, '_blank');
+        }, 500);
+      } else if (qrCodeDiv && qrModal) {
+        qrCodeDiv.innerHTML = '';
+        new QRCode(qrCodeDiv, { text: uri, width: 200, height: 200 });
+        qrModal.classList.remove('hidden');
+      }
+    });
+
+    await walletConnectProvider.enable();
+
+    provider = new ethers.providers.Web3Provider(walletConnectProvider);
+    signer = provider.getSigner();
+    userAddress = await signer.getAddress();
+
+    updateTrackTabData();
+    if (connectWalletBtn) connectWalletBtn.textContent = 'Disconnect';
+    if (walletAddress) walletAddress.textContent = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
+    loadOnchainData();
+    if (qrModal) qrModal.classList.add('hidden');
+
+  } catch (error) {
+    console.error('WalletConnect failed:', error);
+    alert('Failed to connect wallet: ' + error.message);
+  }
+}
   
 
   async function loadOnchainData() {
