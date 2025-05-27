@@ -10,16 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const appContent = document.getElementById('appContent');
 
   // Visa app efter onboarding
-  if (onboardingOverlay && appContent) {
-    setTimeout(() => {
-      onboardingOverlay.classList.add('fade-out-logo');
-      setTimeout(() => {
-        onboardingOverlay.style.display = 'none';
-        appContent.style.display = 'block';
-      }, 500);
-    }, 2000);
-  }
-  
+    
   if (onboardingOverlay && appContent) {
   console.log('Onboarding overlay and app content found');
   setTimeout(() => {
