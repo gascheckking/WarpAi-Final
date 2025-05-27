@@ -84,7 +84,7 @@ async function connectWallet() {
       icons: ['https://warp-ai-final.vercel.app/logo.png']
     };
 
-const modal = new window.Web3Modal.default({
+const modal = new window.Web3ModalStandalone({
       projectId,
       themeMode: 'dark',
       metadata,
