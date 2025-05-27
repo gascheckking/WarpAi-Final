@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Uppdaterad CSP för att tillåta nödvändiga resurser -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://base-mainnet.g.alchemy.com wss://*.walletconnect.com wss://*.walletconnect.org;">  <title>WarpAi</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://base-mainnet.g.alchemy.com wss://*.walletconnect.com wss://*.walletconnect.org;">
+  <title>WarpAi</title>
   <link rel="stylesheet" href="style.css" />
-  <!-- Säkra nycklar -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <meta name="alchemy-key" content="aH4-X2bNp1BarPcBcHiWR6vHxJz_lGbA">
   <meta name="etherscan-key" content="Y1VRJKQB1A4K2JTA8GE1YDH3W54W4I35D5">
 </head>
@@ -43,12 +43,12 @@
         </div>
       </div>
     </header>
-<div class="xp-progress-banner">
-  <span>Level 1 → 200 XP | Bonus: +10%</span>
-  <div class="xp-bar">
-    <div class="xp-fill" style="width: 0%;" id="xpBannerFill"></div>
-  </div>
-</div>
+    <div class="xp-progress-banner">
+      <span>Level 1 → 200 XP | Bonus: +10%</span>
+      <div class="xp-bar">
+        <div class="xp-fill" style="width: 0%;" id="xpBannerFill"></div>
+      </div>
+    </div>
     <nav class="nav-tabs">
       <button class="tab-button active" data-tab="home">🏠 Home</button>
       <button class="tab-button" data-tab="track">📈 Track</button>
@@ -59,357 +59,292 @@
 
     <main>
       <!-- HOME -->
-<section class="tab-content home" data-tab="home" style="display: block;">
-  <div class="custom-home-grid">
-
-    <!-- Activity, Level & Progress -->
-    <div class="card dark tall">
-      <h3>🎯 Your Activity</h3>
-      <p>
-        Level: <span id="userLevel">Level 1: Bronze</span><br>
-        XP: <span id="currentXP">🔥 0 XP</span><br>
-        <progress id="xpProgress" value="0" max="200" style="width: 100%; height: 8px;"></progress><br>
-        <small id="xpProgressLabel">0/200 XP till Level 2</small><br>
-        Streak: 5 days<br>
-        Latest: Minted Token #123 on Zora<br>
-        <a href="#" id="viewActivityBtn" style="font-size: 12px;">Se mer</a><br>
-        Daily WAI Claimed: ✅
-      </p>
-    </div>
-
-    <!-- Daily Claim -->
-    <div class="card dark">
-      <h3>💰 Claim WAI</h3>
-      <p>
-        Daily reward: 5 WAI<br>
-        Next claim: <span id="claimTimer">23h 45m</span>
-      </p>
-      <button id="claimTokenBtn">Claim</button>
-      <p id="claimFeedback" style="display: none; color: #4caf50; font-weight: bold;">Claimed! +5 WAI 🎉</p>
-    </div>
-
-    <!-- Referral & Share -->
-    <div class="card dark">
-      <h3>🔗 Referral & Earn</h3>
-      <p>
-        Invite friends & earn WAI<br>
-        Invited: <span id="invitedCount">2/5</span> for +10 WAI
-      </p>
-      <button id="copyReferralBtn">Copy Link</button>
-      <button id="shareFarcasterBtn" style="margin-top: 5px;">Share on Farcaster</button>
-      <p id="shareFeedback" style="display: none; color: #4caf50; font-size: 12px;">Delat! +5 WAI 🎉</p>
-    </div>
-
-    <!-- Milestone Tracker -->
-    <div class="card dark">
-      <h3>🏆 Next Milestone</h3>
-      <p>
-        Reach 7-day streak → +50 WAI 🔥 (5/7 dagar)<br>
-        Complete your first mint → +20 XP
-      </p>
-    </div>
-
-    <!-- Info Block -->
-    <div class="card dark full">
-      <h3>ℹ️ About WarpAi & WAI</h3>
-      <p>
-        WarpAi tracks your onchain activity.<br>
-        Earn XP for every interaction.<br>
-        <small>Mint: +10 XP, Tx: +5 XP, Daily login: +2 XP</small><br>
-        Claim WAI tokens daily.<br>
-        Unlock premium perks and level up.<br>
-        <small>Ny här? Gör din första on-chain handling för +10 WAI!</small>
-      </p>
-    </div>
-
-  </div>
-</section>
-
+      <section class="tab-content home" data-tab="home" style="display: block;">
+        <div class="custom-home-grid">
+          <div class="card dark tall">
+            <h3>🎯 Your Activity</h3>
+            <p>
+              Level: <span id="userLevel">Level 1: Bronze</span><br>
+              XP: <span id="currentXP">🔥 0 XP</span><br>
+              <progress id="xpProgress" value="0" max="200" style="width: 100%; height: 8px;"></progress><br>
+              <small id="xpProgressLabel">0/200 XP till Level 2</small><br>
+              Streak: 5 days<br>
+              Latest: Minted Token #123 on Zora<br>
+              <a href="#" id="viewActivityBtn" style="font-size: 12px;">Se mer</a><br>
+              Daily WAI Claimed: ✅
+            </p>
+          </div>
+          <div class="card dark">
+            <h3>💰 Claim WAI</h3>
+            <p>
+              Daily reward: 5 WAI<br>
+              Next claim: <span id="claimTimer">23h 45m</span>
+            </p>
+            <button id="claimTokenBtn">Claim</button>
+            <p id="claimFeedback" style="display: none; color: #4caf50; font-weight: bold;">Claimed! +5 WAI 🎉</p>
+          </div>
+          <div class="card dark">
+            <h3>🔗 Referral & Earn</h3>
+            <p>
+              Invite friends & earn WAI<br>
+              Invited: <span id="invitedCount">2/5</span> for +10 WAI
+            </p>
+            <button id="copyReferralBtn">Copy Link</button>
+            <button id="shareFarcasterBtn" style="margin-top: 5px;">Share on Farcaster</button>
+            <p id="shareFeedback" style="display: none; color: #4caf50; font-size: 12px;">Delat! +5 WAI 🎉</p>
+          </div>
+          <div class="card dark">
+            <h3>🏆 Next Milestone</h3>
+            <p>
+              Reach 7-day streak → +50 WAI 🔥 (5/7 dagar)<br>
+              Complete your first mint → +20 XP
+            </p>
+          </div>
+          <div class="card dark full">
+            <h3>ℹ️ About WarpAi & WAI</h3>
+            <p>
+              WarpAi tracks your onchain activity.<br>
+              Earn XP for every interaction.<br>
+              <small>Mint: +10 XP, Tx: +5 XP, Daily login: +2 XP</small><br>
+              Claim WAI tokens daily.<br>
+              Unlock premium perks and level up.<br>
+              <small>Ny här? Gör din första on-chain handling för +10 WAI!</small>
+            </p>
+          </div>
+        </div>
+      </section>
       <!-- TRACK -->
-<section class="tab-content track" data-tab="track" style="display: none;">
-  <div class="hero">
-  </div>
-
-  <div class="card-grid">
-    <!-- Gas Overview -->
-    <div class="card dark">
-      <h3>⛽ Gas Overview</h3>
-      <p><strong>Base Fee:</strong> <span id="baseGas">--</span> Gwei</p>
-      <p><strong>30D:</strong> <span id="gasFees30d">$0.00</span></p>
-      <p><strong>Avg (10 TX):</strong> <span id="avgGas">-- Gwei</span></p>
-    </div>
-
-    <!-- Connected dApps (bytt plats med PnL) -->
-    <div class="card dark">
-      <h3>🧩 Connected dApps</h3>
-      <ul id="connectedDapps">
-        <li>-</li>
-      </ul>
-    </div>
-
-    <!-- Tokens Minted -->
-    <div class="card dark">
-      <h3>📦 Tokens Minted</h3>
-      <p><span id="tokensMinted">0</span></p>
-    </div>
-
-    <!-- ETH Moved -->
-    <div class="card dark">
-      <h3>💰 ETH Moved</h3>
-      <p><span id="ethMoved">0 ETH total</span></p>
-    </div>
-
-    <!-- Volume -->
-    <div class="card dark">
-      <h3>📊 Volume (30D)</h3>
-      <p><span id="volume30d">$0</span></p>
-    </div>
-
-    <!-- PnL Today (flyttad ner) -->
-    <div class="card dark">
-      <h3>📈 PnL Today</h3>
-      <p><span id="pnlToday">+ $0.00</span></p>
-    </div>
-
-    <!-- Latest Activity -->
-    <div class="card dark full">
-      <div class="track-header-row">
-        <h3>📜 Latest Activity</h3>
-        <button id="refreshTrackBtn">↻</button>
-      </div>
-      <p id="latestActivity">No recent tx</p>
-      <small id="activityResult">$0</small>
-    </div>
-  </div>
-</section>
-
-<!-- PREMIUM -->
-<section class="tab-content premium" data-tab="premium" style="display: none;">
-  <div class="hero">
-  </div>
-
-  <div class="card-grid">
-    <div class="card dark full">
-      <h3>🚀 Upgrade to Premium</h3>
-      <p>Get exclusive benefits for only <strong>$5 one-time</strong> or <strong>$2/month</strong></p>
-      <ul>
-        <li>1.5x XP boost on all claims</li>
-        <li>Premium badge on leaderboard</li>
-        <li>Access to private token mints</li>
-        <li>Early access to new features</li>
-      </ul>
-      <button id="upgradeBtn">Upgrade Now</button>
-    </div>
-
-    <div class="card dark">
-      <h3>🔍 Wallet Tracker</h3>
-      <p>Track up to 10 public wallets</p>
-      <button disabled style="opacity: 0.6;">Premium Only</button>
-    </div>
-
-    <div class="card dark">
-      <h3>📊 Full Analytics</h3>
-      <p>See all your wallet stats over time</p>
-      <button disabled style="opacity: 0.6;">Premium Only</button>
-    </div>
-
-    <div class="card dark full">
-      <h3>✨ Unlock More</h3>
-      <p>Support WarpAI and unlock hidden rewards!</p>
-      <ul>
-        <li>Secret mints</li>
-        <li>Double referral bonuses</li>
-        <li>Limited NFT drops</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-      <!-- REWARDS -->
-<section class="tab-content rewards" data-tab="rewards" style="display: none;">
-  <div class="card-grid">
-
-    <div class="card dark">
-  <h3>🔗 Referral & Earn</h3>
-  <p>Invite friends & earn WAI<br>Invited: <span id="invitedCount">2/5</span> for +10 WAI</p>
-  <button id="copyReferralBtn">Share Invite Link</button>
-  <p id="shareFeedback" style="display: none; color: #4caf50; font-size: 12px;">Shared! +5 WAI 🎉</p>
-</div>
-
-    <!-- Referral Stats -->
-    <div class="card dark">
-      <h3>📊 Referral Stats</h3>
-      <p>Friends Invited: <strong>2</strong></p>
-      <p>Total Earned: <strong>10 WAI</strong></p>
-      <p>Next reward: Invite 3 more for +15 WAI</p>
-      <progress value="2" max="5" style="width: 100%; height: 6px;"></progress>
-      <p><small>Invite 3 more and unlock Referral Pro-achievement !</small></p>
-    </div>
-
-    <!-- Leaderboard -->
-    <div class="card dark">
-      <h3>🥇 Leaderboard</h3>
-      <p><small>Weekly top inviters – ends Sunday 23:59 UTC</small></p>
-      <p><small>1:a: 100 WAI, 2:a: 50 WAI, 3–5:e: 20 WAI</small></p>
-      <ul style="font-size: 0.8rem; padding-left: 1rem;">
-        <li>🥇 0xAlphaMint — 12 invites</li>
-        <li>🥈 0xZoraKing — 9 invites</li>
-        <li>🥉 0xFanArtist — 7 invites</li>
-        <li>4. 0xMintBot — 6 invites</li>
-        <li>5. You — 2 invites</li>
-      </ul>
-      <p><small>Invite 5 more to beat 0xFanArtist (7 invites)!</small></p>
-      <button id="viewFullLeaderboardBtn" style="font-size: 12px;">See full leaderboard</button>
-    </div>
-
-    <!-- Bonus Rewards -->
-    <div class="card dark">
-      <h3>🎉 Bonus Rewards</h3>
-      <p>Total bonus earned: <strong>0 WAI</strong></p>
-      <p><small>Tjäna din första bonus nu!</small></p>
-      <p>
-        Post about WarpAI on Farcaster → +10 WAI
-        <small>(innan onsdag 23:59 UTC: +20 WAI!)</small>
-        <button id="postFarcasterBtn" style="font-size: 12px; margin-left: 5px;">Post now</button>
-      </p>
-      <p>
-        Mint a token via app → +5 WAI
-        <a href="#" id="mintTokenBtn" style="font-size: 12px; margin-left: 5px;">Mint now</a>
-      </p>
-      <p id="bonusFeedback" style="display: none; color: #4caf50; font-size: 12px;">Postat! +10 WAI 🎉</p>
-    </div>
-
-  </div>
-</section>
-      <!-- PROFILE -->
-<section class="tab-content profile" data-tab="profile" style="display: none;">
-  <div class="hero">
-  </div>
-
-  <div class="card-grid">
-    <!-- Wallet Info -->
-    <div class="card dark">
-      <h3>Wallet Info</h3>      
-      <p id="walletAddress">Not Connected</p>
-      <p><small>Connect your wallet to show your Farcaster/ENS avatar!</small></p>
-      <button id="connectWalletBtn">Connect Wallet</button>
-      <button id="disconnectWalletBtn" style="display: none; margin-top: 5px;">Disconnect Wallet</button>
-      <button id="viewFarcasterProfileBtn" disabled style="margin-top: 5px;">View My Farcaster Profile</button>
-      <p id="farcasterProfileTooltip" style="font-size: 12px; color: #888;">Connect wallet to view!</p>
-      <p>Total XP: <strong id="totalXP">0</strong></p>
-      <p>Level: <strong id="userLevel">Level 1: Bronze</strong></p>
-      <progress value="0" max="200" style="width: 100%; height: 6px;"></progress>
-      <p><small>0/200 XP to Level 2</small></p>
-      <p>Total Mints: <span id="totalMints">0</span></p>
-      <p>Total Transactions: <span id="totalTxs">0</span></p>
-      <a href="#" id="editProfileBtn" style="font-size: 12px;">Edit Profile</a>
-    </div>
-
-    <!-- WAI Balance -->
-    <div class="card dark">
-      <h3>WarpAI Token</h3>
-      <p id="waiBalance">Balance: 0 WAI</p>
-      <p>Total Earned: <strong>15 WAI</strong></p>
-      <p>Level Bonus: +10%</p>
-      <p><small>+10% extra WAI on daily claims (e.g. earn 5 WAI → get 5.5 WAI)</small></p>
-      <p>Next Bonus Milestone: <strong>Reach Level 3 for +15% Bonus</strong></p>
-      <a href="#" id="learnMoreWaiBtn" style="font-size: 12px;">Learn More About WAI</a>
-    </div>
-
-    <!-- Share Stats -->
-    <div class="card dark">
-      <h3>📤 Showcase Your Stats</h3>
-      <p>Earn 5 WAI for every share</p>
-      <p>You've shared: <strong id="shareCount">3 times (+15 WAI)</strong></p>
-      <button id="shareFarcasterBtn">Share on Farcaster</button>
-      <button id="shareOnXBtn" style="margin-top: 5px;">Share on X</button>
-      <p id="shareFeedbackProfile" style="display: none; color: #4caf50; font-size: 12px;">Shared! +5 WAI 🎉</p>
-    </div>
-
-    <!-- Achievements -->
-    <div class="card dark">
-      <h3>🏆 Achievements</h3>
-      <ul style="font-size: 0.9rem; padding-left: 1rem; text-align: left;">
-        <li>✅ Early Adopter</li>
-        <li>🔓 Mint Master (0/10 mints)</li>
-        <li>🔓 Referral Pro (2/5 invites)</li>
-        <li>🔓 Streak Master (reach 7-day streak)</li>
-        <li>🔓 Token Collector (collect 100 WAI)</li>
-      </ul>
-    </div>
-
-    <!-- Claim History -->
-    <div class="card dark full">
-      <h3>📦 Claim History</h3>
-      <p>Total earned: <strong>15 WAI</strong></p>
-      <ul id="claimHistory" style="font-size: 0.85rem;">
-        <li>2025-05-26: +5 WAI</li>
-        <li>2025-05-25: +5 WAI</li>
-        <li>2025-05-24: +5 WAI</li>
-      </ul>
-      <button id="showMoreClaimsBtn" style="font-size: 12px;">View More Claims</button>
-    </div>
-  </div>
-</section>
-
-
+      <section class="tab-content track" data-tab="track" style="display: none;">
+        <div class="hero"></div>
+        <div class="card-grid">
+          <div class="card dark">
+            <h3>⛽ Gas Overview</h3>
+            <p><strong>Base Fee:</strong> <span id="baseGas">--</span> Gwei</p>
+            <p><strong>30D:</strong> <span id="gasFees30d">$0.00</span></p>
+            <p><strong>Avg (10 TX):</strong> <span id="avgGas">-- Gwei</span></p>
+          </div>
+          <div class="card dark">
+            <h3>🧩 Connected dApps</h3>
+            <ul id="connectedDapps">
+              <li>-</li>
+            </ul>
+          </div>
+          <div class="card dark">
+            <h3>📦 Tokens Minted</h3>
+            <p><span id="tokensMinted">0</span></p>
+          </div>
+          <div class="card dark">
+            <h3>💰 ETH Moved</h3>
+            <p><span id="ethMoved">0 ETH total</span></p>
+          </div>
+          <div class="card dark">
+            <h3>📊 Volume (30D)</h3>
+            <p><span id="volume30d">$0</span></p>
+          </div>
+          <div class="card dark">
+            <h3>📈 PnL Today</h3>
+            <p><span id="pnlToday">+ $0.00</span></p>
+          </div>
+          <div class="card dark full">
+            <div class="track-header-row">
+              <h3>📜 Latest Activity</h3>
+              <button id="refreshTrackBtn">↻</button>
+            </div>
+            <p id="latestActivity">No recent tx</p>
+            <small id="activityResult">$0</small>
+          </div>
+        </div>
+      </section>
       <!-- PREMIUM -->
-<section class="tab-content premium" data-tab="premium" style="display: none;">
-  <div class="card-grid">
-
-    <!-- Intro -->
-    <div class="card dark full">
-      <h3>💎 Unlock Premium</h3>
-      <p>Get access to exclusive WarpAI tools, badges, and boost your earnings.</p>
-      <p><small>Erbjudande: Uppgradera innan 31 maj för en exklusiv badge!</small></p>
-      <ul style="padding-left: 1.2rem;">
-        <li>🔥 1.5x XP on daily actions</li>
-        <li>🎖️ VIP badge in leaderboard</li>
-        <li>🪙 +20% WAI claim bonus</li>
-        <li>📊 Track more wallets & advanced stats</li>
-        <li>🎁 Early access to airdrops</li>
-        <li>🖼️ Exklusiv Farcaster Frame för Premium-användare</li>
-      </ul>
-      <button id="upgradeBtn" class="upgrade-button-green" style="margin-top: 10px;">Upgrade to Premium – $5</button>
-      <p style="font-size: 0.75rem; margin-top: 5px;">One-time payment. Lifetime access.</p>
-      <a href="#" id="tryFreeBtn" style="font-size: 12px;">Testa Wallet Tracker gratis i 24h</a>
-    </div>
-
-    <!-- Premium Feature Preview -->
-    <div class="card dark">
-      <h3>🔍 Wallet Tracker</h3>
-      <p>Track onchain activity for other wallets.</p>
-      <input type="text" id="walletToTrack" placeholder="Paste address" style="width: 100%; padding: 4px;">
-      <button id="trackWalletBtn" style="margin-top: 5px;">Track</button>
-      <p id="walletTrackFeedback" style="font-size: 12px; display: none; color: #4caf50;">Now tracking!</p>
-      <a href="#" id="viewTrackedActivityBtn" style="font-size: 12px; display: none;">Se spårad aktivitet</a>
-    </div>
-
-    <!-- Analytics Preview -->
-    <div class="card dark">
-      <h3>📈 Advanced Analytics</h3>
-      <p>Visualize spending, mints, gas, earnings, and trends.</p>
-      <p><small>Din gasförbrukning: $0 (Uppgradera för full statistik!)</small></p>
-      <button id="comingSoonBtn" disabled style="opacity: 0.6;">Coming soon</button>
-    </div>
-
-    <!-- Perks Summary -->
-    <div class="card dark">
-      <h3>🎁 Premium Perks</h3>
-      <p id="premiumStatus" style="display: none; color: #4caf50;">✅ Du är Premium!</p>
-      <p>
-        XP Boost: <strong>+50%</strong><br>
-        WAI Bonus: <strong>+20%</strong><br>
-        Wallets Tracked: <strong>Unlimited</strong><br>
-        Airdrop Priority: <strong>Enabled</strong><br>
-        <small>Få 20% extra tokens vid nästa airdrop!</small><br>
-        Discord Role: <strong>Coming</strong>
-      </p>
-    </div>
-
-  </div>
-</section>
-
+      <section class="tab-content premium" data-tab="premium" style="display: none;">
+        <div class="hero"></div>
+        <div class="card-grid">
+          <div class="card dark full">
+            <h3>🚀 Upgrade to Premium</h3>
+            <p>Get exclusive benefits for only <strong>$5 one-time</strong> or <strong>$2/month</strong></p>
+            <ul>
+              <li>1.5x XP boost on all claims</li>
+              <li>Premium badge on leaderboard</li>
+              <li>Access to private token mints</li>
+              <li>Early access to new features</li>
+            </ul>
+            <button id="upgradeBtn">Upgrade Now</button>
+          </div>
+          <div class="card dark">
+            <h3>🔍 Wallet Tracker</h3>
+            <p>Track up to 10 public wallets</p>
+            <button disabled style="opacity: 0.6;">Premium Only</button>
+          </div>
+          <div class="card dark">
+            <h3>📊 Full Analytics</h3>
+            <p>See all your wallet stats over time</p>
+            <button disabled style="opacity: 0.6;">Premium Only</button>
+          </div>
+          <div class="card dark full">
+            <h3>✨ Unlock More</h3>
+            <p>Support WarpAI and unlock hidden rewards!</p>
+            <ul>
+              <li>Secret mints</li>
+              <li>Double referral bonuses</li>
+              <li>Limited NFT drops</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <!-- REWARDS -->
+      <section class="tab-content rewards" data-tab="rewards" style="display: none;">
+        <div class="card-grid">
+          <div class="card dark">
+            <h3>🔗 Referral & Earn</h3>
+            <p>Invite friends & earn WAI<br>Invited: <span id="invitedCount">2/5</span> for +10 WAI</p>
+            <button id="copyReferralBtn">Share Invite Link</button>
+            <p id="shareFeedback" style="display: none; color: #4caf50; font-size: 12px;">Shared! +5 WAI 🎉</p>
+          </div>
+          <div class="card dark">
+            <h3>📊 Referral Stats</h3>
+            <p>Friends Invited: <strong>2</strong></p>
+            <p>Total Earned: <strong>10 WAI</strong></p>
+            <p>Next reward: Invite 3 more for +15 WAI</p>
+            <progress value="2" max="5" style="width: 100%; height: 6px;"></progress>
+            <p><small>Invite 3 more and unlock Referral Pro-achievement !</small></p>
+          </div>
+          <div class="card dark">
+            <h3>🥇 Leaderboard</h3>
+            <p><small>Weekly top inviters – ends Sunday 23:59 UTC</small></p>
+            <p><small>1:a: 100 WAI, 2:a: 50 WAI, 3–5:e: 20 WAI</small></p>
+            <ul style="font-size: 0.8rem; padding-left: 1rem;">
+              <li>🥇 0xAlphaMint — 12 invites</li>
+              <li>🥈 0xZoraKing — 9 invites</li>
+              <li>🥉 0xFanArtist — 7 invites</li>
+              <li>4. 0xMintBot — 6 invites</li>
+              <li>5. You — 2 invites</li>
+            </ul>
+            <p><small>Invite 5 more to beat 0xFanArtist (7 invites)!</small></p>
+            <button id="viewFullLeaderboardBtn" style="font-size: 12px;">See full leaderboard</button>
+          </div>
+          <div class="card dark">
+            <h3>🎉 Bonus Rewards</h3>
+            <p>Total bonus earned: <strong>0 WAI</strong></p>
+            <p><small>Tjäna din första bonus nu!</small></p>
+            <p>
+              Post about WarpAI on Farcaster → +10 WAI
+              <small>(innan onsdag 23:59 UTC: +20 WAI!)</small>
+              <button id="postFarcasterBtn" style="font-size: 12px; margin-left: 5px;">Post now</button>
+            </p>
+            <p>
+              Mint a token via app → +5 WAI
+              <a href="#" id="mintTokenBtn" style="font-size: 12px; margin-left: 5px;">Mint now</a>
+            </p>
+            <p id="bonusFeedback" style="display: none; color: #4caf50; font-size: 12px;">Postat! +10 WAI 🎉</p>
+          </div>
+        </div>
+      </section>
+      <!-- PROFILE -->
+      <section class="tab-content profile" data-tab="profile" style="display: none;">
+        <div class="hero"></div>
+        <div class="card-grid">
+          <div class="card dark">
+            <h3>Wallet Info</h3>
+            <p id="walletAddress">Not Connected</p>
+            <p><small>Connect your wallet to show your Farcaster/ENS avatar!</small></p>
+            <button id="connectWalletBtn">Connect Wallet</button>
+            <button id="disconnectWalletBtn" style="display: none; margin-top: 5px;">Disconnect Wallet</button>
+            <button id="viewFarcasterProfileBtn" disabled style="margin-top: 5px;">View My Farcaster Profile</button>
+            <p id="farcasterProfileTooltip" style="font-size: 12px; color: #888;">Connect wallet to view!</p>
+            <p>Total XP: <strong id="totalXP">0</strong></p>
+            <p>Level: <strong id="userLevel">Level 1: Bronze</strong></p>
+            <progress value="0" max="200" style="width: 100%; height: 6px;"></progress>
+            <p><small>0/200 XP to Level 2</small></p>
+            <p>Total Mints: <span id="totalMints">0</span></p>
+            <p>Total Transactions: <span id="totalTxs">0</span></p>
+            <a href="#" id="editProfileBtn" style="font-size: 12px;">Edit Profile</a>
+          </div>
+          <div class="card dark">
+            <h3>WarpAI Token</h3>
+            <p id="waiBalance">Balance: 0 WAI</p>
+            <p>Total Earned: <strong>15 WAI</strong></p>
+            <p>Level Bonus: +10%</p>
+            <p><small>+10% extra WAI on daily claims (e.g. earn 5 WAI → get 5.5 WAI)</small></p>
+            <p>Next Bonus Milestone: <strong>Reach Level 3 for +15% Bonus</strong></p>
+            <a href="#" id="learnMoreWaiBtn" style="font-size: 12px;">Learn More About WAI</a>
+          </div>
+          <div class="card dark">
+            <h3>📤 Showcase Your Stats</h3>
+            <p>Earn 5 WAI for every share</p>
+            <p>You've shared: <strong id="shareCount">3 times (+15 WAI)</strong></p>
+            <button id="shareFarcasterBtn">Share on Farcaster</button>
+            <button id="shareOnXBtn" style="margin-top: 5px;">Share on X</button>
+            <p id="shareFeedbackProfile" style="display: none; color: #4caf50; font-size: 12px;">Shared! +5 WAI 🎉</p>
+          </div>
+          <div class="card dark">
+            <h3>🏆 Achievements</h3>
+            <ul style="font-size: 0.9rem; padding-left: 1rem; text-align: left;">
+              <li>✅ Early Adopter</li>
+              <li>🔓 Mint Master (0/10 mints)</li>
+              <li>🔓 Referral Pro (2/5 invites)</li>
+              <li>🔓 Streak Master (reach 7-day streak)</li>
+              <li>🔓 Token Collector (collect 100 WAI)</li>
+            </ul>
+          </div>
+          <div class="card dark full">
+            <h3>📦 Claim History</h3>
+            <p>Total earned: <strong>15 WAI</strong></p>
+            <ul id="claimHistory" style="font-size: 0.85rem;">
+              <li>2025-05-26: +5 WAI</li>
+              <li>2025-05-25: +5 WAI</li>
+              <li>2025-05-24: +5 WAI</li>
+            </ul>
+            <button id="showMoreClaimsBtn" style="font-size: 12px;">View More Claims</button>
+          </div>
+        </div>
+      </section>
+      <!-- PREMIUM -->
+      <section class="tab-content premium" data-tab="premium" style="display: none;">
+        <div class="card-grid">
+          <div class="card dark full">
+            <h3>💎 Unlock Premium</h3>
+            <p>Get access to exclusive WarpAI tools, badges, and boost your earnings.</p>
+            <p><small>Erbjudande: Uppgradera innan 31 maj för en exklusiv badge!</small></p>
+            <ul style="padding-left: 1.2rem;">
+              <li>🔥 1.5x XP on daily actions</li>
+              <li>🎖️ VIP badge in leaderboard</li>
+              <li>🪙 +20% WAI claim bonus</li>
+              <li>📊 Track more wallets & advanced stats</li>
+              <li>🎁 Early access to airdrops</li>
+              <li>🖼️ Exklusiv Farcaster Frame för Premium-användare</li>
+            </ul>
+            <button id="upgradeBtn" class="upgrade-button-green" style="margin-top: 10px;">Upgrade to Premium – $5</button>
+            <p style="font-size: 0.75rem; margin-top: 5px;">One-time payment. Lifetime access.</p>
+            <a href="#" id="tryFreeBtn" style="font-size: 12px;">Testa Wallet Tracker gratis i 24h</a>
+          </div>
+          <div class="card dark">
+            <h3>🔍 Wallet Tracker</h3>
+            <p>Track onchain activity for other wallets.</p>
+            <input type="text" id="walletToTrack" placeholder="Paste address" style="width: 100%; padding: 4px;">
+            <button id="trackWalletBtn" style="margin-top: 5px;">Track</button>
+            <p id="walletTrackFeedback" style="font-size: 12px; display: none; color: #4caf50;">Now tracking!</p>
+            <a href="#" id="viewTrackedActivityBtn" style="font-size: 12px; display: none;">Se spårad aktivitet</a>
+          </div>
+          <div class="card dark">
+            <h3>📈 Advanced Analytics</h3>
+            <p>Visualize spending, mints, gas, earnings, and trends.</p>
+            <p><small>Din gasförbrukning: $0 (Uppgradera för full statistik!)</small></p>
+            <button id="comingSoonBtn" disabled style="opacity: 0.6;">Coming soon</button>
+          </div>
+          <div class="card dark">
+            <h3>🎁 Premium Perks</h3>
+            <p id="premiumStatus" style="display: none; color: #4caf50;">✅ Du är Premium!</p>
+            <p>
+              XP Boost: <strong>+50%</strong><br>
+              WAI Bonus: <strong>+20%</strong><br>
+              Wallets Tracked: <strong>Unlimited</strong><br>
+              Airdrop Priority: <strong>Enabled</strong><br>
+              <small>Få 20% extra tokens vid nästa airdrop!</small><br>
+              Discord Role: <strong>Coming</strong>
+            </p>
+          </div>
+        </div>
+      </section>
       <!-- MODALS -->
       <div id="faqModal" class="modal hidden">
         <div class="modal-content">
@@ -422,7 +357,6 @@
           <button onclick="toggleFAQ()">Close</button>
         </div>
       </div>
-
       <div id="xpInfoModal" class="modal hidden">
         <div class="modal-content">
           <h3>ℹ️ XP & WAI Info</h3>
@@ -434,7 +368,6 @@
           <button onclick="toggleXpInfo()">Close</button>
         </div>
       </div>
-
       <div id="warpInfoModal" class="modal hidden">
         <div class="modal-content">
           <h3>Buy WarpAi Token</h3>
@@ -447,21 +380,17 @@
           <button onclick="toggleWarpInfo()">Close</button>
         </div>
       </div>
-
-      <!-- QR Code Modal -->
-<div id="qrModal" class="modal hidden">
-  <div class="modal-content">
-    <h3>Scan QR Code to Connect Wallet</h3>
-    <div id="qrCode"></div>
-    <button onclick="closeQrModal()">Close</button>
+      <div id="qrModal" class="modal hidden">
+        <div class="modal-content">
+          <h3>Scan QR Code to Connect Wallet</h3>
+          <div id="qrCode"></div>
+          <button onclick="closeQrModal()">Close</button>
+        </div>
+      </div>
+    </main>
   </div>
-</div>
-</main>
-</div>
-
-  <!-- Externa skript -->
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-<script src="https://unpkg.com/@walletconnect/web3modal@2.6.4/dist/index.umd.js"></script>
+  <script src="https://unpkg.com/@walletconnect/web3modal@2.6.4/dist/index.umd.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js"></script>
   <script src="app.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
